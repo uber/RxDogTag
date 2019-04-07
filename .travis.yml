@@ -1,0 +1,28 @@
+language: java
+
+jdk:
+- oraclejdk8
+
+install: ./gradlew build --stacktrace
+
+script:
+- ./gradlew check --stacktrace
+
+after_success:
+- .buildscript/deploy_snapshot.sh
+
+env:
+  global:
+  - secure: "TODO"
+  - secure: "TODO"
+
+branches:
+  only:
+  - master
+
+notifications:
+  email: false
+
+cache:
+  directories:
+  - $HOME/.gradle

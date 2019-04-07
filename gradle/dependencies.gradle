@@ -1,0 +1,53 @@
+/*
+ * Copyright (C) 2017. Uber Technologies
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+def versions = [
+    animalSniffer: '1.5.0',
+    errorProne: '2.3.3',
+    errorPronePlugin: '0.7.1',
+    gjf: '1.7',
+    nullawayPlugin: '0.1',
+    spotless: '3.21.1'
+]
+
+def build = [
+    ci: 'true' == System.getenv('CI'),
+    javaVersion: JavaVersion.VERSION_1_8,
+
+    errorProne: "com.google.errorprone:error_prone_core:${versions.errorProne}",
+    errorProneJavac: "com.google.errorprone:javac:9+181-r4173-1",
+    errorProneCheckApi: "com.google.errorprone:error_prone_check_api:${versions.errorProne}",
+    errorProneTestHelpers: "com.google.errorprone:error_prone_test_helpers:${versions.errorProne}",
+    nullAway: 'com.uber.nullaway:nullaway:0.7.0',
+    animalSniffer: 'org.codehaus.mojo.signature:java17:1.0@signature'
+]
+
+def rx = [
+    java: 'io.reactivex.rxjava2:rxjava:2.2.2'
+]
+
+def test = [
+    junit: 'junit:junit:4.12',
+    truth: 'com.google.truth:truth:0.43'
+]
+
+ext.deps = [
+    "build": build,
+    "misc": misc,
+    "rx": rx,
+    "test": test,
+    "versions": versions
+]
