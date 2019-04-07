@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.uber.anotherpackage;
 
-plugins {
-  id 'ru.vyarus.animalsniffer'
+import io.reactivex.SingleObserver;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.LambdaConsumerIntrospection;
+
+class EmptySingleObserver<T> implements SingleObserver<T>, LambdaConsumerIntrospection {
+
+  @Override
+  public void onSubscribe(Disposable d) {}
+
+  @Override
+  public void onSuccess(T t) {}
+
+  @Override
+  public final void onError(Throwable e) {}
+
+  @Override
+  public final boolean hasCustomOnError() {
+    return false;
+  }
 }
-
-dependencies {
-  api deps.rx.java
-
-  // Eventually this should be pulled out to a separate API
-  implementation deps.rx.autodispose
-
-  signature deps.build.animalSniffer
-  testCompile deps.test.junit
-  testCompile deps.test.truth
-}
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

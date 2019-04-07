@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -13,20 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.uber.anotherpackage;
 
-plugins {
-  id 'ru.vyarus.animalsniffer'
+final class DogTagTestUtil {
+
+  /**
+   * Get the current line number.
+   *
+   * @return int - Current line number.
+   */
+  static int getLineNumber() {
+    return Thread.currentThread().getStackTrace()[2].getLineNumber();
+  }
+
+  /**
+   * Get the previous line number.
+   *
+   * @return int - Previous line number.
+   */
+  static int getPreviousLineNumber() {
+    return Thread.currentThread().getStackTrace()[2].getLineNumber() - 1;
+  }
 }
-
-dependencies {
-  api deps.rx.java
-
-  // Eventually this should be pulled out to a separate API
-  implementation deps.rx.autodispose
-
-  signature deps.build.animalSniffer
-  testCompile deps.test.junit
-  testCompile deps.test.truth
-}
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

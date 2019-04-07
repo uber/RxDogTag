@@ -36,6 +36,7 @@ def build = [
 ]
 
 def rx = [
+    autodispose: 'com.uber.autodispose:autodispose:1.2.0',
     java: 'io.reactivex.rxjava2:rxjava:2.2.2'
 ]
 
@@ -46,7 +47,6 @@ def test = [
 
 ext.deps = [
     "build": build,
-    "misc": misc,
     "rx": rx,
     "test": test,
     "versions": versions
