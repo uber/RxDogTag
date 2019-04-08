@@ -290,7 +290,7 @@ public final class RxDogTag {
    * Returns index of the last element matching the given {@code predicate}, or -1 if the array does
    * not contain such element.
    */
-  private static <T> int indexOfLast(T[] array, NonCheckingPredicatePredicate<T> predicate) {
+  private static <T> int indexOfLast(T[] array, NonCheckingPredicate<T> predicate) {
     for (int index = array.length - 1; index >= 0; --index) {
       if (predicate.test(array[index])) {
         return index;
@@ -304,7 +304,7 @@ public final class RxDogTag {
    *
    * @param <T> the first value
    */
-  public interface NonCheckingPredicatePredicate<T> {
+  public interface NonCheckingPredicate<T> {
     /**
      * Test the given input value and return a boolean.
      *
