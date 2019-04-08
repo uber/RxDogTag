@@ -31,11 +31,14 @@ interface DogTagTest {
       String delegateType) {
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e).hasMessageThat().isEqualTo(originalError.getCause().getMessage());
-    assertThat(e.getStackTrace()[0].getClassName())
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause).isNotNull();
+    assertThat(cause.getStackTrace()[0].getClassName())
         .isEqualTo(String.format(Locale.US, RxDogTag.STACK_ELEMENT_SOURCE_DELEGATE, delegateType));
-    assertThat(e.getStackTrace()[1].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
-    assertThat(e.getStackTrace()[2].getFileName()).isEqualTo(getClass().getSimpleName() + ".java");
-    assertThat(e.getStackTrace()[2].getLineNumber()).isEqualTo(expectedLineNumber);
-    assertThat(e.getStackTrace()[3].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
+    assertThat(cause.getStackTrace()[1].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[2].getFileName()).isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[2].getLineNumber()).isEqualTo(expectedLineNumber);
+    assertThat(cause.getStackTrace()[3].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
   }
 }

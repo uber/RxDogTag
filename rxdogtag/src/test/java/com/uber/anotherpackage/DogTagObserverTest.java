@@ -154,10 +154,12 @@ public class DogTagObserverTest implements DogTagTest {
     Throwable e = errorsRule.take();
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e).hasMessageThat().isEqualTo(original.getMessage());
-    assertThat(e.getStackTrace()[0].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
-    assertThat(e.getStackTrace()[1].getFileName()).isEqualTo(getClass().getSimpleName() + ".java");
-    assertThat(e.getStackTrace()[1].getLineNumber()).isEqualTo(expectedLineNumber);
-    assertThat(e.getStackTrace()[2].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause.getStackTrace()[0].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[1].getFileName()).isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[1].getLineNumber()).isEqualTo(expectedLineNumber);
+    assertThat(cause.getStackTrace()[2].getClassName()).isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
   }
 
   /**
