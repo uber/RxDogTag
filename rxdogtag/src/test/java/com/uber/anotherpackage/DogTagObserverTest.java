@@ -26,6 +26,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
+import io.reactivex.observers.TestObserver;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -100,6 +101,23 @@ public class DogTagObserverTest implements DogTagTest {
     Exception originalError = new IllegalStateException("illegal state exception");
     Another o = new Another();
     assertRewrittenStacktrace(throwError(o, originalError), originalError);
+  }
+
+  @Test
+  public void observerWithErrorHandling_ignoredByRxDogTag() {
+    Exception originalError = new IllegalStateException("illegal state exception");
+    // Test observer which custom error handling.
+    TestObserver<Object> testObserver = Observable.error(originalError).test();
+    // No errors intercepted by RxDogTag.
+    errorsRule.assertNoErrors();
+
+    testObserver.assertError(
+        (error) -> {
+          assertThat(error).isNotInstanceOf(OnErrorNotImplementedException.class);
+          assertThat(error).hasMessageThat().isEqualTo(originalError.getMessage());
+          assertThat(error.getStackTrace()).isNotEmpty();
+          return true;
+        });
   }
 
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
