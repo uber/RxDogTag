@@ -27,6 +27,7 @@ buildscript {
       classpath "net.ltgt.gradle:gradle-nullaway-plugin:${deps.versions.nullawayPlugin}"
       classpath "ru.vyarus:gradle-animalsniffer-plugin:${deps.versions.animalSniffer}"
       classpath "com.diffplug.spotless:spotless-plugin-gradle:${deps.versions.spotless}"
+      classpath 'com.vanniktech:gradle-maven-publish-plugin:0.8.0'
     }
   }
 }
