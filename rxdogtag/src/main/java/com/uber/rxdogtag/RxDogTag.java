@@ -50,7 +50,7 @@ public final class RxDogTag {
 
   public static final String STACK_ELEMENT_SOURCE_HEADER = "[[ Inferred subscribe point ]]";
   public static final String STACK_ELEMENT_SOURCE_DELEGATE = "[[ Originating callback: %s ]]";
-  public static final String STACK_ELEMENT_CAUSE_HEADER = "[[ Original cause ]]";
+  public static final String STACK_ELEMENT_CAUSE_HEADER = "[[ Original trace ]]";
 
   private static final List<String> IGNORED_PACKAGES =
       Arrays.asList(
