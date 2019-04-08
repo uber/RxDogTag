@@ -193,13 +193,7 @@ public final class RxDogTag {
               (t, e) -> {
                 Thread.currentThread().setUncaughtExceptionHandler(h);
                 if (e instanceof OnErrorNotImplementedException) {
-                  Throwable cause = e.getCause();
-                  if (cause instanceof CauseHolder) {
-                    // We threw this, so throw it as-os
-                    errorConsumer.accept(e);
-                  } else {
-                    errorConsumer.accept(cause);
-                  }
+                  errorConsumer.accept(e);
                 } else if (e instanceof NullPointerException
                     && "subscribeActual failed".equals(e.getMessage())) {
                   errorConsumer.accept(e.getCause());
@@ -217,28 +211,37 @@ public final class RxDogTag {
   }
 
   /**
-   * Reports a new {@link OnErrorNotImplementedException} instance with a modified stacktrace. The
-   * new stacktrace contains a line pointing to the inferred subscribe point, and then the trace of
-   * the original {@code cause} (as the actual trace for the created trace is irrelevant). This does
-   * carry a {@link CauseHolder} at the bottom to appease the constructor of {@link
-   * OnErrorNotImplementedException}, but it has no stacktrace and only has APIs for testing
-   * purposes. The message of the exception is the message from the {@code cause}, if present, and
-   * an empty string otherwise.
+   * Reports a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
+   * cause with a modified stacktrace. If the original cause is not an instance of
+   * OnErrorNotImplementedException, a new one is created with the cause as its original cause. The
+   * new modified stacktrace contains a line pointing to the inferred subscribe point, and then the
+   * trace of the original {@code originalCause} (as the actual trace for the created trace is
+   * irrelevant). The message of the exception is the message from the {@code originalCause}, if
+   * present, and an empty string otherwise.
    *
    * <p>Reporting is done via {@link RxJavaPlugins#onError(Throwable)}.
    *
    * @param stackSource the source throwable to extract a stack element tag from.
-   * @param cause the cause of the original error.
+   * @param originalCause the cause of the original error.
    * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
    */
-  static void reportError(Throwable stackSource, Throwable cause, @Nullable String callbackType) {
+  static void reportError(
+      Throwable stackSource, Throwable originalCause, @Nullable String callbackType) {
     StackTraceElement s = RxDogTag.extractStackElementTag(stackSource);
-    String message = cause.getMessage();
-    if (message == null) {
-      message = "";
+    OnErrorNotImplementedException error;
+    Throwable cause;
+    if (originalCause instanceof OnErrorNotImplementedException) {
+      error = (OnErrorNotImplementedException) originalCause;
+      cause = error.getCause();
+    } else {
+      String message = originalCause.getMessage();
+      if (message == null) {
+        message = "";
+      }
+      error = new OnErrorNotImplementedException(message, originalCause);
+      error.setStackTrace(new StackTraceElement[0]);
+      cause = originalCause;
     }
-    OnErrorNotImplementedException error =
-        new OnErrorNotImplementedException(message, new CauseHolder(cause));
     StackTraceElement[] originalTrace = cause.getStackTrace();
     int syntheticLength = 3;
     if (callbackType != null) {
@@ -273,7 +276,7 @@ public final class RxDogTag {
       System.arraycopy(
           originalTrace, srcPos, newTrace, syntheticLength, originalTrace.length - srcPos);
     }
-    error.setStackTrace(newTrace);
+    cause.setStackTrace(newTrace);
     RxJavaPlugins.onError(error);
   }
 
@@ -328,27 +331,5 @@ public final class RxDogTag {
      * @param t the value
      */
     void accept(T t);
-  }
-
-  /**
-   * A throwable that contains no stacktrace and just holds a reference to a cause (but not set
-   * directly).
-   */
-  static class CauseHolder extends Throwable {
-
-    private final Throwable originalCause;
-
-    private CauseHolder(Throwable cause) {
-      this.originalCause = cause;
-    }
-
-    Throwable originalCause() {
-      return originalCause;
-    }
-
-    @Override
-    public final synchronized Throwable fillInStackTrace() {
-      return this;
-    }
   }
 }
