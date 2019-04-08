@@ -15,6 +15,7 @@
  */
 package com.uber.anotherpackage;
 
+import com.google.errorprone.annotations.concurrent.LazyInit;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -31,8 +32,8 @@ import org.junit.runners.model.Statement;
  */
 public final class AggressiveUncaughtExceptionHandlerRule extends TestWatcher {
 
-  private UncaughtExceptionHandler oldDefaultUncaughtExceptionHandler;
-  private Description lastTestStarted;
+  @LazyInit private UncaughtExceptionHandler oldDefaultUncaughtExceptionHandler;
+  @LazyInit private Description lastTestStarted;
   private final Map<Throwable, String> exceptions = new ConcurrentHashMap<>();
 
   @Override
