@@ -325,6 +325,7 @@ public class DogTagObserverDelegatesTest implements DogTagTest {
     assertTaggedError(getPreviousLineNumber(), handler, "onComplete");
   }
 
+  @SuppressWarnings("NullAway") // https://github.com/uber/NullAway/issues/301
   private void assertTaggedError(
       int lineNumber, Thread.UncaughtExceptionHandler handler, String delegateType) {
     Throwable recordedThrowable = ref.get();
