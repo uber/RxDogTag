@@ -28,6 +28,7 @@ import org.junit.Test;
 
 /** This is the code for the README examples. Un-ignore to test yourself. */
 @Ignore
+@SuppressWarnings("CheckReturnValue")
 public class ReadMeExample {
 
   @Rule
