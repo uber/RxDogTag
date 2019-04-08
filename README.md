@@ -4,7 +4,15 @@ RxDogTag is a utility to tag originating subscribe points in RxJava 2 observers,
 surfacing their subscribe locations for error reporting/investigation later in the event of an unhandled
 error. This is _only_ for RxJava observers that do not implement `onError()`.
 
-## Setup
+## Download
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag)
+
+```gradle
+implementation("com.uber.rxdogtag:rxdogtag:x.y.z")
+```
+
+# Setup
 
 Install early in your application lifecycle via `RxDogTag.install()`. This will install the necessary
 hooks in `RxJavaPlugins`.
