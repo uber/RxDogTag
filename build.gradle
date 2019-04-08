@@ -68,6 +68,7 @@ subprojects {
   targetCompatibility = deps.build.javaVersion
   test {
     testLogging.showStandardStreams = true
+    maxParallelForks Runtime.runtime.availableProcessors().intdiv(2) ?: 1
   }
   apply plugin: 'net.ltgt.errorprone'
   apply plugin: 'net.ltgt.nullaway'
@@ -81,9 +82,6 @@ subprojects {
       severity = CheckSeverity.ERROR
       annotatedPackages.add("com.uber")
     }
-  }
-  tasks.withType(Test) {
-    setMaxParallelForks(Runtime.runtime.availableProcessors().intdiv(2) ?: 1)
   }
 }
 
