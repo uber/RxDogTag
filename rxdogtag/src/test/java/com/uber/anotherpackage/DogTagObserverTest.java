@@ -17,15 +17,7 @@ package com.uber.anotherpackage;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.uber.anotherpackage.DogTagTestUtil.getPreviousLineNumber;
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.CompletableSubscribeProxy;
-import com.uber.autodispose.FlowableSubscribeProxy;
-import com.uber.autodispose.MaybeSubscribeProxy;
-import com.uber.autodispose.ObservableSubscribeProxy;
-import com.uber.autodispose.ScopeProvider;
-import com.uber.autodispose.SingleSubscribeProxy;
 import com.uber.rxdogtag.RxDogTag;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -34,7 +26,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
-import io.reactivex.plugins.RxJavaPlugins;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,7 +34,7 @@ import org.junit.Test;
 /**
  * NOTE: These tests are a little odd. There are two conditions for them running correctly because
  * they verify via inspecting stacktraces. 1. the throwError() method MUST calculate the line number
- * immediately after subscribe (on the next line). 2. it must not be in the com.ubercab.rx2.java
+ * immediately after subscribe (on the next line). 2. it must not be in the com.uber.rxdogtag
  * package because that is filtered out in stacktrace inspection.
  */
 public class DogTagObserverTest implements DogTagTest {
@@ -57,45 +48,7 @@ public class DogTagObserverTest implements DogTagTest {
 
   @After
   public void tearDown() {
-    RxJavaPlugins.reset();
-  }
-
-  @Test
-  public void testObservable_autodispose() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(
-        subscribeError(Observable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
-        original);
-  }
-
-  @Test
-  public void testFlowable_autodispose() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(
-        subscribeError(Flowable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
-        original);
-  }
-
-  @Test
-  public void testSingle_autodispose() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(
-        subscribeError(Single.error(original).as(autoDisposable(ScopeProvider.UNBOUND))), original);
-  }
-
-  @Test
-  public void testMaybe_autodispose() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(
-        subscribeError(Maybe.error(original).as(autoDisposable(ScopeProvider.UNBOUND))), original);
-  }
-
-  @Test
-  public void testCompletable_autodispose() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(
-        subscribeError(Completable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
-        original);
+    RxDogTag.reset();
   }
 
   @Test
@@ -162,71 +115,7 @@ public class DogTagObserverTest implements DogTagTest {
         .isEqualTo(getClass().getSimpleName() + ".java");
     assertThat(cause.getStackTrace()[1].getLineNumber()).isEqualTo(expectedLineNumber);
     assertThat(cause.getStackTrace()[2].getClassName())
-        .isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
-  }
-
-  /**
-   * This is a weird but necessary tests. We have proguard configurations that depend on these
-   * packages to have names kept in order for DogTagObservers to work their magic correctly.
-   *
-   * <p>In the event that this test fails, please update the proguard configurations with the new
-   * package names. You will see something like this in our global proguard config.
-   *
-   * <pre><code>
-   *   -keepnames class io.reactivex.**
-   * </code></pre>
-   *
-   * <p>This should be updated with the new package name.
-   */
-  @Test
-  public void verifyPackages() {
-    checkPackage("Observable", "io.reactivex", Observable.class.getPackage().getName());
-    checkPackage("AutoDispose", "com.uber.autodispose", AutoDispose.class.getPackage().getName());
-    checkPackage(
-        "RxDogTag",
-        "com.uber.rxdogtag",
-        RxDogTag.class.getPackage().getName().replace(".RxDogTag", ""));
-  }
-
-  private void checkPackage(String name, String expectedPackage, String actualPackage) {
-    if (!actualPackage.equals(expectedPackage)) {
-      throw new RuntimeException(
-          "The package name for "
-              + name
-              + " has changed. Please "
-              + "update this test and the proguard -keepnames configuration to properly keep the new "
-              + "package It was \n\"-keepnames class "
-              + expectedPackage
-              + ".**\"\nbut should now "
-              + "be\n\"-keepnames class "
-              + actualPackage
-              + ".**\"");
-    }
-  }
-
-  private static int subscribeError(CompletableSubscribeProxy completable) {
-    completable.subscribe();
-    return getPreviousLineNumber();
-  }
-
-  private static <T> int subscribeError(ObservableSubscribeProxy<T> observable) {
-    observable.subscribe();
-    return getPreviousLineNumber();
-  }
-
-  private static <T> int subscribeError(MaybeSubscribeProxy<T> maybe) {
-    maybe.subscribe();
-    return getPreviousLineNumber();
-  }
-
-  private static <T> int subscribeError(SingleSubscribeProxy<T> single) {
-    single.subscribe();
-    return getPreviousLineNumber();
-  }
-
-  private static <T> int subscribeError(FlowableSubscribeProxy<T> flowable) {
-    flowable.subscribe();
-    return getPreviousLineNumber();
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
   }
 
   private static int subscribeError(Completable completable) {
