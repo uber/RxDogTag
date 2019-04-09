@@ -49,10 +49,10 @@ public class ReadMeExample {
   public void complex() throws InterruptedException {
     RxDogTag.install();
     CountDownLatch latch = new CountDownLatch(1);
-    Observable.range(0, 10)
+    Observable.just(1)
         .subscribeOn(Schedulers.io())
-        .<Integer>map(i -> null)
-        .subscribe(i -> latch.countDown());
+        .map(i -> null)
+        .subscribe();
     latch.await(1, TimeUnit.SECONDS);
   }
 
@@ -60,7 +60,7 @@ public class ReadMeExample {
   public void complexDelegate() throws InterruptedException {
     RxDogTag.install();
     CountDownLatch latch = new CountDownLatch(1);
-    Observable.range(0, 10).subscribeOn(Schedulers.io()).subscribe(i -> throwSomething());
+    Observable.just(1).subscribeOn(Schedulers.io()).subscribe(i -> throwSomething());
     latch.await(1, TimeUnit.SECONDS);
   }
 

@@ -25,7 +25,7 @@ Consider the following classic RxJava error:
 ```java
 Observable.range(0, 10)
     .subscribeOn(Schedulers.io())
-    .<Integer>map(i -> null)
+    .map(i -> null)
     .subscribe();
 ```
 
@@ -33,7 +33,6 @@ This is a fairly common case in RxJava concurrency. Without tagging, this yields
 
 ```
 io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not handled due to missing onError handler in the subscribe() method call. Further reading: https://github.com/ReactiveX/RxJava/wiki/Error-Handling | The mapper function returned a null value.
-
 	at io.reactivex.internal.functions.Functions$OnErrorMissingConsumer.accept(Functions.java:704)
 	at io.reactivex.internal.functions.Functions$OnErrorMissingConsumer.accept(Functions.java:701)
 	at io.reactivex.internal.observers.LambdaObserver.onError(LambdaObserver.java:77)
@@ -41,8 +40,8 @@ io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not ha
 	at io.reactivex.internal.observers.BasicFuseableObserver.fail(BasicFuseableObserver.java:110)
 	at io.reactivex.internal.operators.observable.ObservableMap$MapObserver.onNext(ObservableMap.java:59)
 	at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeOnObserver.onNext(ObservableSubscribeOn.java:58)
-	at io.reactivex.internal.operators.observable.ObservableRange$RangeDisposable.run(ObservableRange.java:64)
-	at io.reactivex.internal.operators.observable.ObservableRange.subscribeActual(ObservableRange.java:35)
+	at io.reactivex.internal.operators.observable.ObservableScalarXMap$ScalarDisposable.run(ObservableScalarXMap.java:248)
+	at io.reactivex.internal.operators.observable.ObservableJust.subscribeActual(ObservableJust.java:35)
 	at io.reactivex.Observable.subscribe(Observable.java:12090)
 	at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeTask.run(ObservableSubscribeOn.java:96)
 	at io.reactivex.Scheduler$DisposeTask.run(Scheduler.java:578)
@@ -60,9 +59,9 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 	... 14 more
 ```
 
-Yikes! This is basically impossible to investigate if you're looking at a crash report from the wild.
+This is basically impossible to investigate if you're looking at a crash report from the wild.
 
-Now the same trace with tagging enabled:
+Now the same error with RxDogTag enabled:
 
 ```
 io.reactivex.exceptions.OnErrorNotImplementedException: The mapper function returned a null value.
@@ -74,8 +73,8 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 	at io.reactivex.internal.functions.ObjectHelper.requireNonNull(ObjectHelper.java:39)
 	at io.reactivex.internal.operators.observable.ObservableMap$MapObserver.onNext(ObservableMap.java:57)
 	at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeOnObserver.onNext(ObservableSubscribeOn.java:58)
-	at io.reactivex.internal.operators.observable.ObservableRange$RangeDisposable.run(ObservableRange.java:64)
-	at io.reactivex.internal.operators.observable.ObservableRange.subscribeActual(ObservableRange.java:35)
+	at io.reactivex.internal.operators.observable.ObservableScalarXMap$ScalarDisposable.run(ObservableScalarXMap.java:248)
+	at io.reactivex.internal.operators.observable.ObservableJust.subscribeActual(ObservableJust.java:35)
 	at io.reactivex.Observable.subscribe(Observable.java:12090)
 	at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeTask.run(ObservableSubscribeOn.java:96)
 	at io.reactivex.Scheduler$DisposeTask.run(Scheduler.java:578)
