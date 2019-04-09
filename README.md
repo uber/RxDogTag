@@ -23,12 +23,10 @@ the Javadoc for full details of which plugins it uses.
 Consider the following classic RxJava error:
 
 ```java
-CountDownLatch latch = new CountDownLatch(1);
 Observable.range(0, 10)
     .subscribeOn(Schedulers.io())
     .<Integer>map(i -> null)
     .subscribe(i -> latch.countDown());
-latch.await();
 ```
 
 This is a fairly common case in RxJava concurrency. Without tagging, this yields the following trace:
