@@ -94,6 +94,9 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 Now we have the example subscribe line at `ReadMeExample.java:55`. It may not be a silver bullet to 
 root-causing why the exception occurred, but at least you know where it's emanating from.
 
+The subscribe line reported should also retrace and group well for crash reporting. As we use our own 
+in-house reporter though, we're very open to feedback on how this can be improved for other solutions.
+
 More examples and details can be found in the [wiki](https://github.com/uber/RxDogTag/wiki)
 
 ## Custom handlers
