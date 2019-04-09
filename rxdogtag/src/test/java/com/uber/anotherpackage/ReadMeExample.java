@@ -37,7 +37,7 @@ public class ReadMeExample {
 
   @After
   public void tearDown() {
-    RxJavaPlugins.reset();
+    RxDogTag.reset();
   }
 
   @Test
