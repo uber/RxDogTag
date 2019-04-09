@@ -91,7 +91,7 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 	at java.lang.Thread.run(Thread.java:748)
 ```
 
-Now we have the example subscribe line at `ReadMeExample.java:43`. It may not be a silver bullet to 
+Now we have the example subscribe line at `ReadMeExample.java:55`. It may not be a silver bullet to 
 root-causing why the exception occurred, but at least you know where it's emanating from.
 
 More examples and details can be found in the [wiki](https://github.com/uber/RxDogTag/wiki)
