@@ -43,8 +43,8 @@ import org.reactivestreams.Subscriber;
  * was called and surface that in the eventual thrown {@link OnErrorNotImplementedException}
  * message.
  *
- * <p>To use, simply call {@link #install()}. Note that this uses {@link RxJavaPlugins}'s {@code
- * onSubscribe} hooks.
+ * <p>To use, simply call {@link #install}. Note that this uses {@link RxJavaPlugins}'s
+ * {@code onSubscribe} hooks.
  */
 public final class RxDogTag {
 
