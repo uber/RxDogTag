@@ -17,8 +17,6 @@ implementation("com.uber.rxdogtag:rxdogtag:x.y.z")
 Install early in your application lifecycle via `RxDogTag.install()`. This will install the necessary
 hooks in `RxJavaPlugins`.
 
-TBD: custom handlers
-
 ## Examples
 
 For a simple synchronous error, it's usually not difficult to diagnose its origin. It does help to 
@@ -277,13 +275,23 @@ Decision tree:
     -> Decorate with a DogTag observer.
 ```
 
-## AutoDispose support
+## Custom handlers
+
+In the event of custom observers that possibly decorate other observer types, this information can
+be passed to RxDogTag via the `ObserverHandler` interface. This interface can be used to unwrap 
+these custom observers to reveal their delegates and their potential behavior. Install these via
+the `RxDogTag.install()` overloads that accept handlers.
+
+### AutoDispose support
 
 AutoDispose is a library for automatically disposing streams, and works via its own decorating observers 
 under the hood. AutoDispose can work with RxDogTag via its `delegateObserver()` APIs on the AutoDisposingObserver
-interfaces.
+interfaces. Support for this is available via separate `rxdogtag-autodispose` artifact and its 
+`AutoDisposeObserverHandler` singleton instance.
 
-TBD: First party autodispose artifact.
+```java
+RxDogTag.install(AutoDisposeObserverHandler.INSTANCE)
+```
 
 ## Proguard/R8
 
@@ -294,8 +302,6 @@ secret sauce. Keeping names has a negligible impact on APK size as well. If this
 though, then RxDogTag is probably not the right solution for your project.
 
 RxDogTag ships with custom `rxdogtag.pro` rules in the jar resources to handle this automatically.
-
-TBD - custom handlers.
 
 Javadocs and KDocs for the most recent release can be found here: https://uber.github.io/RxDogTag/1.x/
 
