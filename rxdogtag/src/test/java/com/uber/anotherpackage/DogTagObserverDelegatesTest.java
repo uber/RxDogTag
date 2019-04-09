@@ -108,7 +108,7 @@ public class DogTagObserverDelegatesTest implements DogTagTest {
   // reaches here it should be the decorated exception.
   private AtomicReference<Throwable> ref;
 
-  // We'll similate an OnErrorNotImplemented exception coming from a delegate, which will happen
+  // We'll simulate an OnErrorNotImplemented exception coming from a delegate, which will happen
   // if a delegate hits its internal missing onError first before the DogTagObserver has a chance.
   private OnErrorNotImplementedException originalError;
 

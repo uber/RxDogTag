@@ -234,9 +234,9 @@ public final class RxDogTag {
   /**
    * If the delegate {@code onNext()}/{@code onSuccess()}/{@code onComplete()} throws any exception,
    * that is conventionally routed immediately to its `onError()` before we get a chance at it.
-   * Since we know that is always just going to throw the OnErrorNotImplementedException back at us
-   * per {@link LambdaConsumerIntrospection}, we can expect it here, unwrap the original cause, and
-   * pass it on to our version.
+   * Since we know that is always just going to throw the {@link OnErrorNotImplementedException}
+   * back at us per {@link LambdaConsumerIntrospection}, we can expect it here, unwrap the original
+   * cause, and pass it on to our version.
    *
    * <p>Should we ever rewrite this in kotlin, this is a great candidate for inlining.
    *
