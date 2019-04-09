@@ -15,12 +15,8 @@
  */
 package com.uber.rxdogtag;
 
-import com.uber.autodispose.AutoDispose;
-import com.uber.autodispose.observers.AutoDisposingCompletableObserver;
-import com.uber.autodispose.observers.AutoDisposingMaybeObserver;
-import com.uber.autodispose.observers.AutoDisposingObserver;
-import com.uber.autodispose.observers.AutoDisposingSingleObserver;
-import com.uber.autodispose.observers.AutoDisposingSubscriber;
+import static java.util.Collections.unmodifiableSet;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
@@ -32,9 +28,13 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.observers.LambdaConsumerIntrospection;
 import io.reactivex.plugins.RxJavaPlugins;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import org.reactivestreams.Subscriber;
 
 /**
@@ -50,19 +50,50 @@ public final class RxDogTag {
 
   public static final String STACK_ELEMENT_SOURCE_HEADER = "[[ Inferred subscribe point ]]";
   public static final String STACK_ELEMENT_SOURCE_DELEGATE = "[[ Originating callback: %s ]]";
-  public static final String STACK_ELEMENT_CAUSE_HEADER = "[[ Original trace ]]";
+  public static final String STACK_ELEMENT_TRACE_HEADER = "[[ Original trace ]]";
 
-  private static final List<String> IGNORED_PACKAGES =
+  /** Default ignored packages when sourcing originating subscribe points. */
+  private static final Collection<String> DEFAULT_IGNORED_PACKAGES =
       Arrays.asList(
           // "io.reactivex"
           Observable.class.getPackage().getName(),
-          // "com.uber.autodispose"
-          AutoDispose.class.getPackage().getName(),
           // "com.uber.rxdogtag"
           DogTagObserver.class.getPackage().getName());
 
   private RxDogTag() {
     throw new InstantiationError();
+  }
+
+  private static final ObserverHandler DEFAULT_HANDLER =
+      new ObserverHandler() {
+        @Override
+        public Collection<String> ignorablePackagePrefixes() {
+          return DEFAULT_IGNORED_PACKAGES;
+        }
+      };
+  @Nullable private static volatile Set<String> ignorablePackages = null;
+
+  /**
+   * Resets RxDogTag by resetting custom onSubscribe hooks via {@link RxJavaPlugins}. Note that
+   * calling this calls the following methods with null values.
+   *
+   * <p>
+   *
+   * <ul>
+   *   <li>{@link RxJavaPlugins#setOnFlowableSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnObservableSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnMaybeSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnSingleSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
+   * </ul>
+   */
+  public static synchronized void reset() {
+    ignorablePackages = null;
+    RxJavaPlugins.setOnFlowableSubscribe(null);
+    RxJavaPlugins.setOnObservableSubscribe(null);
+    RxJavaPlugins.setOnMaybeSubscribe(null);
+    RxJavaPlugins.setOnSingleSubscribe(null);
+    RxJavaPlugins.setOnCompletableSubscribe(null);
   }
 
   /**
@@ -79,75 +110,102 @@ public final class RxDogTag {
    *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
    * </ul>
    *
+   * @param handlers a list of {@link ObserverHandler} instances to potentially unpack or decorate.
+   *     Note that order matters here, and the first one to return a {@link
+   *     LambdaConsumerIntrospection} with no custom error handling will be used.
    * @see #extractStackElementTag(Throwable)
    */
-  public static synchronized void install() {
+  public static synchronized void install(ObserverHandler... handlers) {
+    install(Arrays.asList(handlers));
+  }
+
+  /**
+   * Initializes RxDogTag by installing custom onSubscribe hooks via {@link RxJavaPlugins}. Note
+   * that calling this calls the following methods:
+   *
+   * <p>
+   *
+   * <ul>
+   *   <li>{@link RxJavaPlugins#setOnFlowableSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnObservableSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnMaybeSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnSingleSubscribe(BiFunction)}
+   *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
+   * </ul>
+   *
+   * @param handlers a list of {@link ObserverHandler} instances to potentially unpack or decorate.
+   *     Note that order matters here, and the first one to return a {@link
+   *     LambdaConsumerIntrospection} with no custom error handling will be used.
+   * @see #extractStackElementTag(Throwable)
+   */
+  public static synchronized void install(List<ObserverHandler> handlers) {
+    final List<ObserverHandler> finalHandlers = new ArrayList<>(handlers); // Defensive copy
+    finalHandlers.add(DEFAULT_HANDLER);
+    Set<String> packagesToIgnore = new LinkedHashSet<>();
+    for (ObserverHandler handler : finalHandlers) {
+      packagesToIgnore.addAll(handler.ignorablePackagePrefixes());
+    }
+    RxDogTag.ignorablePackages = unmodifiableSet(packagesToIgnore);
     RxJavaPlugins.setOnObservableSubscribe(
         (observable, originalObserver) -> {
-          Observer observerToCheck = originalObserver;
-          if (observerToCheck instanceof AutoDisposingObserver) {
-            observerToCheck = ((AutoDisposingObserver) observerToCheck).delegateObserver();
-          }
-          if (observerToCheck instanceof LambdaConsumerIntrospection) {
-            if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-              //noinspection unchecked
-              return new DogTagObserver(originalObserver);
+          for (ObserverHandler handler : finalHandlers) {
+            Observer observerToCheck = handler.handle(observable, originalObserver);
+            if (observerToCheck instanceof LambdaConsumerIntrospection) {
+              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
+                //noinspection unchecked
+                return new DogTagObserver(originalObserver);
+              }
             }
           }
           return originalObserver;
         });
     RxJavaPlugins.setOnFlowableSubscribe(
         (flowable, originalSubscriber) -> {
-          Subscriber subscriberToCheck = originalSubscriber;
-          if (subscriberToCheck instanceof AutoDisposingSubscriber) {
-            subscriberToCheck = ((AutoDisposingSubscriber) subscriberToCheck).delegateSubscriber();
-          }
-          if (subscriberToCheck instanceof LambdaConsumerIntrospection) {
-            if (!((LambdaConsumerIntrospection) subscriberToCheck).hasCustomOnError()) {
-              //noinspection unchecked
-              return new DogTagSubscriber(originalSubscriber);
+          for (ObserverHandler handler : finalHandlers) {
+            Subscriber subscriberToCheck = handler.handle(flowable, originalSubscriber);
+            if (subscriberToCheck instanceof LambdaConsumerIntrospection) {
+              if (!((LambdaConsumerIntrospection) subscriberToCheck).hasCustomOnError()) {
+                //noinspection unchecked
+                return new DogTagSubscriber(originalSubscriber);
+              }
             }
           }
           return originalSubscriber;
         });
     RxJavaPlugins.setOnSingleSubscribe(
         (single, originalObserver) -> {
-          SingleObserver observerToCheck = originalObserver;
-          if (observerToCheck instanceof AutoDisposingSingleObserver) {
-            observerToCheck = ((AutoDisposingSingleObserver) observerToCheck).delegateObserver();
-          }
-          if (observerToCheck instanceof LambdaConsumerIntrospection) {
-            if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-              //noinspection unchecked
-              return new DogTagSingleObserver(originalObserver);
+          for (ObserverHandler handler : finalHandlers) {
+            SingleObserver observerToCheck = handler.handle(single, originalObserver);
+            if (observerToCheck instanceof LambdaConsumerIntrospection) {
+              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
+                //noinspection unchecked
+                return new DogTagSingleObserver(originalObserver);
+              }
             }
           }
           return originalObserver;
         });
     RxJavaPlugins.setOnMaybeSubscribe(
         (maybe, originalObserver) -> {
-          MaybeObserver observerToCheck = originalObserver;
-          if (observerToCheck instanceof AutoDisposingMaybeObserver) {
-            observerToCheck = ((AutoDisposingMaybeObserver) observerToCheck).delegateObserver();
-          }
-          if (observerToCheck instanceof LambdaConsumerIntrospection) {
-            if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-              //noinspection unchecked
-              return new DogTagMaybeObserver(originalObserver);
+          for (ObserverHandler handler : finalHandlers) {
+            MaybeObserver observerToCheck = handler.handle(maybe, originalObserver);
+            if (observerToCheck instanceof LambdaConsumerIntrospection) {
+              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
+                //noinspection unchecked
+                return new DogTagMaybeObserver(originalObserver);
+              }
             }
           }
           return originalObserver;
         });
     RxJavaPlugins.setOnCompletableSubscribe(
         (completable, originalObserver) -> {
-          CompletableObserver observerToCheck = originalObserver;
-          if (observerToCheck instanceof AutoDisposingCompletableObserver) {
-            observerToCheck =
-                ((AutoDisposingCompletableObserver) observerToCheck).delegateObserver();
-          }
-          if (observerToCheck instanceof LambdaConsumerIntrospection) {
-            if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-              return new DogTagCompletableObserver(originalObserver);
+          for (ObserverHandler handler : finalHandlers) {
+            CompletableObserver observerToCheck = handler.handle(completable, originalObserver);
+            if (observerToCheck instanceof LambdaConsumerIntrospection) {
+              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
+                return new DogTagCompletableObserver(originalObserver);
+              }
             }
           }
           return originalObserver;
@@ -255,7 +313,7 @@ public final class RxDogTag {
     int lastCauseIndex =
         indexOfLast(
             originalTrace,
-            (StackTraceElement e) -> STACK_ELEMENT_CAUSE_HEADER.equals(e.getClassName()));
+            (StackTraceElement e) -> STACK_ELEMENT_TRACE_HEADER.equals(e.getClassName()));
 
     if (lastCauseIndex != -1) {
       // We have an older cause, chop it any everything in between
@@ -271,7 +329,7 @@ public final class RxDogTag {
     }
     newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER, "", "", 0);
     newTrace[indexCount++] = s;
-    newTrace[indexCount] = new StackTraceElement(STACK_ELEMENT_CAUSE_HEADER, "", "", 0);
+    newTrace[indexCount] = new StackTraceElement(STACK_ELEMENT_TRACE_HEADER, "", "", 0);
     if (originalTrace.length != 0) {
       System.arraycopy(
           originalTrace, srcPos, newTrace, syntheticLength, originalTrace.length - srcPos);
@@ -281,7 +339,12 @@ public final class RxDogTag {
   }
 
   private static boolean containsAnyPackages(String input) {
-    for (String packageName : IGNORED_PACKAGES) {
+    Set<String> ignorablePackages = RxDogTag.ignorablePackages;
+    if (ignorablePackages == null) {
+      // Not actually possible, but here to be safe
+      return false;
+    }
+    for (String packageName : ignorablePackages) {
       if (input.startsWith(packageName)) {
         return true;
       }

@@ -21,9 +21,6 @@ plugins {
 dependencies {
   api deps.rx.java
 
-  // Eventually this should be pulled out to a separate API
-  implementation deps.rx.autodispose
-
   signature deps.build.animalSniffer
   testCompile deps.test.junit
   testCompile deps.test.truth

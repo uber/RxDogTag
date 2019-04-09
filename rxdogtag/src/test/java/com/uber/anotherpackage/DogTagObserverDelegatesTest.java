@@ -125,7 +125,7 @@ public class DogTagObserverDelegatesTest implements DogTagTest {
 
   @After
   public void tearDown() {
-    RxJavaPlugins.reset();
+    RxDogTag.reset();
   }
 
   @Test
