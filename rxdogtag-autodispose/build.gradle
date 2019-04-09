@@ -19,11 +19,14 @@ plugins {
 }
 
 dependencies {
-  api deps.rx.java
+  api project(':rxdogtag')
+
+  implementation deps.rx.autodispose
 
   signature deps.build.animalSniffer
   testCompile deps.test.junit
   testCompile deps.test.truth
+  testCompile project(':rxdogtag').sourceSets.test.output
 }
 
 apply plugin: 'com.vanniktech.maven.publish'

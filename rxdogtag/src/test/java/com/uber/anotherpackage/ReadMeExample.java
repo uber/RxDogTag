@@ -17,7 +17,6 @@ package com.uber.anotherpackage;
 
 import com.uber.rxdogtag.RxDogTag;
 import io.reactivex.Observable;
-import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -37,7 +36,7 @@ public class ReadMeExample {
 
   @After
   public void tearDown() {
-    RxJavaPlugins.reset();
+    RxDogTag.reset();
   }
 
   @Test

@@ -17,15 +17,24 @@ package com.uber.anotherpackage;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.uber.anotherpackage.DogTagTestUtil.getPreviousLineNumber;
+import static com.uber.autodispose.AutoDispose.autoDisposable;
 
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.CompletableSubscribeProxy;
+import com.uber.autodispose.FlowableSubscribeProxy;
+import com.uber.autodispose.MaybeSubscribeProxy;
+import com.uber.autodispose.ObservableSubscribeProxy;
+import com.uber.autodispose.ScopeProvider;
+import com.uber.autodispose.SingleSubscribeProxy;
 import com.uber.rxdogtag.RxDogTag;
+import com.uber.rxdogtag.autodispose.AutoDisposeObserverHandler;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
+import java.util.Collections;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,13 +46,13 @@ import org.junit.Test;
  * immediately after subscribe (on the next line). 2. it must not be in the com.uber.rxdogtag
  * package because that is filtered out in stacktrace inspection.
  */
-public class DogTagObserverTest implements DogTagTest {
+public class AutoDisposeObserverHandlerTest implements DogTagTest {
 
   @Rule public RxErrorsRule errorsRule = new RxErrorsRule();
 
   @Before
   public void setUp() {
-    RxDogTag.install();
+    RxDogTag.install(Collections.singletonList(AutoDisposeObserverHandler.INSTANCE));
   }
 
   @After
@@ -52,54 +61,41 @@ public class DogTagObserverTest implements DogTagTest {
   }
 
   @Test
-  public void testObservable() {
+  public void testObservable_autodispose() {
     Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(subscribeError(Observable.error(original)), original);
-  }
-
-  @Test
-  public void testFlowable() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(subscribeError(Flowable.error(original)), original);
-  }
-
-  @Test
-  public void testSingle() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(subscribeError(Single.error(original)), original);
-  }
-
-  @Test
-  public void testMaybe() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(subscribeError(Maybe.error(original)), original);
-  }
-
-  @Test
-  public void testCompletable() {
-    Exception original = new RuntimeException("Blah");
-    assertRewrittenStacktrace(subscribeError(Completable.error(original)), original);
-  }
-
-  @Test
-  public void noConstructor_generatesStringFromStackElement_anonymous() {
-    Exception originalError = new IllegalStateException("illegal state exception");
     assertRewrittenStacktrace(
-        throwError(new EmptyObserver<Integer>() {}, originalError), originalError);
+        subscribeError(Observable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
+        original);
   }
 
   @Test
-  public void noConstructor_generatesStringFromStackElement_instance() {
-    Exception originalError = new IllegalStateException("illegal state exception");
-    Observer<Integer> o = new EmptyObserver<Integer>() {};
-    assertRewrittenStacktrace(throwError(o, originalError), originalError);
+  public void testFlowable_autodispose() {
+    Exception original = new RuntimeException("Blah");
+    assertRewrittenStacktrace(
+        subscribeError(Flowable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
+        original);
   }
 
   @Test
-  public void noConstructor_generatesStringFromStackElement_subclass() {
-    Exception originalError = new IllegalStateException("illegal state exception");
-    Another o = new Another();
-    assertRewrittenStacktrace(throwError(o, originalError), originalError);
+  public void testSingle_autodispose() {
+    Exception original = new RuntimeException("Blah");
+    assertRewrittenStacktrace(
+        subscribeError(Single.error(original).as(autoDisposable(ScopeProvider.UNBOUND))), original);
+  }
+
+  @Test
+  public void testMaybe_autodispose() {
+    Exception original = new RuntimeException("Blah");
+    assertRewrittenStacktrace(
+        subscribeError(Maybe.error(original).as(autoDisposable(ScopeProvider.UNBOUND))), original);
+  }
+
+  @Test
+  public void testCompletable_autodispose() {
+    Exception original = new RuntimeException("Blah");
+    assertRewrittenStacktrace(
+        subscribeError(Completable.error(original).as(autoDisposable(ScopeProvider.UNBOUND))),
+        original);
   }
 
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
@@ -118,39 +114,62 @@ public class DogTagObserverTest implements DogTagTest {
         .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
   }
 
-  private static int subscribeError(Completable completable) {
+  /**
+   * This is a weird but necessary tests. We have proguard configurations that depend on these
+   * packages to have names kept in order for DogTagObservers to work their magic correctly.
+   *
+   * <p>In the event that this test fails, please update the proguard configurations with the new
+   * package names. You will see something like this in our global proguard config.
+   *
+   * <pre><code>
+   *   -keepnames class io.reactivex.**
+   * </code></pre>
+   *
+   * <p>This should be updated with the new package name.
+   */
+  @Test
+  public void verifyPackages() {
+    checkPackage("AutoDispose", "com.uber.autodispose", AutoDispose.class.getPackage().getName());
+  }
+
+  private void checkPackage(String name, String expectedPackage, String actualPackage) {
+    if (!actualPackage.equals(expectedPackage)) {
+      throw new RuntimeException(
+          "The package name for "
+              + name
+              + " has changed. Please "
+              + "update this test and the proguard -keepnames configuration to properly keep the new "
+              + "package It was \n\"-keepnames class "
+              + expectedPackage
+              + ".**\"\nbut should now "
+              + "be\n\"-keepnames class "
+              + actualPackage
+              + ".**\"");
+    }
+  }
+
+  private static int subscribeError(CompletableSubscribeProxy completable) {
     completable.subscribe();
     return getPreviousLineNumber();
   }
 
-  private static <T> int subscribeError(Observable<T> observable) {
+  private static <T> int subscribeError(ObservableSubscribeProxy<T> observable) {
     observable.subscribe();
     return getPreviousLineNumber();
   }
 
-  private static <T> int subscribeError(Maybe<T> maybe) {
+  private static <T> int subscribeError(MaybeSubscribeProxy<T> maybe) {
     maybe.subscribe();
     return getPreviousLineNumber();
   }
 
-  private static <T> int subscribeError(Single<T> single) {
+  private static <T> int subscribeError(SingleSubscribeProxy<T> single) {
     single.subscribe();
     return getPreviousLineNumber();
   }
 
-  private static <T> int subscribeError(Flowable<T> flowable) {
+  private static <T> int subscribeError(FlowableSubscribeProxy<T> flowable) {
     flowable.subscribe();
     return getPreviousLineNumber();
-  }
-
-  private static <T> int throwError(Observer<T> observer, Exception error) {
-    Observable.<T>defer(() -> Observable.error(error)).subscribe(observer);
-    return getPreviousLineNumber();
-  }
-
-  private static class Another extends EmptyObserver<Object> {
-
-    @Override
-    public void onNext(Object unit) {}
   }
 }

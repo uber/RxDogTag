@@ -42,6 +42,6 @@ interface DogTagTest {
         .isEqualTo(getClass().getSimpleName() + ".java");
     assertThat(cause.getStackTrace()[2].getLineNumber()).isEqualTo(expectedLineNumber);
     assertThat(cause.getStackTrace()[3].getClassName())
-        .isEqualTo(RxDogTag.STACK_ELEMENT_CAUSE_HEADER);
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
   }
 }
