@@ -122,7 +122,7 @@ implementation("com.uber.rxdogtag:rxdogtag-autodispose:x.y.z")
 
 ## Development
 
-Javadocs and KDocs for the most recent release can be found here: https://uber.github.io/RxDogTag/1.x/
+Javadocs and KDocs for the most recent release can be found here: https://uber.github.io/RxDogTag/0.x/
 
 Snapshots of the development version are available in [Sonatype's snapshots repository][snapshots].
 
