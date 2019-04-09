@@ -26,7 +26,7 @@ Consider the following classic RxJava error:
 Observable.range(0, 10)
     .subscribeOn(Schedulers.io())
     .<Integer>map(i -> null)
-    .subscribe(i -> latch.countDown());
+    .subscribe();
 ```
 
 This is a fairly common case in RxJava concurrency. Without tagging, this yields the following trace:
