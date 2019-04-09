@@ -40,3 +40,4 @@ pluginManagement {
 
 rootProject.name = 'rxdogtag-root'
 include ':rxdogtag'
+include ':rxdogtag-autodispose'
