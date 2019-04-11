@@ -120,6 +120,28 @@ public class DogTagObserverTest implements DogTagTest {
         });
   }
 
+  @Test
+  public void nullOriginErrorMessage_replacedWithEmptyString() {
+    Exception originalError = new IllegalStateException();
+    int expectedLineNumber = subscribeError(Observable.error(originalError));
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    // Original error message was null. Now replaced by empty string
+    assertThat(e).hasMessageThat().isNotEqualTo(originalError.getMessage());
+    assertThat(e).hasMessageThat().isEqualTo("");
+
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause.getStackTrace()[0].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[1].getFileName())
+        .isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[1].getLineNumber()).isEqualTo(expectedLineNumber);
+    assertThat(cause.getStackTrace()[2].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
+  }
+
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
   private void assertRewrittenStacktrace(int expectedLineNumber, Exception original) {
     Throwable e = errorsRule.take();
