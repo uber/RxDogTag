@@ -127,9 +127,8 @@ public class DogTagObserverTest implements DogTagTest {
 
     Throwable e = errorsRule.take();
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
-    //
+    // Original error message was null. Now replaced by empty string
     assertThat(e).hasMessageThat().isNotEqualTo(originalError.getMessage());
-    // Null message is replaced with empty string
     assertThat(e).hasMessageThat().isEqualTo("");
 
     assertThat(e.getStackTrace()).isEmpty();
