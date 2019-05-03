@@ -43,30 +43,33 @@ import org.reactivestreams.Subscription;
 final class DogTagSubscriber<T> implements FlowableSubscriber<T>, LambdaConsumerIntrospection {
 
   private final Throwable t = new Throwable();
+  private final RxDogTag.Configuration config;
   private final Subscriber<T> delegate;
 
-  DogTagSubscriber(Subscriber<T> delegate) {
+  DogTagSubscriber(RxDogTag.Configuration config, Subscriber<T> delegate) {
+    this.config = config;
     this.delegate = delegate;
   }
 
   @Override
   public void onSubscribe(Subscription s) {
-    guardedDelegateCall(e -> reportError(t, e, "onSubscribe"), () -> delegate.onSubscribe(s));
+    guardedDelegateCall(
+        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(s));
   }
 
   @Override
   public void onNext(T t) {
-    guardedDelegateCall(e -> reportError(this.t, e, "onNext"), () -> delegate.onNext(t));
+    guardedDelegateCall(e -> reportError(config, this.t, e, "onNext"), () -> delegate.onNext(t));
   }
 
   @Override
   public void onError(Throwable e) {
-    reportError(t, e, null);
+    reportError(config, t, e, null);
   }
 
   @Override
   public void onComplete() {
-    guardedDelegateCall(e -> reportError(t, e, "onComplete"), delegate::onComplete);
+    guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
   }
 
   @Override
