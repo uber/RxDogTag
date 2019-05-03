@@ -34,7 +34,6 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
-import java.util.Collections;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -52,7 +51,7 @@ public class AutoDisposeObserverHandlerTest implements DogTagTest {
 
   @Before
   public void setUp() {
-    RxDogTag.install(Collections.singletonList(AutoDisposeObserverHandler.INSTANCE));
+    AutoDisposeObserverHandler.configureWith(RxDogTag.builder()).install();
   }
 
   @After
@@ -119,10 +118,10 @@ public class AutoDisposeObserverHandlerTest implements DogTagTest {
    * packages to have names kept in order for DogTagObservers to work their magic correctly.
    *
    * <p>In the event that this test fails, please update the proguard configurations with the new
-   * package names. You will see something like this in our global proguard config.
+   * package names. You will see something like this in the bundled proguard config.
    *
    * <pre><code>
-   *   -keepnames class io.reactivex.**
+   *   -keepnames class com.uber.autodispose.**
    * </code></pre>
    *
    * <p>This should be updated with the new package name.

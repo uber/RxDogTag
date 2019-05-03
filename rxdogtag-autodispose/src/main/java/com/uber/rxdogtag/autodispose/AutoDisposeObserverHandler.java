@@ -32,9 +32,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import org.reactivestreams.Subscriber;
 
@@ -42,12 +40,22 @@ import org.reactivestreams.Subscriber;
  * A {@link ObserverHandler} that supports handling AutoDispose's decorating observers to retrieve
  * their underlying delegate observers.
  *
- * <p>Usage: Add {@link #INSTANCE} to the list of {@link ObserverHandler SubscribeHandlers} in
- * {@link RxDogTag#install(List)}.
+ * <p>Usage: Configure with {@link #configureWith(RxDogTag.Builder)}.
  */
 public class AutoDisposeObserverHandler implements ObserverHandler {
 
-  public static final AutoDisposeObserverHandler INSTANCE = new AutoDisposeObserverHandler();
+  /**
+   * Configures an {@link RxDogTag.Builder} with AutoDispose observer handler and ignored packages
+   * support.
+   *
+   * @param builder the builder to configure.
+   * @return the same builder for chaining convenience.
+   */
+  public static RxDogTag.Builder configureWith(RxDogTag.Builder builder) {
+    return builder.addObserverHandlers(INSTANCE).addIgnoredPackages(IGNORE_PACKAGES);
+  }
+
+  private static final AutoDisposeObserverHandler INSTANCE = new AutoDisposeObserverHandler();
 
   private static final Set<String> IGNORE_PACKAGES =
       Collections.singleton(
@@ -55,11 +63,6 @@ public class AutoDisposeObserverHandler implements ObserverHandler {
           AutoDispose.class.getPackage().getName());
 
   private AutoDisposeObserverHandler() {}
-
-  @Override
-  public Collection<String> ignorablePackagePrefixes() {
-    return IGNORE_PACKAGES;
-  }
 
   @Override
   public Subscriber handle(Flowable flowable, Subscriber subscriber) {
@@ -99,5 +102,10 @@ public class AutoDisposeObserverHandler implements ObserverHandler {
       return ((AutoDisposingCompletableObserver) observer).delegateObserver();
     }
     return observer;
+  }
+
+  @Override
+  public String toString() {
+    return "AutoDisposeObserverHandler";
   }
 }
