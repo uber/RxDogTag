@@ -25,8 +25,6 @@ import io.reactivex.Observer;
 import io.reactivex.Single;
 import io.reactivex.SingleObserver;
 import io.reactivex.observers.LambdaConsumerIntrospection;
-import java.util.Collection;
-import java.util.Collections;
 import org.reactivestreams.Subscriber;
 
 /**
@@ -44,15 +42,6 @@ import org.reactivestreams.Subscriber;
  * if there is custom error handling.
  */
 public interface ObserverHandler {
-
-  /**
-   * @return a list of ignorable packages. Useful if decorating observers that you know can be
-   *     safely ignored when deducing a target subscribe() point. It's recommended that classes in
-   *     these packages have their names kept in Proguard/R8 obfuscation as well.
-   */
-  default Collection<String> ignorablePackagePrefixes() {
-    return Collections.emptyList();
-  }
 
   /**
    * Callbacks to handle {@link Flowable} and {@link Subscriber}.
