@@ -50,7 +50,7 @@ public final class ObserverHandlerDefaultsTest {
    * packages to have names kept in order for DogTagObservers to work their magic correctly.
    *
    * <p>In the event that this test fails, please update the proguard configurations with the new
-   * package names. You will see something like this in our global proguard config.
+   * package names. You will see something like this the bundled proguard config.
    *
    * <pre><code>
    *   -keepnames class io.reactivex.**

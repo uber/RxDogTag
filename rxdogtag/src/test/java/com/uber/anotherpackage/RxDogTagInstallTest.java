@@ -26,8 +26,6 @@ import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.LambdaConsumerIntrospection;
 import io.reactivex.plugins.RxJavaPlugins;
-import java.util.Collection;
-import java.util.Collections;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
@@ -96,7 +94,7 @@ public final class RxDogTagInstallTest implements DogTagTest {
           }
         };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addObserverHandlers(handler).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected)
         .subscribe(
@@ -132,7 +130,7 @@ public final class RxDogTagInstallTest implements DogTagTest {
           }
         };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addObserverHandlers(handler).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected).subscribe();
 
@@ -147,15 +145,8 @@ public final class RxDogTagInstallTest implements DogTagTest {
   @Test
   public void customPackages() {
     String thisPackage = getClass().getPackage().getName();
-    ObserverHandler handler =
-        new ObserverHandler() {
-          @Override
-          public Collection<String> ignorablePackagePrefixes() {
-            return Collections.singleton(thisPackage);
-          }
-        };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addIgnoredPackages(thisPackage).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected).subscribe();
 
