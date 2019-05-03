@@ -263,9 +263,16 @@ public final class RxDogTag {
       cause = originalCause;
     }
     StackTraceElement[] originalTrace = cause.getStackTrace();
+    boolean disableAnnotations = config.disableAnnotations;
+    boolean inferredSubscribePointFirst = config.inferredSubscribePointFirst;
+    boolean inferredSubscribePointInMessage = config.inferredSubscribePointInMessage;
     int syntheticLength = 3;
     if (callbackType != null) {
       syntheticLength++;
+    }
+    if (disableAnnotations) {
+
+
     }
     // If a synchronous subscription races through the lifecycle, we could get "duplicates"
     // here. Check that here and crop the chain to avoid
