@@ -15,6 +15,8 @@
  */
 package com.uber.rxdogtag;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableSet;
 
 import io.reactivex.CompletableObserver;
@@ -29,7 +31,6 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.observers.LambdaConsumerIntrospection;
 import io.reactivex.plugins.RxJavaPlugins;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -43,8 +44,8 @@ import org.reactivestreams.Subscriber;
  * was called and surface that in the eventual thrown {@link OnErrorNotImplementedException}
  * message.
  *
- * <p>To use, simply call {@link #install}. Note that this uses {@link RxJavaPlugins}'s {@code
- * onSubscribe} hooks.
+ * <p>To use, simply call {@link #install} or use {@link #builder()} to install with configuration.
+ * Note that this uses {@link RxJavaPlugins}'s {@code onSubscribe} hooks.
  */
 public final class RxDogTag {
 
@@ -52,26 +53,9 @@ public final class RxDogTag {
   public static final String STACK_ELEMENT_SOURCE_DELEGATE = "[[ Originating callback: %s ]]";
   public static final String STACK_ELEMENT_TRACE_HEADER = "[[ Original trace ]]";
 
-  /** Default ignored packages when sourcing originating subscribe points. */
-  private static final Collection<String> DEFAULT_IGNORED_PACKAGES =
-      Arrays.asList(
-          // "io.reactivex"
-          Observable.class.getPackage().getName(),
-          // "com.uber.rxdogtag"
-          DogTagObserver.class.getPackage().getName());
-
   private RxDogTag() {
     throw new InstantiationError();
   }
-
-  private static final ObserverHandler DEFAULT_HANDLER =
-      new ObserverHandler() {
-        @Override
-        public Collection<String> ignorablePackagePrefixes() {
-          return DEFAULT_IGNORED_PACKAGES;
-        }
-      };
-  @Nullable private static volatile Set<String> ignorablePackages = null;
 
   /**
    * Resets RxDogTag by resetting custom onSubscribe hooks via {@link RxJavaPlugins}. Note that
@@ -88,7 +72,6 @@ public final class RxDogTag {
    * </ul>
    */
   public static synchronized void reset() {
-    ignorablePackages = null;
     RxJavaPlugins.setOnFlowableSubscribe(null);
     RxJavaPlugins.setOnObservableSubscribe(null);
     RxJavaPlugins.setOnMaybeSubscribe(null);
@@ -96,32 +79,13 @@ public final class RxDogTag {
     RxJavaPlugins.setOnCompletableSubscribe(null);
   }
 
-  /**
-   * Initializes RxDogTag by installing custom onSubscribe hooks via {@link RxJavaPlugins}. Note
-   * that calling this calls the following methods:
-   *
-   * <p>
-   *
-   * <ul>
-   *   <li>{@link RxJavaPlugins#setOnFlowableSubscribe(BiFunction)}
-   *   <li>{@link RxJavaPlugins#setOnObservableSubscribe(BiFunction)}
-   *   <li>{@link RxJavaPlugins#setOnMaybeSubscribe(BiFunction)}
-   *   <li>{@link RxJavaPlugins#setOnSingleSubscribe(BiFunction)}
-   *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
-   * </ul>
-   *
-   * @param handlers a list of {@link ObserverHandler} instances to potentially unpack or decorate.
-   *     Note that order matters here, and the first one to return a {@link
-   *     LambdaConsumerIntrospection} with no custom error handling will be used.
-   * @see #extractStackElementTag(Throwable)
-   */
-  public static synchronized void install(ObserverHandler... handlers) {
-    install(Arrays.asList(handlers));
+  /** @return a new {@link Builder} to configure and install RxDogTag with. */
+  public static Builder builder() {
+    return new Builder();
   }
 
   /**
-   * Initializes RxDogTag by installing custom onSubscribe hooks via {@link RxJavaPlugins}. Note
-   * that calling this calls the following methods:
+   * Initializes RxDogTag with default {@link Builder} settings via {@link Builder#install()}.
    *
    * <p>
    *
@@ -133,27 +97,21 @@ public final class RxDogTag {
    *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
    * </ul>
    *
-   * @param handlers a list of {@link ObserverHandler} instances to potentially unpack or decorate.
-   *     Note that order matters here, and the first one to return a {@link
-   *     LambdaConsumerIntrospection} with no custom error handling will be used.
-   * @see #extractStackElementTag(Throwable)
+   * @see #extractStackElementTag(Throwable, Set)
    */
-  public static synchronized void install(List<ObserverHandler> handlers) {
-    final List<ObserverHandler> finalHandlers = new ArrayList<>(handlers); // Defensive copy
-    finalHandlers.add(DEFAULT_HANDLER);
-    Set<String> packagesToIgnore = new LinkedHashSet<>();
-    for (ObserverHandler handler : finalHandlers) {
-      packagesToIgnore.addAll(handler.ignorablePackagePrefixes());
-    }
-    RxDogTag.ignorablePackages = unmodifiableSet(packagesToIgnore);
+  public static void install() {
+    new Builder().install();
+  }
+
+  private static synchronized void installWithBuilder(final Configuration config) {
     RxJavaPlugins.setOnObservableSubscribe(
         (observable, originalObserver) -> {
-          for (ObserverHandler handler : finalHandlers) {
+          for (ObserverHandler handler : config.observerHandlers) {
             Observer observerToCheck = handler.handle(observable, originalObserver);
             if (observerToCheck instanceof LambdaConsumerIntrospection) {
               if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
                 //noinspection unchecked
-                return new DogTagObserver(originalObserver);
+                return new DogTagObserver(config, originalObserver);
               }
             }
           }
@@ -161,12 +119,12 @@ public final class RxDogTag {
         });
     RxJavaPlugins.setOnFlowableSubscribe(
         (flowable, originalSubscriber) -> {
-          for (ObserverHandler handler : finalHandlers) {
+          for (ObserverHandler handler : config.observerHandlers) {
             Subscriber subscriberToCheck = handler.handle(flowable, originalSubscriber);
             if (subscriberToCheck instanceof LambdaConsumerIntrospection) {
               if (!((LambdaConsumerIntrospection) subscriberToCheck).hasCustomOnError()) {
                 //noinspection unchecked
-                return new DogTagSubscriber(originalSubscriber);
+                return new DogTagSubscriber(config, originalSubscriber);
               }
             }
           }
@@ -174,12 +132,12 @@ public final class RxDogTag {
         });
     RxJavaPlugins.setOnSingleSubscribe(
         (single, originalObserver) -> {
-          for (ObserverHandler handler : finalHandlers) {
+          for (ObserverHandler handler : config.observerHandlers) {
             SingleObserver observerToCheck = handler.handle(single, originalObserver);
             if (observerToCheck instanceof LambdaConsumerIntrospection) {
               if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
                 //noinspection unchecked
-                return new DogTagSingleObserver(originalObserver);
+                return new DogTagSingleObserver(config, originalObserver);
               }
             }
           }
@@ -187,12 +145,12 @@ public final class RxDogTag {
         });
     RxJavaPlugins.setOnMaybeSubscribe(
         (maybe, originalObserver) -> {
-          for (ObserverHandler handler : finalHandlers) {
+          for (ObserverHandler handler : config.observerHandlers) {
             MaybeObserver observerToCheck = handler.handle(maybe, originalObserver);
             if (observerToCheck instanceof LambdaConsumerIntrospection) {
               if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
                 //noinspection unchecked
-                return new DogTagMaybeObserver(originalObserver);
+                return new DogTagMaybeObserver(config, originalObserver);
               }
             }
           }
@@ -200,11 +158,11 @@ public final class RxDogTag {
         });
     RxJavaPlugins.setOnCompletableSubscribe(
         (completable, originalObserver) -> {
-          for (ObserverHandler handler : finalHandlers) {
+          for (ObserverHandler handler : config.observerHandlers) {
             CompletableObserver observerToCheck = handler.handle(completable, originalObserver);
             if (observerToCheck instanceof LambdaConsumerIntrospection) {
               if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                return new DogTagCompletableObserver(originalObserver);
+                return new DogTagCompletableObserver(config, originalObserver);
               }
             }
           }
@@ -218,12 +176,13 @@ public final class RxDogTag {
    * @param throwable the throwable
    * @return the tag to use.
    */
-  private static StackTraceElement extractStackElementTag(Throwable throwable) {
+  private static StackTraceElement extractStackElementTag(
+      Throwable throwable, Set<String> ignorablePackages) {
     // DO NOT switch this to Thread.getCurrentThread().getStackTrace(). The test will pass
     // because Robolectric runs them on the JVM but on Android the elements are different.
     StackTraceElement[] stackTrace = throwable.getStackTrace();
     for (StackTraceElement element : stackTrace) {
-      if (containsAnyPackages(element.getClassName())) {
+      if (containsAnyPackages(element.getClassName(), ignorablePackages)) {
         continue;
       }
       return element;
@@ -284,8 +243,11 @@ public final class RxDogTag {
    * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
    */
   static void reportError(
-      Throwable stackSource, Throwable originalCause, @Nullable String callbackType) {
-    StackTraceElement s = RxDogTag.extractStackElementTag(stackSource);
+      Configuration config,
+      Throwable stackSource,
+      Throwable originalCause,
+      @Nullable String callbackType) {
+    StackTraceElement s = RxDogTag.extractStackElementTag(stackSource, config.ignoredPackages);
     OnErrorNotImplementedException error;
     Throwable cause;
     if (originalCause instanceof OnErrorNotImplementedException) {
@@ -338,12 +300,7 @@ public final class RxDogTag {
     RxJavaPlugins.onError(error);
   }
 
-  private static boolean containsAnyPackages(String input) {
-    Set<String> ignorablePackages = RxDogTag.ignorablePackages;
-    if (ignorablePackages == null) {
-      // Not actually possible, but here to be safe
-      return false;
-    }
+  private static boolean containsAnyPackages(String input, Set<String> ignorablePackages) {
     for (String packageName : ignorablePackages) {
       if (input.startsWith(packageName)) {
         return true;
@@ -365,12 +322,122 @@ public final class RxDogTag {
     return -1;
   }
 
+  public static final class Builder {
+    boolean inferredSubscribePointFirst = false;
+    boolean inferredSubscribePointInMessage = false;
+    boolean disableAnnotations = false;
+    List<ObserverHandler> observerHandlers = new ArrayList<>();
+    Set<String> ignoredPackages = new LinkedHashSet<>();
+
+    Builder() {}
+
+    /**
+     * If enabled, the inferred subscribe point will be listed as the first element in the
+     * stacktrace before any annotations. This can be better for grouping with some crash
+     * processors. If annotations are enabled ({@link #disableAnnotations() ref}), they will be
+     * modified to indicate the first entry is the inferred subscribe point.
+     *
+     * @return this builder for fluent chaining.
+     */
+    public Builder inferredSubscribePointFirst() {
+      inferredSubscribePointFirst = true;
+      return this;
+    }
+
+    /**
+     * If enabled, will move the inferred subscribe point to be appended to the exception message
+     * instead of embedded within the stacktrace.
+     *
+     * <p><em>Note:</em> Enabling this implicitly disables annotations as well. See {@link
+     * #disableAnnotations()}.
+     *
+     * @return this builder for fluent chaining.
+     */
+    public Builder inferredSubscribePointInMessage() {
+      inferredSubscribePointInMessage = true;
+      return disableAnnotations();
+    }
+
+    /**
+     * Disables stacktrace annotations. No headers like {@link #STACK_ELEMENT_SOURCE_HEADER} will be
+     * present in the stack of this is disabled.
+     *
+     * @return this builder for fluent chaining.
+     */
+    public Builder disableAnnotations() {
+      disableAnnotations = true;
+      return this;
+    }
+
+    /**
+     * @param handlers any number of {@link ObserverHandler} instances to potentially unpack or
+     *     decorate observers. Note that order matters here, and the first one to return a {@link
+     *     LambdaConsumerIntrospection} with no custom error handling will be used.
+     * @return this builder for fluent chaining.
+     */
+    public Builder addObserverHandlers(ObserverHandler... handlers) {
+      return addObserverHandlers(asList(handlers));
+    }
+
+    /**
+     * @param handlers a list of {@link ObserverHandler} instances to potentially unpack or decorate
+     *     observers. Note that order matters here, and the first one to return a {@link
+     *     LambdaConsumerIntrospection} with no custom error handling will be used.
+     * @return this builder for fluent chaining.
+     */
+    public Builder addObserverHandlers(Collection<ObserverHandler> handlers) {
+      observerHandlers.addAll(handlers);
+      return this;
+    }
+
+    /**
+     * @param packages ignorable packages. Useful if decorating observers that you know can be
+     *     safely ignored when deducing a target subscribe() point. It's recommended that classes in
+     *     these packages have their names kept in Proguard/R8 obfuscation as well.
+     * @return this builder for fluent chaining.
+     */
+    public Builder addIgnoredPackages(String... packages) {
+      return addIgnoredPackages(asList(packages));
+    }
+
+    /**
+     * @param packages ignorable packages. Useful if decorating observers that you know can be
+     *     safely ignored when deducing a target subscribe() point. It's recommended that classes in
+     *     these packages have their names kept in Proguard/R8 obfuscation as well.
+     * @return this builder for fluent chaining.
+     */
+    public Builder addIgnoredPackages(Collection<String> packages) {
+      ignoredPackages.addAll(packages);
+      return this;
+    }
+
+    /**
+     * Initializes RxDogTag by installing custom onSubscribe hooks via {@link RxJavaPlugins}. Note
+     * that calling this calls the following methods:
+     *
+     * <p>
+     *
+     * <ul>
+     *   <li>{@link RxJavaPlugins#setOnFlowableSubscribe(BiFunction)}
+     *   <li>{@link RxJavaPlugins#setOnObservableSubscribe(BiFunction)}
+     *   <li>{@link RxJavaPlugins#setOnMaybeSubscribe(BiFunction)}
+     *   <li>{@link RxJavaPlugins#setOnSingleSubscribe(BiFunction)}
+     *   <li>{@link RxJavaPlugins#setOnCompletableSubscribe(BiFunction)}
+     * </ul>
+     *
+     * @see #extractStackElementTag(Throwable, Set)
+     */
+    public void install() {
+      RxDogTag.installWithBuilder(new Configuration(this));
+    }
+  }
+
   /**
    * A functional interface (callback) that returns true or false for the given input value.
    *
    * @param <T> the first value
    */
-  public interface NonCheckingPredicate<T> {
+  private interface NonCheckingPredicate<T> {
     /**
      * Test the given input value and return a boolean.
      *
@@ -378,6 +445,37 @@ public final class RxDogTag {
      * @return the boolean result
      */
     boolean test(T t);
+  }
+
+  static class Configuration {
+    /** Default ignored packages when sourcing originating subscribe points. */
+    private static final Collection<String> DEFAULT_IGNORED_PACKAGES =
+        asList(
+            // "io.reactivex"
+            Observable.class.getPackage().getName(),
+            // "com.uber.rxdogtag"
+            DogTagObserver.class.getPackage().getName());
+
+    private static final ObserverHandler DEFAULT_HANDLER = new ObserverHandler() {};
+    final boolean inferredSubscribePointFirst;
+    final boolean inferredSubscribePointInMessage;
+    final boolean disableAnnotations;
+    final List<ObserverHandler> observerHandlers;
+    final Set<String> ignoredPackages;
+
+    Configuration(Builder builder) {
+      this.inferredSubscribePointFirst = builder.inferredSubscribePointFirst;
+      this.inferredSubscribePointInMessage = builder.inferredSubscribePointInMessage;
+      this.disableAnnotations = builder.disableAnnotations;
+      final List<ObserverHandler> finalHandlers =
+          new ArrayList<>(builder.observerHandlers); // Defensive copy
+      finalHandlers.add(DEFAULT_HANDLER);
+      final Set<String> finalIgnoredPackages =
+          new LinkedHashSet<>(builder.ignoredPackages); // Defensive copy
+      finalIgnoredPackages.addAll(DEFAULT_IGNORED_PACKAGES);
+      this.observerHandlers = unmodifiableList(finalHandlers);
+      this.ignoredPackages = unmodifiableSet(finalIgnoredPackages);
+    }
   }
 
   /**
