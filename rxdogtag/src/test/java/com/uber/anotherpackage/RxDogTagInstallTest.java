@@ -116,7 +116,8 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
   }
 
   @Test
@@ -139,7 +140,8 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
   }
 
   @Test
@@ -155,7 +157,8 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
 
     // Confirm that we ignored the subscribe line in this test because of the matching package.
     assertThat(cause.getStackTrace()[1].toString().startsWith(thisPackage)).isFalse();

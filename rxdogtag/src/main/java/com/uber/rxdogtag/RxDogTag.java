@@ -15,10 +15,6 @@
  */
 package com.uber.rxdogtag;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableSet;
-
 import io.reactivex.CompletableObserver;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
@@ -38,6 +34,10 @@ import java.util.Locale;
 import java.util.Set;
 import org.reactivestreams.Subscriber;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
 /**
  * RxDogTag is a mechanism to automatically detect RxJava observers with no error handling and wrap
  * them in {@code DogTagObserver}s that attempt to deduce the line number that {@code subscribe()}
@@ -49,9 +49,12 @@ import org.reactivestreams.Subscriber;
  */
 public final class RxDogTag {
 
-  public static final String STACK_ELEMENT_SOURCE_HEADER = "[[ Inferred subscribe point ]]";
+  public static final String STACK_ELEMENT_SOURCE_HEADER_UP =
+      "[[ ↑↑ Inferred subscribe point ↑↑ ]]";
+  public static final String STACK_ELEMENT_SOURCE_HEADER_DOWN =
+      "[[ ↓↓ Inferred subscribe point ↓↓ ]]";
   public static final String STACK_ELEMENT_SOURCE_DELEGATE = "[[ Originating callback: %s ]]";
-  public static final String STACK_ELEMENT_TRACE_HEADER = "[[ Original trace ]]";
+  public static final String STACK_ELEMENT_TRACE_HEADER = "[[ ↓↓ Original trace ↓↓ ]]";
 
   private RxDogTag() {
     throw new InstantiationError();
@@ -258,50 +261,69 @@ public final class RxDogTag {
       if (message == null) {
         message = "";
       }
+      if (config.inferredSubscribePointInMessage) {
+        message += "\nInferred subscribe point: " + s;
+      }
       error = new OnErrorNotImplementedException(message, originalCause);
       error.setStackTrace(new StackTraceElement[0]);
       cause = originalCause;
     }
     StackTraceElement[] originalTrace = cause.getStackTrace();
-    boolean disableAnnotations = config.disableAnnotations;
-    boolean inferredSubscribePointFirst = config.inferredSubscribePointFirst;
-    boolean inferredSubscribePointInMessage = config.inferredSubscribePointInMessage;
     int syntheticLength = 3;
     if (callbackType != null) {
       syntheticLength++;
     }
-    if (disableAnnotations) {
+    StackTraceElement[] newTrace;
+    if (config.disableAnnotations) {
+      if (config.inferredSubscribePointInMessage) {
+        newTrace = originalTrace;
+      } else {
+        newTrace = new StackTraceElement[originalTrace.length + 1];
+        newTrace[0] = s;
+        if (originalTrace.length != 0) {
+          System.arraycopy(originalTrace, 0, newTrace, 1, originalTrace.length);
+        }
+      }
+    } else {
+      // If a synchronous subscription races through the lifecycle, we could get "duplicates"
+      // here. Check that here and crop the chain to avoid
+      // noise.
+      // TODO(zsweers) we could possibly explore parsing the past delegate types for better
+      // visibility
+      int srcPos = 0;
+      int lastCauseIndex =
+          indexOfLast(
+              originalTrace,
+              (StackTraceElement e) -> STACK_ELEMENT_TRACE_HEADER.equals(e.getClassName()));
 
-
-    }
-    // If a synchronous subscription races through the lifecycle, we could get "duplicates"
-    // here. Check that here and crop the chain to avoid
-    // noise.
-    // TODO(zsweers) we could possibly explore parsing the past delegate types for better visibility
-    int srcPos = 0;
-    int lastCauseIndex =
-        indexOfLast(
-            originalTrace,
-            (StackTraceElement e) -> STACK_ELEMENT_TRACE_HEADER.equals(e.getClassName()));
-
-    if (lastCauseIndex != -1) {
-      // We have an older cause, chop it any everything in between
-      srcPos = lastCauseIndex + 1;
-    }
-    StackTraceElement[] newTrace =
-        new StackTraceElement[originalTrace.length + syntheticLength - srcPos];
-    int indexCount = 0;
-    if (callbackType != null) {
-      newTrace[indexCount++] =
-          new StackTraceElement(
-              String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
-    }
-    newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER, "", "", 0);
-    newTrace[indexCount++] = s;
-    newTrace[indexCount] = new StackTraceElement(STACK_ELEMENT_TRACE_HEADER, "", "", 0);
-    if (originalTrace.length != 0) {
-      System.arraycopy(
-          originalTrace, srcPos, newTrace, syntheticLength, originalTrace.length - srcPos);
+      if (lastCauseIndex != -1) {
+        // We have an older cause, chop it any everything in between
+        srcPos = lastCauseIndex + 1;
+      }
+      newTrace = new StackTraceElement[originalTrace.length + syntheticLength - srcPos];
+      int indexCount = 0;
+      if (config.inferredSubscribePointFirst) {
+        newTrace[indexCount++] = s;
+        newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER_UP, "", "", 0);
+        if (callbackType != null) {
+          newTrace[indexCount++] =
+              new StackTraceElement(
+                  String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
+        }
+      } else {
+        if (callbackType != null) {
+          newTrace[indexCount++] =
+              new StackTraceElement(
+                  String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
+        }
+        newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER_DOWN, "", "", 0);
+        newTrace[indexCount++] = s;
+      }
+      newTrace[indexCount] = new StackTraceElement(STACK_ELEMENT_TRACE_HEADER, "", "", 0);
+      if (originalTrace.length != 0) {
+        System.arraycopy(
+            originalTrace, srcPos, newTrace, syntheticLength, originalTrace.length - srcPos);
+      }
     }
     cause.setStackTrace(newTrace);
     RxJavaPlugins.onError(error);
@@ -355,8 +377,14 @@ public final class RxDogTag {
      * If enabled, will move the inferred subscribe point to be appended to the exception message
      * instead of embedded within the stacktrace.
      *
-     * <p><em>Note:</em> Enabling this implicitly disables annotations as well. See {@link
-     * #disableAnnotations()}.
+     * <p><em>Note:</em>
+     *
+     * <ul>
+     *   <li>Enabling this implicitly disables annotations as well. See {@link
+     *       #disableAnnotations()}.
+     *   <li>Enabling this is only applicable for non-{@link OnErrorNotImplementedException}
+     *       exceptions where RxDogTag creates a new exception.
+     * </ul>
      *
      * @return this builder for fluent chaining.
      */
@@ -366,7 +394,7 @@ public final class RxDogTag {
     }
 
     /**
-     * Disables stacktrace annotations. No headers like {@link #STACK_ELEMENT_SOURCE_HEADER} will be
+     * Disables stacktrace annotations. No headers like {@link #STACK_ELEMENT_TRACE_HEADER} will be
      * present in the stack of this is disabled.
      *
      * @return this builder for fluent chaining.
