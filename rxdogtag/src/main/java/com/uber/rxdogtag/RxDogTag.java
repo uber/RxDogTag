@@ -15,6 +15,10 @@
  */
 package com.uber.rxdogtag;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
@@ -33,10 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.reactivestreams.Subscriber;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableSet;
 
 /**
  * RxDogTag is a mechanism to automatically detect RxJava observers with no error handling and wrap

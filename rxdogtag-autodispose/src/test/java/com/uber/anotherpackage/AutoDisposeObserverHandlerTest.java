@@ -15,6 +15,10 @@
  */
 package com.uber.anotherpackage;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.uber.anotherpackage.DogTagTestUtil.getPreviousLineNumber;
+import static com.uber.autodispose.AutoDispose.autoDisposable;
+
 import com.uber.autodispose.AutoDispose;
 import com.uber.autodispose.CompletableSubscribeProxy;
 import com.uber.autodispose.FlowableSubscribeProxy;
@@ -34,10 +38,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
-import static com.google.common.truth.Truth.assertThat;
-import static com.uber.anotherpackage.DogTagTestUtil.getPreviousLineNumber;
-import static com.uber.autodispose.AutoDispose.autoDisposable;
 
 /**
  * NOTE: These tests are a little odd. There are two conditions for them running correctly because
