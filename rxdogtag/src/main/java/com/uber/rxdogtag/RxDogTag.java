@@ -261,9 +261,6 @@ public final class RxDogTag {
       if (message == null) {
         message = "";
       }
-      if (config.inferredSubscribePointInMessage) {
-        message += "\nInferred subscribe point: " + s;
-      }
       error = new OnErrorNotImplementedException(message, originalCause);
       error.setStackTrace(new StackTraceElement[0]);
       cause = originalCause;
@@ -275,14 +272,10 @@ public final class RxDogTag {
     }
     StackTraceElement[] newTrace;
     if (config.disableAnnotations) {
-      if (config.inferredSubscribePointInMessage) {
-        newTrace = originalTrace;
-      } else {
-        newTrace = new StackTraceElement[originalTrace.length + 1];
-        newTrace[0] = s;
-        if (originalTrace.length != 0) {
-          System.arraycopy(originalTrace, 0, newTrace, 1, originalTrace.length);
-        }
+      newTrace = new StackTraceElement[originalTrace.length + 1];
+      newTrace[0] = s;
+      if (originalTrace.length != 0) {
+        System.arraycopy(originalTrace, 0, newTrace, 1, originalTrace.length);
       }
     } else {
       // If a synchronous subscription races through the lifecycle, we could get "duplicates"
@@ -353,7 +346,6 @@ public final class RxDogTag {
 
   public static final class Builder {
     boolean inferredSubscribePointFirst = false;
-    boolean inferredSubscribePointInMessage = false;
     boolean disableAnnotations = false;
     List<ObserverHandler> observerHandlers = new ArrayList<>();
     Set<String> ignoredPackages = new LinkedHashSet<>();
@@ -371,26 +363,6 @@ public final class RxDogTag {
     public Builder inferredSubscribePointFirst() {
       inferredSubscribePointFirst = true;
       return this;
-    }
-
-    /**
-     * If enabled, will move the inferred subscribe point to be appended to the exception message
-     * instead of embedded within the stacktrace.
-     *
-     * <p><em>Note:</em>
-     *
-     * <ul>
-     *   <li>Enabling this implicitly disables annotations as well. See {@link
-     *       #disableAnnotations()}.
-     *   <li>Enabling this is only applicable for non-{@link OnErrorNotImplementedException}
-     *       exceptions where RxDogTag creates a new exception.
-     * </ul>
-     *
-     * @return this builder for fluent chaining.
-     */
-    public Builder inferredSubscribePointInMessage() {
-      inferredSubscribePointInMessage = true;
-      return disableAnnotations();
     }
 
     /**
@@ -493,14 +465,12 @@ public final class RxDogTag {
 
     private static final ObserverHandler DEFAULT_HANDLER = new ObserverHandler() {};
     final boolean inferredSubscribePointFirst;
-    final boolean inferredSubscribePointInMessage;
     final boolean disableAnnotations;
     final List<ObserverHandler> observerHandlers;
     final Set<String> ignoredPackages;
 
     Configuration(Builder builder) {
       this.inferredSubscribePointFirst = builder.inferredSubscribePointFirst;
-      this.inferredSubscribePointInMessage = builder.inferredSubscribePointInMessage;
       this.disableAnnotations = builder.disableAnnotations;
       final List<ObserverHandler> finalHandlers =
           new ArrayList<>(builder.observerHandlers); // Defensive copy
