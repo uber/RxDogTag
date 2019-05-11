@@ -395,7 +395,7 @@ public final class RxDogTag {
 
     /**
      * Disables stacktrace annotations. No headers like {@link #STACK_ELEMENT_TRACE_HEADER} will be
-     * present in the stack of this is disabled.
+     * present in the stack if this is disabled.
      *
      * @return this builder for fluent chaining.
      */
