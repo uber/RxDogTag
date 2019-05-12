@@ -164,6 +164,36 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(cause.getStackTrace()[1].toString().startsWith(thisPackage)).isFalse();
   }
 
+  @Test
+  public void disableAnnotations() {
+    RxDogTag.builder().disableAnnotations().install();
+    Exception expected = new RuntimeException("Exception!");
+    Observable.error(expected).subscribe();
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause).isSameAs(expected);
+    assertThat(cause.getStackTrace()[0].toString())
+        .doesNotContain(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
+  }
+
+  @Test
+  public void inferredSubscribePointFirst() {
+    RxDogTag.builder().inferredSubscribePointFirst().install();
+    Exception expected = new RuntimeException("Exception!");
+    Observable.error(expected).subscribe();
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause).isSameAs(expected);
+    assertThat(cause.getStackTrace()[1].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_UP);
+  }
+
   abstract static class LambdaConsumerObserver<T>
       implements Observer<T>, LambdaConsumerIntrospection {}
 }
