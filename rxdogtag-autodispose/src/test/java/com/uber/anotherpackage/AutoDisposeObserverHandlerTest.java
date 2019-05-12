@@ -27,7 +27,7 @@ import com.uber.autodispose.ObservableSubscribeProxy;
 import com.uber.autodispose.ScopeProvider;
 import com.uber.autodispose.SingleSubscribeProxy;
 import com.uber.rxdogtag.RxDogTag;
-import com.uber.rxdogtag.autodispose.AutoDisposeObserverHandler;
+import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
@@ -45,13 +45,13 @@ import org.junit.Test;
  * immediately after subscribe (on the next line). 2. it must not be in the com.uber.rxdogtag
  * package because that is filtered out in stacktrace inspection.
  */
-public class AutoDisposeObserverHandlerTest implements DogTagTest {
+public final class AutoDisposeObserverHandlerTest implements DogTagTest {
 
   @Rule public RxErrorsRule errorsRule = new RxErrorsRule();
 
   @Before
   public void setUp() {
-    AutoDisposeObserverHandler.configureWith(RxDogTag.builder()).install();
+    RxDogTag.builder().configureWith(AutoDisposeConfigurer::configure).install();
   }
 
   @After

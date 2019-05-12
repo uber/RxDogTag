@@ -419,6 +419,15 @@ public final class RxDogTag {
     }
 
     /**
+     * @param configurer an {@link Configurer} instance to be called.
+     * @return this builder for fluent chaining.
+     */
+    public Builder configureWith(Configurer configurer) {
+      configurer.apply(this);
+      return this;
+    }
+
+    /**
      * Initializes RxDogTag by installing custom onSubscribe hooks via {@link RxJavaPlugins}. Note
      * that calling this calls the following methods:
      *
@@ -437,6 +446,21 @@ public final class RxDogTag {
     public void install() {
       RxDogTag.installWithBuilder(new Configuration(this));
     }
+  }
+
+  /**
+   * Convenience interface to allow custom configurers to hook into a builder to add their own
+   * configurations as needed.
+   *
+   * @see Builder#configureWith(Configurer)
+   */
+  public interface Configurer {
+    /**
+     * Called to configure the given {@code builder} instance as needed.
+     *
+     * @param builder the {@link Builder} to configure.
+     */
+    void apply(Builder builder);
   }
 
   /**
