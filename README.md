@@ -96,12 +96,22 @@ in-house reporter though, we're very open to feedback on how this can be improve
 
 More examples and details can be found in the [wiki](https://github.com/uber/RxDogTag/wiki)
 
-## Custom handlers
+## Configuration
+
+RxDogTag has an alternative `RxDogTag.builder()` API to facilitate added configuration, such as annotation
+control, stacktrace element location, and more.
+
+### Custom handlers
 
 In the event of custom observers that possibly decorate other observer types, this information can
 be passed to RxDogTag via the `ObserverHandler` interface. This interface can be used to unwrap 
 these custom observers to reveal their delegates and their potential behavior. Install these via
-the `RxDogTag.install()` overloads that accept handlers.
+the `RxDogTag.Builder#addObserverHandlers(...)` overloads that accept handlers.
+
+### Ignored packages
+
+RxDogTag needs to ignore certain packages (such as its own or RxJava's) when inspecting stack traces
+to deduce the subscribe point. You can add other custom ones via `RxDogTag.Builder#addIgnoredPackages(...)`.
 
 ### AutoDispose support
 
@@ -111,7 +121,9 @@ interfaces. Support for this is available via separate `rxdogtag-autodispose` ar
 `AutoDisposeObserverHandler` singleton instance.
 
 ```java
-RxDogTag.install(AutoDisposeObserverHandler.INSTANCE)
+RxDogTag.Builder builder = RxDogTag.builder();
+AutoDisposeObserverHandler.configureWith(builder);
+builder.install();
 ```
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag-autodispose.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag-autodispose)

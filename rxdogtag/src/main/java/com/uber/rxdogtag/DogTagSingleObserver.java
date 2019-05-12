@@ -37,25 +37,29 @@ import io.reactivex.observers.LambdaConsumerIntrospection;
 final class DogTagSingleObserver<T> implements SingleObserver<T>, LambdaConsumerIntrospection {
 
   private final Throwable t = new Throwable();
+  private final RxDogTag.Configuration config;
   private final SingleObserver<T> delegate;
 
-  DogTagSingleObserver(SingleObserver<T> delegate) {
+  DogTagSingleObserver(RxDogTag.Configuration config, SingleObserver<T> delegate) {
+    this.config = config;
     this.delegate = delegate;
   }
 
   @Override
   public void onSubscribe(Disposable d) {
-    guardedDelegateCall(e -> reportError(t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    guardedDelegateCall(
+        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
   }
 
   @Override
   public void onSuccess(T t) {
-    guardedDelegateCall(e -> reportError(this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
+    guardedDelegateCall(
+        e -> reportError(config, this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
   }
 
   @Override
   public void onError(Throwable e) {
-    reportError(t, e, null);
+    reportError(config, t, e, null);
   }
 
   @Override

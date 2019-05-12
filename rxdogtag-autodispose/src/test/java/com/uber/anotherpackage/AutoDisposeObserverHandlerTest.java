@@ -27,14 +27,13 @@ import com.uber.autodispose.ObservableSubscribeProxy;
 import com.uber.autodispose.ScopeProvider;
 import com.uber.autodispose.SingleSubscribeProxy;
 import com.uber.rxdogtag.RxDogTag;
-import com.uber.rxdogtag.autodispose.AutoDisposeObserverHandler;
+import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
-import java.util.Collections;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -46,13 +45,13 @@ import org.junit.Test;
  * immediately after subscribe (on the next line). 2. it must not be in the com.uber.rxdogtag
  * package because that is filtered out in stacktrace inspection.
  */
-public class AutoDisposeObserverHandlerTest implements DogTagTest {
+public final class AutoDisposeObserverHandlerTest implements DogTagTest {
 
   @Rule public RxErrorsRule errorsRule = new RxErrorsRule();
 
   @Before
   public void setUp() {
-    RxDogTag.install(Collections.singletonList(AutoDisposeObserverHandler.INSTANCE));
+    RxDogTag.builder().configureWith(AutoDisposeConfigurer::configure).install();
   }
 
   @After
@@ -106,7 +105,7 @@ public class AutoDisposeObserverHandlerTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause.getStackTrace()[0].getClassName())
-        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
     assertThat(cause.getStackTrace()[1].getFileName())
         .isEqualTo(getClass().getSimpleName() + ".java");
     assertThat(cause.getStackTrace()[1].getLineNumber()).isEqualTo(expectedLineNumber);
@@ -119,10 +118,10 @@ public class AutoDisposeObserverHandlerTest implements DogTagTest {
    * packages to have names kept in order for DogTagObservers to work their magic correctly.
    *
    * <p>In the event that this test fails, please update the proguard configurations with the new
-   * package names. You will see something like this in our global proguard config.
+   * package names. You will see something like this in the bundled proguard config.
    *
    * <pre><code>
-   *   -keepnames class io.reactivex.**
+   *   -keepnames class com.uber.autodispose.**
    * </code></pre>
    *
    * <p>This should be updated with the new package name.

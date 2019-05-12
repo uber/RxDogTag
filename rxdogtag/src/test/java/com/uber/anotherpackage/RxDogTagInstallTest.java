@@ -26,8 +26,6 @@ import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.observers.LambdaConsumerIntrospection;
 import io.reactivex.plugins.RxJavaPlugins;
-import java.util.Collection;
-import java.util.Collections;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
@@ -96,7 +94,7 @@ public final class RxDogTagInstallTest implements DogTagTest {
           }
         };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addObserverHandlers(handler).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected)
         .subscribe(
@@ -118,7 +116,8 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
   }
 
   @Test
@@ -132,7 +131,7 @@ public final class RxDogTagInstallTest implements DogTagTest {
           }
         };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addObserverHandlers(handler).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected).subscribe();
 
@@ -141,21 +140,15 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
   }
 
   @Test
   public void customPackages() {
     String thisPackage = getClass().getPackage().getName();
-    ObserverHandler handler =
-        new ObserverHandler() {
-          @Override
-          public Collection<String> ignorablePackagePrefixes() {
-            return Collections.singleton(thisPackage);
-          }
-        };
 
-    RxDogTag.install(handler);
+    RxDogTag.builder().addIgnoredPackages(thisPackage).install();
     Exception expected = new RuntimeException("Exception!");
     Observable.error(expected).subscribe();
 
@@ -164,10 +157,41 @@ public final class RxDogTagInstallTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
     assertThat(cause).isSameAs(expected);
-    assertThat(cause.getStackTrace()[0].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[0].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
 
     // Confirm that we ignored the subscribe line in this test because of the matching package.
     assertThat(cause.getStackTrace()[1].toString().startsWith(thisPackage)).isFalse();
+  }
+
+  @Test
+  public void disableAnnotations() {
+    RxDogTag.builder().disableAnnotations().install();
+    Exception expected = new RuntimeException("Exception!");
+    Observable.error(expected).subscribe();
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause).isSameAs(expected);
+    assertThat(cause.getStackTrace()[0].toString())
+        .doesNotContain(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
+  }
+
+  @Test
+  public void inferredSubscribePointFirst() {
+    RxDogTag.builder().inferredSubscribePointFirst().install();
+    Exception expected = new RuntimeException("Exception!");
+    Observable.error(expected).subscribe();
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause).isSameAs(expected);
+    assertThat(cause.getStackTrace()[1].toString())
+        .contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_UP);
   }
 
   abstract static class LambdaConsumerObserver<T>

@@ -37,7 +37,7 @@ interface DogTagTest {
     assertThat(cause.getStackTrace()[0].getClassName())
         .isEqualTo(String.format(Locale.US, RxDogTag.STACK_ELEMENT_SOURCE_DELEGATE, delegateType));
     assertThat(cause.getStackTrace()[1].getClassName())
-        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER_DOWN);
     assertThat(cause.getStackTrace()[2].getFileName())
         .isEqualTo(getClass().getSimpleName() + ".java");
     assertThat(cause.getStackTrace()[2].getLineNumber()).isEqualTo(expectedLineNumber);

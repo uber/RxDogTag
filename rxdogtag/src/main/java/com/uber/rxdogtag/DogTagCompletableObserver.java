@@ -35,25 +35,28 @@ import io.reactivex.observers.LambdaConsumerIntrospection;
 final class DogTagCompletableObserver implements CompletableObserver, LambdaConsumerIntrospection {
 
   private final Throwable t = new Throwable();
+  private final RxDogTag.Configuration config;
   private final CompletableObserver delegate;
 
-  DogTagCompletableObserver(CompletableObserver delegate) {
+  DogTagCompletableObserver(RxDogTag.Configuration config, CompletableObserver delegate) {
+    this.config = config;
     this.delegate = delegate;
   }
 
   @Override
   public void onSubscribe(Disposable d) {
-    guardedDelegateCall(e -> reportError(t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    guardedDelegateCall(
+        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
   }
 
   @Override
   public void onError(Throwable e) {
-    reportError(t, e, null);
+    reportError(config, t, e, null);
   }
 
   @Override
   public void onComplete() {
-    guardedDelegateCall(e -> reportError(t, e, "onComplete"), delegate::onComplete);
+    guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
   }
 
   @Override
