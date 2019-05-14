@@ -49,10 +49,7 @@ import org.reactivestreams.Subscriber;
  */
 public final class RxDogTag {
 
-  public static final String STACK_ELEMENT_SOURCE_HEADER_UP =
-      "[[ ↑↑ Inferred subscribe point ↑↑ ]]";
-  public static final String STACK_ELEMENT_SOURCE_HEADER_DOWN =
-      "[[ ↓↓ Inferred subscribe point ↓↓ ]]";
+  public static final String STACK_ELEMENT_SOURCE_HEADER = "[[ ↑↑ Inferred subscribe point ↑↑ ]]";
   public static final String STACK_ELEMENT_SOURCE_DELEGATE = "[[ Originating callback: %s ]]";
   public static final String STACK_ELEMENT_TRACE_HEADER = "[[ ↓↓ Original trace ↓↓ ]]";
 
@@ -295,22 +292,12 @@ public final class RxDogTag {
       }
       newTrace = new StackTraceElement[originalTrace.length + syntheticLength - srcPos];
       int indexCount = 0;
-      if (config.inferredSubscribePointFirst) {
-        newTrace[indexCount++] = s;
-        newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER_UP, "", "", 0);
-        if (callbackType != null) {
-          newTrace[indexCount++] =
-              new StackTraceElement(
-                  String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
-        }
-      } else {
-        if (callbackType != null) {
-          newTrace[indexCount++] =
-              new StackTraceElement(
-                  String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
-        }
-        newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER_DOWN, "", "", 0);
-        newTrace[indexCount++] = s;
+      newTrace[indexCount++] = s;
+      newTrace[indexCount++] = new StackTraceElement(STACK_ELEMENT_SOURCE_HEADER, "", "", 0);
+      if (callbackType != null) {
+        newTrace[indexCount++] =
+            new StackTraceElement(
+                String.format(Locale.US, STACK_ELEMENT_SOURCE_DELEGATE, callbackType), "", "", 0);
       }
       newTrace[indexCount] = new StackTraceElement(STACK_ELEMENT_TRACE_HEADER, "", "", 0);
       if (originalTrace.length != 0) {
@@ -345,25 +332,11 @@ public final class RxDogTag {
   }
 
   public static final class Builder {
-    boolean inferredSubscribePointFirst = false;
     boolean disableAnnotations = false;
     List<ObserverHandler> observerHandlers = new ArrayList<>();
     Set<String> ignoredPackages = new LinkedHashSet<>();
 
     Builder() {}
-
-    /**
-     * If enabled, the inferred subscribe point will be listed as the first element in the
-     * stacktrace before any annotations. This can be better for grouping with some crash
-     * processors. If annotations are enabled ({@link #disableAnnotations() ref}), they will be
-     * modified to indicate the first entry is the inferred subscribe point.
-     *
-     * @return this builder for fluent chaining.
-     */
-    public Builder inferredSubscribePointFirst() {
-      inferredSubscribePointFirst = true;
-      return this;
-    }
 
     /**
      * Disables stacktrace annotations. No headers like {@link #STACK_ELEMENT_TRACE_HEADER} will be
@@ -488,13 +461,11 @@ public final class RxDogTag {
             DogTagObserver.class.getPackage().getName());
 
     private static final ObserverHandler DEFAULT_HANDLER = new ObserverHandler() {};
-    final boolean inferredSubscribePointFirst;
     final boolean disableAnnotations;
     final List<ObserverHandler> observerHandlers;
     final Set<String> ignoredPackages;
 
     Configuration(Builder builder) {
-      this.inferredSubscribePointFirst = builder.inferredSubscribePointFirst;
       this.disableAnnotations = builder.disableAnnotations;
       final List<ObserverHandler> finalHandlers =
           new ArrayList<>(builder.observerHandlers); // Defensive copy
