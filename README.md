@@ -121,9 +121,9 @@ interfaces. Support for this is available via separate `rxdogtag-autodispose` ar
 `AutoDisposeObserverHandler` singleton instance.
 
 ```java
-RxDogTag.Builder builder = RxDogTag.builder();
-AutoDisposeObserverHandler.configureWith(builder);
-builder.install();
+RxDogTag.builder()
+    .configureWith(AutoDisposeConfigurer::configure)
+    .install();
 ```
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag-autodispose.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag-autodispose)
