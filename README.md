@@ -16,7 +16,7 @@ implementation("com.uber.rxdogtag:rxdogtag:x.y.z")
 
 Install early in your application lifecycle via `RxDogTag.install()`. This will install the necessary
 hooks in `RxJavaPlugins`. Note that these will replace any existing plugins at the hooks it uses. See 
-the Javadoc for full details of which plugins it uses.
+the [JavaDoc](https://uber.github.io/RxDogTag/0.x/rxdogtag/com/uber/rxdogtag/RxDogTag.html#install--) for full details of which plugins it uses.
 
 ## Example
 
@@ -134,7 +134,7 @@ implementation("com.uber.rxdogtag:rxdogtag-autodispose:x.y.z")
 
 ## Development
 
-Javadocs and KDocs for the most recent release can be found here: https://uber.github.io/RxDogTag/0.x/
+Javadocs for the most recent release can be found here: https://uber.github.io/RxDogTag/0.x/
 
 Snapshots of the development version are available in [Sonatype's snapshots repository][snapshots].
 
