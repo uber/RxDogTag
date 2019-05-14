@@ -16,6 +16,7 @@
 
 plugins {
   id 'ru.vyarus.animalsniffer'
+  id 'me.champeau.gradle.jmh'
 }
 
 dependencies {
@@ -24,6 +25,19 @@ dependencies {
   signature deps.build.animalSniffer
   testCompile deps.test.junit
   testCompile deps.test.truth
+}
+
+// We setup jmh such that you must provide the `-Pjmh` to specify which tests
+// to run. If it has no value then all tests are run, but you can specify
+// tests by providing a value. (e.g., if you want to run "SubscriptionPerf",
+// you can run `./gradlew jmh -Pjmh=SubscriptionPerf`)
+jmh {
+  jmhVersion = deps.versions.jmhLib
+
+  if (project.hasProperty("jmh")) {
+    include = [".*" + project.jmh + ".*"]
+    println("JMH: " + include)
+  }
 }
 
 apply plugin: 'com.vanniktech.maven.publish'

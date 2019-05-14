@@ -19,6 +19,9 @@ pluginManagement {
   resolutionStrategy {
     eachPlugin {
       switch (requested.id.id) {
+        case 'me.champeau.gradle.jmh':
+          useVersion(deps.versions.jmhPlugin)
+          break
         case 'net.ltgt.errorprone':
           useVersion(deps.versions.errorPronePlugin)
           break
