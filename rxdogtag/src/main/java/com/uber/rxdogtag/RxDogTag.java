@@ -248,19 +248,25 @@ public final class RxDogTag {
       Throwable originalCause,
       @Nullable String callbackType) {
     StackTraceElement s = RxDogTag.extractStackElementTag(stackSource, config.ignoredPackages);
+    Throwable varOriginalCause = originalCause;
     OnErrorNotImplementedException error;
     Throwable cause;
-    if (originalCause instanceof OnErrorNotImplementedException) {
-      error = (OnErrorNotImplementedException) originalCause;
+    if (config.repackageOnErrorNotImplementedExceptions
+        && varOriginalCause instanceof OnErrorNotImplementedException) {
+      // Hide the original OENIE because we want to repackage it instead
+      varOriginalCause = varOriginalCause.getCause();
+    }
+    if (varOriginalCause instanceof OnErrorNotImplementedException) {
+      error = (OnErrorNotImplementedException) varOriginalCause;
       cause = error.getCause();
     } else {
-      String message = originalCause.getMessage();
+      String message = varOriginalCause.getMessage();
       if (message == null) {
         message = "";
       }
-      error = new OnErrorNotImplementedException(message, originalCause);
+      error = new OnErrorNotImplementedException(message, varOriginalCause);
       error.setStackTrace(new StackTraceElement[0]);
-      cause = originalCause;
+      cause = varOriginalCause;
     }
     StackTraceElement[] originalTrace = cause.getStackTrace();
     int syntheticLength = 3;
@@ -335,6 +341,7 @@ public final class RxDogTag {
     boolean disableAnnotations = false;
     List<ObserverHandler> observerHandlers = new ArrayList<>();
     Set<String> ignoredPackages = new LinkedHashSet<>();
+    boolean repackageOnErrorNotImplementedExceptions = true;
 
     Builder() {}
 
@@ -392,11 +399,39 @@ public final class RxDogTag {
     }
 
     /**
+     * Can be used to compose this builder with a {@link Configurer} in a way that doesn't break the
+     * builder chain.
+     *
+     * <p>Example:
+     *
+     * <pre><code>
+     *   RxDogTag.builder()
+     *       .configureWith(AutoDisposeConfigurer::configure)
+     *       .install();
+     * </code></pre>
+     *
      * @param configurer an {@link Configurer} instance to be called.
      * @return this builder for fluent chaining.
      */
     public Builder configureWith(Configurer configurer) {
       configurer.apply(this);
+      return this;
+    }
+
+    /**
+     * By default, RxDogTag will repackage {@link OnErrorNotImplementedException
+     * OnErrorNotImplementedExceptions} with its own custom, simplified one with no stacktrace and
+     * the original cause's message copied in. This is effectively the same behavior as any other
+     * type of exception.
+     *
+     * <p>If you don't want this behavior, you can use this configuration to disable that behavior.
+     * This should only be disabled if you throw your own custom {@link
+     * OnErrorNotImplementedException} that you want visible in the stacktrace.
+     *
+     * @return this builder for fluent chaining.
+     */
+    public Builder disableRepackagingOnErrorNotImplementedExceptions() {
+      this.repackageOnErrorNotImplementedExceptions = false;
       return this;
     }
 
@@ -464,6 +499,7 @@ public final class RxDogTag {
     final boolean disableAnnotations;
     final List<ObserverHandler> observerHandlers;
     final Set<String> ignoredPackages;
+    final boolean repackageOnErrorNotImplementedExceptions;
 
     Configuration(Builder builder) {
       this.disableAnnotations = builder.disableAnnotations;
@@ -475,6 +511,8 @@ public final class RxDogTag {
       finalIgnoredPackages.addAll(DEFAULT_IGNORED_PACKAGES);
       this.observerHandlers = unmodifiableList(finalHandlers);
       this.ignoredPackages = unmodifiableSet(finalIgnoredPackages);
+      this.repackageOnErrorNotImplementedExceptions =
+          builder.repackageOnErrorNotImplementedExceptions;
     }
   }
 
