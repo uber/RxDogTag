@@ -19,6 +19,8 @@ def versions = [
     errorProne: '2.3.3',
     errorPronePlugin: '0.7.1',
     gjf: '1.7',
+    jmhLib: '1.21',
+    jmhPlugin: '0.4.8',
     nullawayPlugin: '0.1',
     spotless: '3.21.1'
 ]
