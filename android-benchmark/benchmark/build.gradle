@@ -33,27 +33,18 @@ android {
   }
   sourceSets {
     findByName("androidTest")?.java?.srcDirs("src/androidTest/kotlin")
-  }
-  libraryVariants.all {
-    generateBuildConfigProvider?.configure {
-      enabled = false
-    }
-  }
-  variantFilter { variant ->
-    if (variant.buildType.name == 'debug') {
-      variant.setIgnore(true)
-    }
+    findByName("main")?.java?.srcDirs("src/main/kotlin")
   }
 }
 
 dependencies {
-  androidTestImplementation "androidx.benchmark:benchmark:1.0.0-alpha01"
-  androidTestImplementation deps.test.junit
-  androidTestImplementation "androidx.test:runner:1.1.1"
-  androidTestImplementation "androidx.test:rules:1.1.1"
-  androidTestImplementation "androidx.test.ext:junit:1.1.0"
+  implementation "androidx.benchmark:benchmark:1.0.0-alpha01"
+  implementation "androidx.test:runner:1.1.1"
+  implementation "androidx.test:rules:1.1.1"
+  implementation "androidx.test.ext:junit:1.1.0"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.31"
-  implementation project(":rxdogtag")
   implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+  implementation deps.test.junit
+  implementation project(":rxdogtag")
   androidTestImplementation configurations.getByName("implementation")
 }
