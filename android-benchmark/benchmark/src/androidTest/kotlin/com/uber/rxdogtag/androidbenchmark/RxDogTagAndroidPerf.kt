@@ -30,7 +30,13 @@ import org.junit.Test
 import java.util.concurrent.CountDownLatch
 
 /**
- * Measures the time it takes to both subscribe and consume events.
+ * Measures the time it takes to both subscribe and consume events. Run this like a normal Android
+ * instrumentation test on a device. Note that benchmarks should be run on a real device for more
+ * realistic real-world results. There are further configurations that can be used for the Androidx
+ * Benchmark library used here, full documentation can be found at
+ * https://developer.android.com/studio/profile/benchmark.html.
+ *
+ * Basic command line usage is just to run `./gradlew :android-benchmark:benchmark:connectedCheck`
  */
 @LargeTest
 class RxDogTagAndroidPerf {
