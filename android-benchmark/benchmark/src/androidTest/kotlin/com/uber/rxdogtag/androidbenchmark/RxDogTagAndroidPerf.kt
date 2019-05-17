@@ -146,7 +146,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable0_true() {
+  fun flowable_true_subscribe_simple() {
     RxDogTag.install()
     val flowable = flowableInstance(0)
     benchmarkRule.measureRepeated {
@@ -155,7 +155,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable0_true() {
+  fun observable_true_subscribe_simple() {
     RxDogTag.install()
     val observable = observableInstance(0)
     benchmarkRule.measureRepeated {
@@ -164,7 +164,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable0_false() {
+  fun flowable_false_subscribe_simple() {
     val flowable = flowableInstance(0)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
@@ -172,7 +172,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable0_false() {
+  fun observable_false_subscribe_simple() {
     val observable = observableInstance(0)
     benchmarkRule.measureRepeated {
       observable.subscribe()
@@ -180,12 +180,70 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable0_true_complex() {
+  fun flowable_true_subscribe_complex() {
+    RxDogTag.install()
+    val flowable = flowableInstance(0)
+        .filter { it == 2 }
+        .map { it * 2 }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .ambWith(Flowable.never())
+        .ignoreElements()
+    benchmarkRule.measureRepeated {
+      flowable.subscribe()
+    }
+  }
+
+  @Test
+  fun observable_true_subscribe_complex() {
+    RxDogTag.install()
+    val observable = observableInstance(0)
+        .filter { it == 2 }
+        .map { it * 2 }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .ambWith(Observable.never())
+        .ignoreElements()
+    benchmarkRule.measureRepeated {
+      observable.subscribe()
+    }
+  }
+
+  @Test
+  fun flowable_false_subscribe_complex() {
+    val flowable = flowableInstance(0)
+        .filter { it == 2 }
+        .map { it * 2 }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .ambWith(Flowable.never())
+        .ignoreElements()
+    benchmarkRule.measureRepeated {
+      flowable.subscribe()
+    }
+  }
+
+  @Test
+  fun observable_false_subscribe_complex() {
+    val observable = observableInstance(0)
+        .filter { it == 2 }
+        .map { it * 2 }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .ambWith(Observable.never())
+        .ignoreElements()
+    benchmarkRule.measureRepeated {
+      observable.subscribe()
+    }
+  }
+
+  @Test
+  fun flowable_true_e2e() {
     RxDogTag.install()
     val flowable = flowableInstance(1000)
         .filter { it == 2 }
         .map { it * 2 }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .ambWith(Flowable.never())
         .ignoreElements()
@@ -197,12 +255,12 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable0_true_complex() {
+  fun observable_true_e2e() {
     RxDogTag.install()
     val observable = observableInstance(1000)
         .filter { it == 2 }
         .map { it * 2 }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .ambWith(Observable.never())
         .ignoreElements()
@@ -214,11 +272,11 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable0_false_complex() {
+  fun flowable_false_e2e() {
     val flowable = flowableInstance(1000)
         .filter { it == 2 }
         .map { it * 2 }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .ambWith(Flowable.never())
         .ignoreElements()
@@ -230,11 +288,11 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable0_false_complex() {
+  fun observable_false_e2e() {
     val observable = observableInstance(1000)
         .filter { it == 2 }
         .map { it * 2 }
-        .subscribeOn(Schedulers.io())
+        .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
         .ambWith(Observable.never())
         .ignoreElements()
