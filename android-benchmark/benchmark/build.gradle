@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019 Zac Sweers
+ * Copyright (c) 2019 Uber Technologies, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "androidx.benchmark"
 
 android {
@@ -30,6 +30,9 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+  }
+  sourceSets {
+    findByName("androidTest")?.java?.srcDirs("src/androidTest/kotlin")
   }
   libraryVariants.all {
     generateBuildConfigProvider?.configure {
