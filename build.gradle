@@ -67,7 +67,6 @@ subprojects {
     }
   }
 
-  // TODO: Fix this hack to be more structured.
   if (!project.name.contains("benchmark")) {
     apply plugin: 'java-library'
 
