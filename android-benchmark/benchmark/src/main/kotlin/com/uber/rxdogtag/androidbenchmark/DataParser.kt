@@ -58,10 +58,6 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
   val benchmarkLength = results.maxBy { it.benchmark.length }!!.benchmark.length
   val scoreLength = results.maxBy { it.formattedScore.length }!!.formattedScore.length
 
-//  check(groupedResults.values.flatten().size == results.size) {
-//    "Missing information!"
-//  }
-
   val output = buildString {
     appendln()
     append(type.description)
