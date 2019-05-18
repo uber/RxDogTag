@@ -67,7 +67,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun flowable1000_false() {
-    val flowable = flowableInstance(1000)
+    val flowable = flowableInstance(1_000)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
     }
@@ -75,7 +75,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun observable1000_false() {
-    val observable = observableInstance(1000)
+    val observable = observableInstance(1_000)
     benchmarkRule.measureRepeated {
       observable.subscribe()
     }
@@ -83,7 +83,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun flowable1000000_false() {
-    val flowable = flowableInstance(1000000)
+    val flowable = flowableInstance(1_000_000)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
     }
@@ -91,7 +91,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun observable1000000_false() {
-    val observable = observableInstance(1000000)
+    val observable = observableInstance(1_000_000)
     benchmarkRule.measureRepeated {
       observable.subscribe()
     }
@@ -118,7 +118,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun flowable1000_true() {
     RxDogTag.install()
-    val flowable = flowableInstance(1000)
+    val flowable = flowableInstance(1_000)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
     }
@@ -127,7 +127,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun observable1000_true() {
     RxDogTag.install()
-    val observable = observableInstance(1000)
+    val observable = observableInstance(1_000)
     benchmarkRule.measureRepeated {
       observable.subscribe()
     }
@@ -136,7 +136,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun flowable1000000_true() {
     RxDogTag.install()
-    val flowable = flowableInstance(1000000)
+    val flowable = flowableInstance(1_000_000)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
     }
@@ -145,7 +145,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun observable1000000_true() {
     RxDogTag.install()
-    val observable = observableInstance(1000000)
+    val observable = observableInstance(1_000_000)
     benchmarkRule.measureRepeated {
       observable.subscribe()
     }
@@ -246,7 +246,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun flowable_true_e2e() {
     RxDogTag.install()
-    val flowable = flowableInstance(1000)
+    val flowable = flowableInstance(1_000)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
@@ -263,7 +263,7 @@ class RxDogTagAndroidPerf {
   @Test
   fun observable_true_e2e() {
     RxDogTag.install()
-    val observable = observableInstance(1000)
+    val observable = observableInstance(1_000)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
@@ -279,7 +279,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun flowable_false_e2e() {
-    val flowable = flowableInstance(1000)
+    val flowable = flowableInstance(1_000)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
@@ -295,7 +295,7 @@ class RxDogTagAndroidPerf {
 
   @Test
   fun observable_false_e2e() {
-    val observable = observableInstance(1000)
+    val observable = observableInstance(1_000)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
