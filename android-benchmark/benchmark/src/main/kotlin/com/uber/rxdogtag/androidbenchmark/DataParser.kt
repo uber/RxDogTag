@@ -66,8 +66,25 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
     appendln("```")
     groupedResults.entries
         .joinTo(this, "\n\n", postfix = "\n```") { (grouping, matchedAnalyses) ->
-          val content = matchedAnalyses.sortedBy { it.score }
-              .joinToString("\n") { it.formattedString(benchmarkLength, scoreLength) }
+          val sorted = matchedAnalyses.sortedBy { it.score }
+          val first = sorted[0]
+          val largestDelta = sorted.drop(1)
+              .map {
+                val delta = ((it.score - first.score).toDouble() / first.score) * 100
+                String.format(Locale.US, "%.2f", delta)
+              }
+              .maxBy {
+                it.length
+              }!!
+              .length
+          val content = sorted
+              .withIndex()
+              .joinToString("\n") { (index, analysis) ->
+                analysis.formattedString(benchmarkLength,
+                    scoreLength,
+                    largestDelta,
+                    if (index == 0) null else first.score)
+              }
           "${grouping.name}\n$content"
         }
   }
@@ -144,10 +161,17 @@ private data class Analysis(
 ) {
   override fun toString() = "$benchmark\t$score\t$units"
 
-  fun formattedString(benchmarkLength: Int, scoreLength: Int): String {
-    return String.format(Locale.US,
-        "%-${benchmarkLength}s  %${scoreLength}s  %s",
-        benchmark, formattedScore, units)
+  fun formattedString(benchmarkLength: Int, scoreLength: Int, deltaLength: Int, base: Long?): String {
+    return if (base == null) {
+      String.format(Locale.US,
+          "%-${benchmarkLength}s  %${scoreLength}s%s",
+          benchmark, formattedScore, units)
+    } else {
+      val delta = ((score - base).toDouble() / base) * 100
+      String.format(Locale.US,
+          "%-${benchmarkLength}s  %${scoreLength}s%s  %$deltaLength.2f%%",
+          benchmark, formattedScore, units, delta)
+    }
   }
 
   val formattedScore: String
