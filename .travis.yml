@@ -13,6 +13,7 @@ before_install:
 
 install: ./gradlew build --stacktrace
 
+# Note we don't run connectedCheck here because we're not running benchmarks on CI, just want to make sure they compile
 script:
 - ./gradlew check --stacktrace
 
