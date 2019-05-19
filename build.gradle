@@ -18,11 +18,15 @@ buildscript {
   apply from: rootProject.file('gradle/dependencies.gradle')
   buildscript {
     repositories {
+      google()
       mavenCentral()
       gradlePluginPortal()
       jcenter()
     }
     dependencies {
+      classpath "com.android.tools.build:gradle:3.5.0-beta01"
+      classpath "androidx.benchmark:benchmark-gradle-plugin:1.0.0-alpha01"
+      classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.31"
       classpath "net.ltgt.gradle:gradle-errorprone-plugin:${deps.versions.errorPronePlugin}"
       classpath "net.ltgt.gradle:gradle-nullaway-plugin:${deps.versions.nullawayPlugin}"
       classpath "ru.vyarus:gradle-animalsniffer-plugin:${deps.versions.animalSniffer}"
@@ -34,6 +38,7 @@ buildscript {
 
 subprojects {
   repositories {
+    google()
     mavenCentral()
     jcenter()
   }
@@ -63,24 +68,27 @@ subprojects {
     }
   }
 
-  apply plugin: 'java-library'
-  sourceCompatibility = deps.build.javaVersion
-  targetCompatibility = deps.build.javaVersion
-  test {
-    testLogging.showStandardStreams = true
-    maxParallelForks Runtime.runtime.availableProcessors().intdiv(2) ?: 1
-  }
-  apply plugin: 'net.ltgt.errorprone'
-  apply plugin: 'net.ltgt.nullaway'
-  dependencies {
-    errorproneJavac deps.build.errorProneJavac
-    errorprone deps.build.nullAway
-    errorprone deps.build.errorProne
-  }
-  tasks.withType(JavaCompile).configureEach {
-    options.errorprone.nullaway {
-      severity = CheckSeverity.ERROR
-      annotatedPackages.add("com.uber")
+  if (!project.name.contains("benchmark")) {
+    apply plugin: 'java-library'
+
+    sourceCompatibility = deps.build.javaVersion
+    targetCompatibility = deps.build.javaVersion
+    test {
+      testLogging.showStandardStreams = true
+      maxParallelForks Runtime.runtime.availableProcessors().intdiv(2) ?: 1
+    }
+    apply plugin: 'net.ltgt.errorprone'
+    apply plugin: 'net.ltgt.nullaway'
+    dependencies {
+      errorproneJavac deps.build.errorProneJavac
+      errorprone deps.build.nullAway
+      errorprone deps.build.errorProne
+    }
+    tasks.withType(JavaCompile).configureEach {
+      options.errorprone.nullaway {
+        severity = CheckSeverity.ERROR
+        annotatedPackages.add("com.uber")
+      }
     }
   }
 }
