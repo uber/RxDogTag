@@ -23,8 +23,8 @@ dependencies {
   api deps.rx.java
 
   signature deps.build.animalSniffer
-  testCompile deps.test.junit
-  testCompile deps.test.truth
+  testImplementation deps.test.junit
+  testImplementation deps.test.truth
 }
 
 // We setup jmh such that you must provide the `-Pjmh` to specify which tests

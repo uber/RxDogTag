@@ -24,9 +24,9 @@ dependencies {
   implementation deps.rx.autodispose
 
   signature deps.build.animalSniffer
-  testCompile deps.test.junit
-  testCompile deps.test.truth
-  testCompile project(':rxdogtag').sourceSets.test.output
+  testImplementation deps.test.junit
+  testImplementation deps.test.truth
+  testImplementation project(':rxdogtag').sourceSets.test.output
 }
 
 apply plugin: 'com.vanniktech.maven.publish'
