@@ -24,8 +24,8 @@ buildscript {
       jcenter()
     }
     dependencies {
-      classpath "com.android.tools.build:gradle:3.5.0-beta01"
-      classpath "androidx.benchmark:benchmark-gradle-plugin:1.0.0-alpha01"
+      classpath "com.android.tools.build:gradle:3.5.0-beta04"
+      classpath "androidx.benchmark:benchmark-gradle-plugin:${deps.versions.androidBenchmark}"
       classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.41"
       classpath "net.ltgt.gradle:gradle-errorprone-plugin:${deps.versions.errorPronePlugin}"
       classpath "net.ltgt.gradle:gradle-nullaway-plugin:${deps.versions.nullawayPlugin}"
