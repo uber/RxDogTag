@@ -25,8 +25,12 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
+import org.junit.runners.Parameterized.Parameters
 import java.util.concurrent.CountDownLatch
 
 /**
@@ -39,10 +43,33 @@ import java.util.concurrent.CountDownLatch
  * Basic command line usage is just to run `./gradlew :android-benchmark:benchmark:connectedCheck`
  */
 @LargeTest
-class RxDogTagAndroidPerf {
+@RunWith(Parameterized::class)
+class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) {
+
+  companion object {
+    @JvmStatic
+    @Parameters(name = "enabled={0}, times={1}")
+    fun data() = listOf(
+        arrayOf(true, 0),
+        arrayOf(true, 1),
+        arrayOf(true, 1_000),
+        arrayOf(true, 1_000_000),
+        arrayOf(false, 0),
+        arrayOf(false, 1),
+        arrayOf(false, 1_000),
+        arrayOf(false, 1_000_000)
+    )
+  }
 
   @get:Rule
   val benchmarkRule = BenchmarkRule()
+
+  @Before
+  fun setup() {
+    if (enabled) {
+      RxDogTag.install()
+    }
+  }
 
   @After
   fun tearDown() {
@@ -50,184 +77,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable1_false() {
-    val flowable = flowableInstance(1)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1_false() {
-    val observable = observableInstance(1)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000_false() {
-    val flowable = flowableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000_false() {
-    val observable = observableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000000_false() {
-    val flowable = flowableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000000_false() {
-    val observable = observableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1_true() {
-    RxDogTag.install()
-    val flowable = flowableInstance(1)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val flowable = flowableInstance(1)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1_true() {
-    RxDogTag.install()
-    val observable = observableInstance(1)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val observable = observableInstance(1)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000_true() {
-    RxDogTag.install()
-    val flowable = flowableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val flowable = flowableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000_true() {
-    RxDogTag.install()
-    val observable = observableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val observable = observableInstance(1_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000000_true() {
-    RxDogTag.install()
-    val flowable = flowableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable1000000_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val flowable = flowableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000000_true() {
-    RxDogTag.install()
-    val observable = observableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable1000000_true_withoutGuardedDelegate() {
-    RxDogTag.builder()
-        .guardObserverCallbacks(false)
-        .install()
-    val observable = observableInstance(1_000_000)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable_true_subscribe_simple() {
-    RxDogTag.install()
-    val flowable = flowableInstance(0)
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable_true_subscribe_simple_withoutGuardedDelegate() {
+  fun flowable_withoutGuardedDelegate() {
     RxDogTag.builder()
         .guardObserverCallbacks(false)
         .install()
@@ -238,16 +88,7 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable_true_subscribe_simple() {
-    RxDogTag.install()
-    val observable = observableInstance(0)
-    benchmarkRule.measureRepeated {
-      observable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable_true_subscribe_simple_withoutGuardedDelegate() {
+  fun observable_withoutGuardedDelegate() {
     RxDogTag.builder()
         .guardObserverCallbacks(false)
         .install()
@@ -258,33 +99,18 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable_false_subscribe_simple() {
-    val flowable = flowableInstance(0)
+  fun flowable() {
+    val flowable = flowableInstance(times)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
     }
   }
 
   @Test
-  fun observable_false_subscribe_simple() {
-    val observable = observableInstance(0)
+  fun observable() {
+    val observable = observableInstance(times)
     benchmarkRule.measureRepeated {
       observable.subscribe()
-    }
-  }
-
-  @Test
-  fun flowable_true_subscribe_complex() {
-    RxDogTag.install()
-    val flowable = flowableInstance(0)
-        .filter { it == 2 }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Flowable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
     }
   }
 
@@ -306,17 +132,16 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun observable_true_subscribe_complex() {
-    RxDogTag.install()
-    val observable = observableInstance(0)
+  fun flowable_complex() {
+    val flowable = flowableInstance(times)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Observable.never())
+        .ambWith(Flowable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      observable.subscribe()
+      flowable.subscribe()
     }
   }
 
@@ -338,22 +163,8 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable_false_subscribe_complex() {
-    val flowable = flowableInstance(0)
-        .filter { it == 2 }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Flowable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      flowable.subscribe()
-    }
-  }
-
-  @Test
-  fun observable_false_subscribe_complex() {
-    val observable = observableInstance(0)
+  fun observable_complex() {
+    val observable = observableInstance(times)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
@@ -366,9 +177,8 @@ class RxDogTagAndroidPerf {
   }
 
   @Test
-  fun flowable_true_e2e() {
-    RxDogTag.install()
-    val flowable = flowableInstance(1_000)
+  fun flowable_e2e() {
+    val flowable = flowableInstance(times.takeIf { it != 0 } ?: -1)
         .filter { it == 2 }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
@@ -381,6 +191,23 @@ class RxDogTagAndroidPerf {
       latch.await()
     }
   }
+
+  @Test
+  fun observable_e2e() {
+    val observable = observableInstance(times.takeIf { it != 0 } ?: -1)
+        .filter { it == 2 }
+        .map { it * 2 }
+        .subscribeOn(Schedulers.computation())
+        .observeOn(AndroidSchedulers.mainThread())
+        .ambWith(Observable.never())
+        .ignoreElements()
+    benchmarkRule.measureRepeated {
+      val latch = runWithTimingDisabled { CountDownLatch(1) }
+      observable.subscribe { latch.countDown() }
+      latch.await()
+    }
+  }
+
 
   @Test
   fun flowable_true_e2e_withoutGuardedDelegate() {
@@ -398,23 +225,6 @@ class RxDogTagAndroidPerf {
     benchmarkRule.measureRepeated {
       val latch = runWithTimingDisabled { CountDownLatch(1) }
       flowable.subscribe { latch.countDown() }
-      latch.await()
-    }
-  }
-
-  @Test
-  fun observable_true_e2e() {
-    RxDogTag.install()
-    val observable = observableInstance(1_000)
-        .filter { it == 2 }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Observable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      val latch = runWithTimingDisabled { CountDownLatch(1) }
-      observable.subscribe { latch.countDown() }
       latch.await()
     }
   }
@@ -439,48 +249,26 @@ class RxDogTagAndroidPerf {
     }
   }
 
-  @Test
-  fun flowable_false_e2e() {
-    val flowable = flowableInstance(1_000)
-        .filter { it == 2 }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Flowable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      val latch = runWithTimingDisabled { CountDownLatch(1) }
-      flowable.subscribe { latch.countDown() }
-      latch.await()
-    }
-  }
-
-  @Test
-  fun observable_false_e2e() {
-    val observable = observableInstance(1_000)
-        .filter { it == 2 }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Observable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      val latch = runWithTimingDisabled { CountDownLatch(1) }
-      observable.subscribe { latch.countDown() }
-      latch.await()
-    }
-  }
-
+  /**
+   * @param times -1 for empty, 0 for never, otherwise that number of emissions
+   */
   private fun flowableInstance(times: Int): Flowable<Int> {
     if (times == 0) {
       return Flowable.never()
+    } else if (times == -1) {
+      return Flowable.empty()
     }
     return Flowable.fromArray(*Array(times) { 777 })
   }
 
+  /**
+   * @param times -1 for empty, 0 for never, otherwise that number of emissions
+   */
   private fun observableInstance(times: Int): Observable<Int> {
     if (times == 0) {
       return Observable.never()
+    } else if (times == -1) {
+      return Observable.empty()
     }
     return Observable.fromArray(*Array(times) { 777 })
   }
