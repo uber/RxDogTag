@@ -99,7 +99,7 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
   }
 
   @Test
-  fun flowable() {
+  fun flowable_simple() {
     val flowable = flowableInstance(times)
     benchmarkRule.measureRepeated {
       flowable.subscribe()
@@ -107,7 +107,7 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
   }
 
   @Test
-  fun observable() {
+  fun observable_simple() {
     val observable = observableInstance(times)
     benchmarkRule.measureRepeated {
       observable.subscribe()
