@@ -48,7 +48,7 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
 
   companion object {
     @JvmStatic
-    @Parameters(name = "enabled={0}, times={1}")
+    @Parameters(name = "enabled={0},times={1}")
     fun data() = listOf(
         arrayOf(true, 0),
         arrayOf(true, 1),
