@@ -116,6 +116,7 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 
 private fun String.isFlowable(): Boolean = "flowable" in this
 private fun String.isObservable(): Boolean = "observable" in this
+private fun String.isSubscribeThroughput(): Boolean = "times=0" in this
 
 private enum class ResultType(val title: String, val description: String, val groupings: List<Grouping>) {
   THROUGHPUT(
@@ -147,16 +148,16 @@ private enum class ResultType(val title: String, val description: String, val gr
       description = "This measures the cost to subscription incurred by RxDogTag.",
       groupings = listOf(
           Grouping("Simple (Observable)") {
-            "subscribe" in it && "simple" in it && it.isObservable()
+            "subscribe" in it && "simple" in it && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Simple (Flowable)") {
-            "subscribe" in it && "simple" in it && it.isFlowable()
+            "subscribe" in it && "simple" in it && it.isSubscribeThroughput() && it.isFlowable()
           },
           Grouping("Complex (Observable)") {
-            "subscribe" in it && "complex" in it && it.isObservable()
+            "subscribe" in it && "complex" in it && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Complex (Flowable)") {
-            "subscribe" in it && "complex" in it && it.isFlowable()
+            "subscribe" in it && "complex" in it && it.isSubscribeThroughput() && it.isFlowable()
           }
       )
   ),
