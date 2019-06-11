@@ -16,7 +16,6 @@
 
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.android"
-apply plugin: "androidx.benchmark"
 
 android {
   compileSdkVersion 28
@@ -36,6 +35,8 @@ android {
     findByName("main")?.java?.srcDirs("src/main/kotlin")
   }
 }
+
+apply plugin: "androidx.benchmark"
 
 dependencies {
   implementation "androidx.benchmark:benchmark:${deps.versions.androidBenchmark}"
