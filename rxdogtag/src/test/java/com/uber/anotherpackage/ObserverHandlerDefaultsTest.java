@@ -53,7 +53,7 @@ public final class ObserverHandlerDefaultsTest {
    * package names. You will see something like this the bundled proguard config.
    *
    * <pre><code>
-   *   -keepnames class io.reactivex.**
+   *   -keeppackagenames io.reactivex**
    * </code></pre>
    *
    * <p>This should be updated with the new package name.
