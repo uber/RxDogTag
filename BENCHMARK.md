@@ -1,6 +1,13 @@
 # Benchmarks
 
+## Running the benchmark
+
+You can run the benchmark by executing `./gradlew :android-benchmark:benchmark:connectedCheck`. Note that the benchmark should be run on an actual device.
+You can take the test output and run it through `DataParser.kt` to get a structured breakdown.
+
 ## Results
+
+Running the benchmark on a Pixel 3 yields the following results:
 
 ### Event throughput (grouped by number of events)
 
@@ -42,6 +49,8 @@
 
 ### Subscribe Cost (grouped by complexity)
 
+This measures the cost to subscription incurred by RxDogTag.
+
 #### Simple (Observable)
 | Benchmark | time (ns) | time (ms) | percent increase |
 |---------- |-----------|-----------|------------------|
@@ -67,6 +76,8 @@
 | RxDogTagAndroidPerf.flowable_true_subscribe_complex | 49,184ns | 0.049ms | 487.20%
 
 ### End-to-end amortized cost
+
+This measures the end-to-end cost:
 
 #### Observable
 | Benchmark | time (ns) | time (ms) | percent increase |
