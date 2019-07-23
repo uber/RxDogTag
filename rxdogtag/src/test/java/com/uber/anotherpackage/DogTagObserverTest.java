@@ -25,6 +25,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.exceptions.CompositeException;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.TestObserver;
 import org.junit.After;
@@ -140,6 +141,17 @@ public class DogTagObserverTest implements DogTagTest {
         .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
     assertThat(cause.getStackTrace()[2].getClassName())
         .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
+  }
+
+  @Test
+  public void compositeException() {
+    IllegalStateException original = new IllegalStateException("Initial exception");
+    RuntimeException runtimeException = new RuntimeException("Resulting exception");
+
+    CompositeException compositeException = new CompositeException(original, runtimeException);
+    int expectedLineNumber = subscribeError(Observable.error(compositeException));
+
+    assertRewrittenStacktrace(expectedLineNumber, compositeException);
   }
 
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
