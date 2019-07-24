@@ -37,6 +37,7 @@ markdown_extensions:
 
 nav:
   - 'Overview': index.md
+  - 'API': 0.x/rxdogtag/com/uber/rxdogtag/RxDogTag.html
   - 'Examples': examples.md
   - 'Under The Hood': under-the-hood.md
   - 'Proguard/R8': shrinking.md
