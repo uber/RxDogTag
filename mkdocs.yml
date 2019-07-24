@@ -37,7 +37,6 @@ markdown_extensions:
 
 nav:
   - 'Overview': index.md
-  - 'API':
   - 'Examples': examples.md
   - 'Under The Hood': under-the-hood.md
   - 'Proguard/R8': shrinking.md

@@ -21,6 +21,11 @@ git clone $REPO $DIR
 # Move working directory into temp folder
 cd $DIR
 
+# TODO: Remove before upstreaming
+git checkout sg/mkdocs
+
+cp ../mkdocs.yml mkdocs.yml
+
 # Generate the API docs
 ./gradlew javadoc
 
