@@ -154,6 +154,33 @@ public class DogTagObserverTest implements DogTagTest {
     assertRewrittenStacktrace(expectedLineNumber, compositeException);
   }
 
+  @Test
+  public void mangledCompositeException() {
+    Observable<Integer> mainObservable =
+        Observable.concatDelayError(
+            withError(
+                Observable.just(
+                    withError(
+                        withError(Observable.just(1), new RuntimeException("1")),
+                        new RuntimeException("2"))),
+                new RuntimeException("3")));
+
+    int expectedLineNumber = subscribeError(mainObservable);
+    Throwable e = errorsRule.take();
+    e.printStackTrace();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e).hasMessageThat().isEqualTo("2 exceptions occurred. "); // For composite exception
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause.getStackTrace()[0].getFileName())
+        .isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[0].getLineNumber()).isEqualTo(expectedLineNumber);
+    assertThat(cause.getStackTrace()[1].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[2].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
+  }
+
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
   private void assertRewrittenStacktrace(int expectedLineNumber, Exception original) {
     Throwable e = errorsRule.take();
@@ -198,6 +225,10 @@ public class DogTagObserverTest implements DogTagTest {
   private static <T> int throwError(Observer<T> observer, Exception error) {
     Observable.<T>defer(() -> Observable.error(error)).subscribe(observer);
     return getPreviousLineNumber();
+  }
+
+  private static <T> Observable<T> withError(Observable<T> source, Exception exception) {
+    return source.concatWith(Observable.error(exception));
   }
 
   private static class Another extends EmptyObserver<Object> {
