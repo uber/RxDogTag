@@ -18,6 +18,7 @@ def versions = [
     animalSniffer: '1.5.0',
     errorProne: '2.3.3',
     errorPronePlugin: '0.7.1',
+    dokka: '0.9.17',
     gjf: '1.7',
     jmhLib: '1.21',
     jmhPlugin: '0.4.8',

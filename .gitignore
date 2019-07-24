@@ -109,3 +109,10 @@ annotations/
 # Misc
 .vscode/
 .project/
+
+# Website
+docs/0.x/*
+docs/index.md
+docs/changelog.md
+docs/contributing.md
+docs/code-of-conduct.md
