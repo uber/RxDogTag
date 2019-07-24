@@ -167,7 +167,6 @@ public class DogTagObserverTest implements DogTagTest {
 
     int expectedLineNumber = subscribeError(mainObservable);
     Throwable e = errorsRule.take();
-    e.printStackTrace();
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e).hasMessageThat().isEqualTo("2 exceptions occurred. "); // For composite exception
     assertThat(e.getStackTrace()).isEmpty();
