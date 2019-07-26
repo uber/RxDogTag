@@ -9,7 +9,7 @@
 set -ex
 
 # TODO: Change back to RxDogTag
-REPO="git@github.com:ShaishavGandhi/RxDogTag.git"
+REPO="git@github.com:uber/RxDogTag.git"
 DIR=temp-clone
 
 # Delete any existing temporary website clone
@@ -20,11 +20,6 @@ git clone $REPO $DIR
 
 # Move working directory into temp folder
 cd $DIR
-
-# TODO: Remove before upstreaming
-git checkout sg/mkdocs
-
-cp ../mkdocs.yml mkdocs.yml
 
 # Generate the API docs
 ./gradlew javadoc
