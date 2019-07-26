@@ -16,7 +16,6 @@
 
 plugins {
   id 'ru.vyarus.animalsniffer'
-  id 'org.jetbrains.dokka'
 }
 
 dependencies {
@@ -28,17 +27,6 @@ dependencies {
   testImplementation deps.test.junit
   testImplementation deps.test.truth
   testImplementation project(':rxdogtag').sourceSets.test.output
-}
-
-dokka {
-  externalDocumentationLink {
-    url = new URL("http://reactivex.io/RxJava/2.x/javadoc/")
-  }
-
-  outputFormat = 'gfm'
-  outputDirectory = "$rootDir/docs/0.x"
-  classpath = new ArrayList<File>(project.tasks['assemble'].outputs.files.files)
-  sourceDirs = sourceSets.main.allSource
 }
 
 apply plugin: 'com.vanniktech.maven.publish'
