@@ -17,7 +17,6 @@
 plugins {
   id 'ru.vyarus.animalsniffer'
   id 'me.champeau.gradle.jmh'
-  id 'org.jetbrains.dokka'
 }
 
 dependencies {
