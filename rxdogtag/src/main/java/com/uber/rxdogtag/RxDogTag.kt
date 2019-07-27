@@ -399,7 +399,7 @@ class RxDogTag private constructor() {
      * @param errorConsumer the error consumer to call with a potentially extracted
      * @param runnable the runnable to execute the underlying action that may throw
      */
-    internal fun guardedDelegateCall(errorConsumer: NonCheckingConsumer<Throwable>, runnable: Runnable) {
+    internal inline fun guardedDelegateCall(errorConsumer: NonCheckingConsumer<Throwable>, runnable: () -> Unit) {
       val h = Thread.currentThread().uncaughtExceptionHandler
       try {
         Thread.currentThread()
@@ -413,7 +413,7 @@ class RxDogTag private constructor() {
                 h.uncaughtException(t, e)
               }
             }
-        runnable.run()
+        runnable()
       } catch (e: OnErrorNotImplementedException) {
         val cause = e.cause
         errorConsumer.accept(cause!!)

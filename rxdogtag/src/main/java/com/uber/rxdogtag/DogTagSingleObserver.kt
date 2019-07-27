@@ -43,7 +43,7 @@ internal class DogTagSingleObserver<T>(private val config: RxDogTag.Configuratio
       override fun accept(e: Throwable) {
        reportError(config, t, e, "onSubscribe")
       }
-    }, Runnable { delegate.onSubscribe(d) })
+    }) { delegate.onSubscribe(d) }
   }
 
   override fun onSuccess(t: T) {
@@ -51,7 +51,7 @@ internal class DogTagSingleObserver<T>(private val config: RxDogTag.Configuratio
       override fun accept(e: Throwable) {
        reportError(config, this@DogTagSingleObserver.t, e, "onSuccess")
       }
-    }, Runnable { delegate.onSuccess(t) })
+    }) { delegate.onSuccess(t) }
   }
 
   override fun onError(e: Throwable) {

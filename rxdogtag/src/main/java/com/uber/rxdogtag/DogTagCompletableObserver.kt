@@ -41,7 +41,7 @@ internal class DogTagCompletableObserver(private val config: RxDogTag.Configurat
       override fun accept(e: Throwable) {
         reportError(config, t, e, "onSubscribe")
       }
-    }, Runnable { delegate.onSubscribe(d) })
+    }) { delegate.onSubscribe(d) }
   }
 
   override fun onError(e: Throwable) {
@@ -53,7 +53,7 @@ internal class DogTagCompletableObserver(private val config: RxDogTag.Configurat
       override fun accept(e: Throwable) {
         reportError(config, t, e, "onComplete")
       }
-    }, Runnable { delegate.onComplete() })
+    }) { delegate.onComplete() }
   }
 
   override fun hasCustomOnError(): Boolean {

@@ -542,8 +542,518 @@ benchmark:        17,854 ns RxDogTagAndroidPerf.flowable1000_false
 03:06:48 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       31,145 ns RxDogTagAndroidPerf.flowable1000_false
   """.trimIndent()
 
+  val withInline = """
+    04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=   27,993,127 ns RxDogTagAndroidPerf.observable1000000_false
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=28544401
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=28505940
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=27993127
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=413973
+04:00:07 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=1
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000000_false
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=2
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_subscribe_simple
+04:00:07 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=          203 ns RxDogTagAndroidPerf.observable_false_subscribe_simple
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=936
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=272
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=272
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=203
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=19
+04:00:08 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=2
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_subscribe_simple
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=3
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1_true
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       17,172 ns RxDogTagAndroidPerf.flowable1_true
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=28
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=17790
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=17467
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=17172
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=666
+04:00:08 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=3
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1_true
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=4
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_subscribe_simple
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       16,591 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=29
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=17106
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=16941
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=16591
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=583
+04:00:08 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=4
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_subscribe_simple
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=5
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000_false
+04:00:08 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       28,900 ns RxDogTagAndroidPerf.observable1000_false
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=17
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=31855
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=29382
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=28900
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=7226
+04:00:09 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=5
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000_false
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=6
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_e2e
+04:00:09 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=      121,197 ns RxDogTagAndroidPerf.observable_true_e2e
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=675977
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=589974
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=121197
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=510608
+04:00:17 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=6
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_e2e
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=7
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000000_true
+04:00:17 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=  192,294,706 ns RxDogTagAndroidPerf.flowable1000000_true
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=223622777
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=230037444
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=192294706
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=19724335
+04:00:36 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=7
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000000_true
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=8
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_subscribe_complex
+04:00:36 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=        2,708 ns RxDogTagAndroidPerf.observable_false_subscribe_complex
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=10569
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=8750
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=2708
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=10899
+04:00:44 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=8
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_subscribe_complex
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=9
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1_false
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=          292 ns RxDogTagAndroidPerf.observable1_false
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=629
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=482
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=430
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=292
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=265
+04:00:44 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=9
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1_false
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=10
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_subscribe_complex
+04:00:44 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       58,794 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=7
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=60995
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=60416
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=58794
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=1356
+04:00:46 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=10
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_subscribe_complex
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=11
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000_true
+04:00:46 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=      202,057 ns RxDogTagAndroidPerf.flowable1000_true
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=2
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=253459
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=225612
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=202057
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=65771
+04:00:51 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=11
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000_true
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=12
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000000_false
+04:00:51 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=   28,982,971 ns RxDogTagAndroidPerf.flowable1000000_false
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=29156045
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=29107503
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=28982971
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=209575
+04:01:00 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=12
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000000_false
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=13
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_subscribe_complex
+04:01:00 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       56,282 ns RxDogTagAndroidPerf.flowable_false_subscribe_complex
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=8
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=77077
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=68007
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=56282
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=43131
+04:01:03 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=13
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_subscribe_complex
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=14
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_e2e
+04:01:03 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=      117,605 ns RxDogTagAndroidPerf.flowable_false_e2e
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=1003370
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=956692
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=117605
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=619826
+04:01:11 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=14
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_e2e
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=15
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000000_true
+04:01:11 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=  200,050,333 ns RxDogTagAndroidPerf.observable1000000_true
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=218856559
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=218527001
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=200050333
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=8065470
+04:01:30 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=15
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000000_true
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=16
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_subscribe_simple
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       16,798 ns RxDogTagAndroidPerf.observable_true_subscribe_simple
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=28
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=17260
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=17114
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=16798
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=374
+04:01:30 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=16
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_subscribe_simple
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=17
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_subscribe_complex
+04:01:30 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       27,454 ns RxDogTagAndroidPerf.observable_true_subscribe_complex
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=16
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=38219
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=35247
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=27454
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=12033
+04:01:31 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=17
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_true_subscribe_complex
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=18
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1_true
+04:01:31 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       17,382 ns RxDogTagAndroidPerf.observable1_true
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=28
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=21497
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=19133
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=17382
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=8008
+04:01:32 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=18
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1_true
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=19
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_e2e
+04:01:32 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=      152,760 ns RxDogTagAndroidPerf.flowable_true_e2e
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=2
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=171963
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=162461
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=152760
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=32193
+04:01:37 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=19
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_true_e2e
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=20
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_subscribe_simple
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=          279 ns RxDogTagAndroidPerf.flowable_false_subscribe_simple
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=561
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=391
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=355
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=279
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=262
+04:01:37 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=20
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable_false_subscribe_simple
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=21
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_e2e
+04:01:37 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       90,781 ns RxDogTagAndroidPerf.observable_false_e2e
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=563084
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=159869
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=90781
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=553562
+04:01:45 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=21
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable_false_e2e
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=22
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1_false
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=          321 ns RxDogTagAndroidPerf.flowable1_false
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=576
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=537
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=471
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=321
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=257
+04:01:45 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=22
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1_false
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=23
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000_true
+04:01:45 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=      199,635 ns RxDogTagAndroidPerf.observable1000_true
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: count=1
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: mean=270015
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: median=237708
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: min=199635
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: standardDeviation=118907
+04:01:53 W/InstrumentationResultParser: invalid instrumentation status bundle unknown result
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: -1
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=23
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=.
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=observable1000_true
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 0
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: class=com.uber.rxdogtag.androidbenchmark.RxDogTagAndroidPerf
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: current=24
+04:01:53 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: id=AndroidJUnitRunner
+04:01:54 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: numtests=24
+04:01:54 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: stream=
+04:01:54 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: test=flowable1000_false
+04:01:54 V/InstrumentationResultParser: INSTRUMENTATION_STATUS_CODE: 1
+04:01:54 V/InstrumentationResultParser: INSTRUMENTATION_STATUS: android.studio.display.benchmark=       29,150 ns RxDogTagAndroidPerf.flowable1000_false
+  """.trimIndent()
+
   // Skip the header line
-  val results = newData.lineSequence()
+  val results = withInline.lineSequence()
       .filter { it.contains("benchmark=") }
       .map { it.substring(it.indexOf("benchmark=")) }
       .map { line ->
