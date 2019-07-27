@@ -17,10 +17,12 @@
 plugins {
   id 'ru.vyarus.animalsniffer'
   id 'me.champeau.gradle.jmh'
+  id 'org.jetbrains.kotlin.jvm'
 }
 
 dependencies {
   api deps.rx.java
+  implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.31"
 
   signature deps.build.animalSniffer
   testImplementation deps.test.junit
