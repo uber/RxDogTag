@@ -8,7 +8,6 @@
 
 set -ex
 
-# TODO: Change back to RxDogTag
 REPO="git@github.com:uber/RxDogTag.git"
 DIR=temp-clone
 
