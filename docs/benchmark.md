@@ -2,12 +2,15 @@
 
 ## Running the benchmark
 
-You can run the benchmark by executing `./gradlew :android-benchmark:benchmark:connectedCheck`. (Note that the benchmark should be run on an actual device)
+You can run the benchmark by executing `./gradlew :android-benchmark:benchmark:connectedCheck`. Note that the benchmark should be run on an actual device
+
 You can then take the output from the benchmark and run it through `DataParser.kt` to get a structured breakdown as seen below.
+
+It's important to look at the units than at the percentages. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
 
 ## Results
 
-Running the benchmark on a Pixel 3 yields the following results:
+Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_specs) yields the following results:
 
 ### Event throughput (grouped by number of events)
 
@@ -79,7 +82,7 @@ This measures the cost to subscription incurred by RxDogTag.
 
 ### End-to-end amortized cost
 
-This measures the end-to-end amortized cost
+This measures the end-to-end amortized cost.
 
 #### Observable
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
@@ -92,7 +95,3 @@ This measures the end-to-end amortized cost
 |---------- |-----------|-----------|------------------|
 | RxDogTagAndroidPerf.flowable_false_e2e | 126,371ns  0.126ms
 | RxDogTagAndroidPerf.flowable_true_e2e | 153,107ns | 0.153ms | 21.16%
-
-## Conclusion
-
-RxDogTag does add some overhead to your RxJava subscriptions but the important thing to note is that the millisecond value is minuscule (less than a millisecond in most cases).
