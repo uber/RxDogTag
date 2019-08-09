@@ -182,21 +182,6 @@ class RxDogTag private constructor() {
     fun apply(builder: Builder)
   }
 
-  /**
-   * A functional interface (callback) that returns true or false for the given input value.
-   *
-   * @param <T> the first value
-  </T> */
-  private interface NonCheckingPredicate<T> {
-    /**
-     * Test the given input value and return a boolean.
-     *
-     * @param t the value
-     * @return the boolean result
-     */
-    fun test(t: T): Boolean
-  }
-
   internal class Configuration(builder: Builder) {
     val disableAnnotations: Boolean
     val observerHandlers: List<ObserverHandler>
@@ -226,22 +211,6 @@ class RxDogTag private constructor() {
 
       }
     }
-  }
-
-  /**
-   * A functional interface (callback) that accepts a single value. Identical to [Consumer]
-   * but does not have a checked exception. Solely for use with [.guardedDelegateCall].
-   *
-   * @param <T> the value type
-  </T> */
-  internal interface NonCheckingConsumer<T> {
-
-    /**
-     * Consume the given value.
-     *
-     * @param t the value
-     */
-    fun accept(t: T)
   }
 
   companion object {
@@ -399,16 +368,16 @@ class RxDogTag private constructor() {
      * @param errorConsumer the error consumer to call with a potentially extracted
      * @param runnable the runnable to execute the underlying action that may throw
      */
-    internal inline fun guardedDelegateCall(errorConsumer: NonCheckingConsumer<Throwable>, runnable: () -> Unit) {
+    internal inline fun guardedDelegateCall(crossinline errorConsumer: (Throwable) -> Unit, runnable: () -> Unit) {
       val h = Thread.currentThread().uncaughtExceptionHandler
       try {
         Thread.currentThread()
             .setUncaughtExceptionHandler { t, e ->
               Thread.currentThread().uncaughtExceptionHandler = h
               if (e is OnErrorNotImplementedException) {
-                errorConsumer.accept(e)
+                errorConsumer(e)
               } else if (e is NullPointerException && "subscribeActual failed" == e.message) {
-                errorConsumer.accept(e.cause!!)
+                errorConsumer(e.cause!!)
               } else {
                 h.uncaughtException(t, e)
               }
@@ -416,7 +385,7 @@ class RxDogTag private constructor() {
         runnable()
       } catch (e: OnErrorNotImplementedException) {
         val cause = e.cause
-        errorConsumer.accept(cause!!)
+        errorConsumer(cause!!)
       } finally {
         Thread.currentThread().uncaughtExceptionHandler = h
       }
@@ -483,12 +452,7 @@ class RxDogTag private constructor() {
         // visibility
         var srcPos = 0
         val lastCauseIndex = indexOfLast(
-            originalTrace,
-            object : NonCheckingPredicate<StackTraceElement> {
-              override fun test(t: StackTraceElement): Boolean {
-                return STACK_ELEMENT_TRACE_HEADER == t.className
-              }
-            })
+            originalTrace) { STACK_ELEMENT_TRACE_HEADER == it.className }
 
         if (lastCauseIndex != -1) {
           // We have an older cause, chop it any everything in between
@@ -525,9 +489,9 @@ class RxDogTag private constructor() {
      * Returns index of the last element matching the given `predicate`, or -1 if the array does
      * not contain such element.
      */
-    private fun <T> indexOfLast(array: Array<T>, predicate: NonCheckingPredicate<T>): Int {
+    private inline fun <T> indexOfLast(array: Array<T>, predicate: (T) -> Boolean): Int {
       for (index in array.indices.reversed()) {
-        if (predicate.test(array[index])) {
+        if (predicate(array[index])) {
           return index
         }
       }

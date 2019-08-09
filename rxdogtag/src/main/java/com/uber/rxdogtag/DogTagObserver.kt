@@ -39,19 +39,15 @@ internal class DogTagObserver<T>(private val config: RxDogTag.Configuration, pri
   private val t = Throwable()
 
   override fun onSubscribe(d: Disposable) {
-    guardedDelegateCall(object : RxDogTag.NonCheckingConsumer<Throwable> {
-      override fun accept(e: Throwable) {
+    guardedDelegateCall({ e ->
         reportError(config, t, e, "onSubscribe")
-      }
-    }) { delegate.onSubscribe(d) }
+      }) { delegate.onSubscribe(d) }
   }
 
   override fun onNext(t: T) {
-    guardedDelegateCall(object : RxDogTag.NonCheckingConsumer<Throwable> {
-      override fun accept(e: Throwable) {
+    guardedDelegateCall({ e ->
         reportError(config, this@DogTagObserver.t, e, "onNext")
-      }
-    }) { delegate.onNext(t) }
+      }) { delegate.onNext(t) }
   }
 
   override fun onError(e: Throwable) {
@@ -59,11 +55,9 @@ internal class DogTagObserver<T>(private val config: RxDogTag.Configuration, pri
   }
 
   override fun onComplete() {
-    guardedDelegateCall(object : RxDogTag.NonCheckingConsumer<Throwable> {
-      override fun accept(e: Throwable) {
+    guardedDelegateCall({ e ->
         reportError(config, this@DogTagObserver.t, e, "onComplete")
-      }
-    }) { delegate.onComplete() }
+      }) { delegate.onComplete() }
   }
 
   override fun hasCustomOnError(): Boolean {
