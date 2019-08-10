@@ -22,6 +22,9 @@ pluginManagement {
         case 'me.champeau.gradle.jmh':
           useVersion(deps.versions.jmhPlugin)
           break
+        case 'org.jetbrains.dokka':
+          useModule("org.jetbrains.dokka:dokka-gradle-plugin:${deps.versions.dokka}")
+          break
         case 'net.ltgt.errorprone':
           useVersion(deps.versions.errorPronePlugin)
           break

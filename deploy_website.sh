@@ -21,7 +21,7 @@ git clone $REPO $DIR
 cd $DIR
 
 # Generate the API docs
-./gradlew javadoc
+./gradlew dokka
 
 # Copy in special files that GitHub wants in the project root.
 cat README.md > docs/index.md
