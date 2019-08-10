@@ -38,8 +38,8 @@ markdown_extensions:
 nav:
   - 'Overview': index.md
   - '0.X API':
-      - 'rxdogtag': 0.x/rxdogtag
-      - 'rxdogtag-autodispose': 0.x/rxdogtag-autodispose
+      - 'rxdogtag': 0.x/rxdogtag/com.uber.rxdogtag/
+      - 'rxdogtag-autodispose': 0.x/rxdogtag-autodispose/com.uber.rxdogtag.autodispose/
   - 'Benchmark': benchmark.md
   - 'Examples': examples.md
   - 'Under The Hood': under-the-hood.md
