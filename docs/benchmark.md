@@ -40,7 +40,7 @@ Measures the amount of time it takes for given number of elements to pass throug
 | RxDogTagAndroidPerf.flowable1000_false | 17,854ns | 0.018ms
 | RxDogTagAndroidPerf.flowable1000_true | 143,646ns | 0.144ms | 704.56%
 
-##### 1_000_000 items (Observable)
+#### 1_000_000 items (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |---------- |-----------|-----------|------------------|
 | RxDogTagAndroidPerf.observable1000000_false | 17,078,596ns | 17.079ms
@@ -93,5 +93,5 @@ This measures the end-to-end amortized cost.
 #### Flowable
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_false_e2e | 126,371ns  0.126ms
+| RxDogTagAndroidPerf.flowable_false_e2e | 126,371ns | 0.126ms
 | RxDogTagAndroidPerf.flowable_true_e2e | 153,107ns | 0.153ms | 21.16%
