@@ -17,6 +17,7 @@
 plugins {
   id 'ru.vyarus.animalsniffer'
   id 'me.champeau.gradle.jmh'
+  id 'org.jetbrains.dokka'
 }
 
 dependencies {
@@ -25,6 +26,18 @@ dependencies {
   signature deps.build.animalSniffer
   testImplementation deps.test.junit
   testImplementation deps.test.truth
+}
+
+dokka {
+  externalDocumentationLink {
+    url = new URL("http://reactivex.io/RxJava/2.x/javadoc/")
+  }
+
+  // Output as Github flavored markdown so that docs show up inline in mkdocs website
+  outputFormat = 'gfm'
+  outputDirectory = "$rootDir/docs/0.x"
+  classpath = new ArrayList<File>(project.tasks['assemble'].outputs.files.files)
+  sourceDirs = files('src/main/java')
 }
 
 // We setup jmh such that you must provide the `-Pjmh` to specify which tests
