@@ -102,7 +102,8 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
   fun flowable_simple() {
     val flowable = flowableInstance(times)
     benchmarkRule.measureRepeated {
-      flowable.subscribe()
+      val disposable = flowable.subscribe()
+      runWithTimingDisabled { disposable.dispose() }
     }
   }
 
@@ -110,7 +111,8 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
   fun observable_simple() {
     val observable = observableInstance(times)
     benchmarkRule.measureRepeated {
-      observable.subscribe()
+      val disposable = observable.subscribe()
+      runWithTimingDisabled { disposable.dispose() }
     }
   }
 
@@ -127,7 +129,8 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
         .ambWith(Flowable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      flowable.subscribe()
+      val disposable = flowable.subscribe()
+      runWithTimingDisabled { disposable.dispose() }
     }
   }
 
@@ -158,7 +161,8 @@ class RxDogTagAndroidPerf(private val enabled: Boolean, private val times: Int) 
         .ambWith(Observable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      observable.subscribe()
+      val disposable = observable.subscribe()
+      runWithTimingDisabled { disposable.dispose() }
     }
   }
 
