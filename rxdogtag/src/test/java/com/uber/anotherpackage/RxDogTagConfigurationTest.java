@@ -214,7 +214,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
   }
 
   @Test
-  public void guardObserverChecks_disabled() {
+  public void disableGuardObserverChecks_rewritesStacktrace() {
     RxDogTag.builder().guardObserverCallbacks(false).install();
 
     Exception original = new RuntimeException("Exception!");
