@@ -16,8 +16,8 @@
 
 package com.uber.rxdogtag.androidbenchmark
 
-import androidx.benchmark.BenchmarkRule
-import androidx.benchmark.measureRepeated
+import androidx.benchmark.junit4.BenchmarkRule
+import androidx.benchmark.junit4.measureRepeated
 import androidx.test.filters.LargeTest
 import com.uber.rxdogtag.RxDogTag
 import io.reactivex.Flowable

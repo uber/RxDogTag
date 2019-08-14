@@ -16,6 +16,7 @@
 
 apply plugin: "com.android.library"
 apply plugin: "org.jetbrains.kotlin.android"
+apply plugin: "androidx.benchmark"
 
 android {
   compileSdkVersion 28
@@ -36,10 +37,15 @@ android {
   }
 }
 
-apply plugin: "androidx.benchmark"
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
 
 dependencies {
-  implementation "androidx.benchmark:benchmark:${deps.versions.androidBenchmark}"
+  implementation "androidx.benchmark:benchmark-common:${deps.versions.androidBenchmark}"
+  implementation "androidx.benchmark:benchmark-junit4:${deps.versions.androidBenchmark}"
   implementation "androidx.test:runner:1.2.0"
   implementation "androidx.test:rules:1.2.0"
   implementation "androidx.test.ext:junit:1.1.1"
