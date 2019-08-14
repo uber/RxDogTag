@@ -47,14 +47,22 @@ final class DogTagSingleObserver<T> implements SingleObserver<T>, LambdaConsumer
 
   @Override
   public void onSubscribe(Disposable d) {
-    guardedDelegateCall(
-        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    } else {
+      delegate.onSubscribe(d);
+    }
   }
 
   @Override
   public void onSuccess(T t) {
-    guardedDelegateCall(
-        e -> reportError(config, this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
+    } else {
+      delegate.onSuccess(t);
+    }
   }
 
   @Override

@@ -47,13 +47,21 @@ final class DogTagObserver<T> implements Observer<T>, LambdaConsumerIntrospectio
 
   @Override
   public void onSubscribe(Disposable d) {
-    guardedDelegateCall(
-        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    } else {
+      delegate.onSubscribe(d);
+    }
   }
 
   @Override
   public void onNext(T t) {
-    guardedDelegateCall(e -> reportError(config, this.t, e, "onNext"), () -> delegate.onNext(t));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(e -> reportError(config, this.t, e, "onNext"), () -> delegate.onNext(t));
+    } else {
+      delegate.onNext(t);
+    }
   }
 
   @Override
@@ -63,7 +71,11 @@ final class DogTagObserver<T> implements Observer<T>, LambdaConsumerIntrospectio
 
   @Override
   public void onComplete() {
-    guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    } else {
+      delegate.onComplete();
+    }
   }
 
   @Override
