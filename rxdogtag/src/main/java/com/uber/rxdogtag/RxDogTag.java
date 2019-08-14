@@ -404,7 +404,6 @@ public final class RxDogTag {
      *     during observer callbacks are intercepted and routed to RxDogTag's error handling that
      *     will give you more info on the subscription point. Set to true by default.
      * @return this builder for fluent chaining.
-     * @see #guardedDelegateCall(NonCheckingConsumer, Runnable)
      */
     public Builder guardObserverCallbacks(boolean guardObserverCallbacks) {
       this.guardObserverCallbacks = guardObserverCallbacks;
