@@ -49,7 +49,7 @@ final class DogTagCompletableObserver implements CompletableObserver, LambdaCons
       guardedDelegateCall(
           e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
     } else {
-     delegate.onSubscribe(d);
+      delegate.onSubscribe(d);
     }
   }
 
