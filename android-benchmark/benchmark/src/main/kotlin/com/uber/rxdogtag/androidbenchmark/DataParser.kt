@@ -5,47 +5,108 @@ import java.util.Locale
 fun main() {
 
   val data = """
-benchmark:    26,984,534 ns RxDogTagAndroidPerf.observable1000000_false
-benchmark:           148 ns RxDogTagAndroidPerf.observable_false_subscribe_simple
-Timed out waiting for process to appear on google-pixel_2-HT79N1A00303.
-benchmark:        16,765 ns RxDogTagAndroidPerf.flowable1_true
-benchmark:        15,677 ns RxDogTagAndroidPerf.observable1_true_withoutGuardedDelegate
-benchmark:        15,895 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple
-benchmark:        27,913 ns RxDogTagAndroidPerf.observable1000_false
-benchmark:    34,621,670 ns RxDogTagAndroidPerf.observable1000000_true_withoutGuardedDelegate
-benchmark:        15,630 ns RxDogTagAndroidPerf.observable_true_subscribe_simple_withoutGuardedDelegate
-benchmark:       129,817 ns RxDogTagAndroidPerf.observable_true_e2e
-benchmark:   224,655,387 ns RxDogTagAndroidPerf.flowable1000000_true
-benchmark:         5,331 ns RxDogTagAndroidPerf.observable_false_subscribe_complex
-benchmark:       152,865 ns RxDogTagAndroidPerf.flowable_true_e2e_withoutGuardedDelegate
-benchmark:           423 ns RxDogTagAndroidPerf.observable1_false
-benchmark:       126,928 ns RxDogTagAndroidPerf.observable_true_e2e_withoutGuardedDelegate
-benchmark:        29,531 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex
-benchmark:       210,677 ns RxDogTagAndroidPerf.flowable1000_true
-benchmark:    29,811,097 ns RxDogTagAndroidPerf.flowable1000000_false
-benchmark:        60,498 ns RxDogTagAndroidPerf.flowable_false_subscribe_complex
-benchmark:        36,630 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex_withoutGuardedCall
-benchmark:       110,730 ns RxDogTagAndroidPerf.flowable_false_e2e
-benchmark:   280,736,746 ns RxDogTagAndroidPerf.observable1000000_true
-benchmark:        15,881 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple_withoutGuardedDelegate
-benchmark:        15,973 ns RxDogTagAndroidPerf.observable_true_subscribe_simple
-benchmark:        23,033 ns RxDogTagAndroidPerf.observable_true_subscribe_complex_withoutGuardedDelegate
-benchmark:        22,095 ns RxDogTagAndroidPerf.observable_true_subscribe_complex
-benchmark:        16,603 ns RxDogTagAndroidPerf.observable1_true
-benchmark:       176,510 ns RxDogTagAndroidPerf.flowable_true_e2e
-benchmark:        51,765 ns RxDogTagAndroidPerf.flowable1000_true_withoutGuardedDelegate
-benchmark:           198 ns RxDogTagAndroidPerf.flowable_false_subscribe_simple
-benchmark:       104,063 ns RxDogTagAndroidPerf.observable_false_e2e
-benchmark:    36,557,868 ns RxDogTagAndroidPerf.flowable1000000_true_withoutGuardedDelegate
-benchmark:        49,496 ns RxDogTagAndroidPerf.observable1000_true_withoutGuardedDelegate
-benchmark:           320 ns RxDogTagAndroidPerf.flowable1_false
-benchmark:        16,157 ns RxDogTagAndroidPerf.flowable1_true_withoutGuardedDelegate
-benchmark:       249,479 ns RxDogTagAndroidPerf.observable1000_true
-benchmark:        32,566 ns RxDogTagAndroidPerf.flowable1000_false
+benchmark:        13,774 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=0]
+
+benchmark:        24,137 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0]
+
+benchmark:        61,635 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=0]
+
+benchmark:         7,451 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=0]
+
+benchmark:        74,453 ns RxDogTagAndroidPerf.flowable_e2e[enabled=true,times=0]
+
+benchmark:         7,390 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=0]
+
+benchmark:        13,768 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1]
+
+benchmark:        27,448 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1]
+
+benchmark:        60,364 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=1]
+
+benchmark:         7,268 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1]
+
+benchmark:        73,099 ns RxDogTagAndroidPerf.flowable_e2e[enabled=true,times=1]
+
+benchmark:         7,204 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1]
+
+benchmark:        13,579 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000]
+
+benchmark:        48,883 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000]
+
+benchmark:       143,906 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=1,000]
+
+Timed out waiting for process to appear on google-pixel_3-89UX0H5NB.
+benchmark:       157,525 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000]
+
+benchmark:     1,307,361 ns RxDogTagAndroidPerf.flowable_e2e[enabled=true,times=1,000]
+
+benchmark:       154,036 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000]
+
+benchmark:        24,311 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000]
+
+benchmark:        44,661 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000]
+
+benchmark:    20,541,252 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=1,000,000]
+
+benchmark:   158,292,671 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000]
+
+benchmark:    22,119,429 ns RxDogTagAndroidPerf.flowable_e2e[enabled=true,times=1,000,000]
+
+benchmark:   160,530,434 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000]
+
+benchmark:         9,152 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=0]
+
+benchmark:        20,534 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=0]
+
+benchmark:        73,854 ns RxDogTagAndroidPerf.observable_e2e[enabled=false,times=0]
+
+benchmark:           355 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=0]
+
+benchmark:        95,656 ns RxDogTagAndroidPerf.flowable_e2e[enabled=false,times=0]
+
+benchmark:           316 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=0]
+
+benchmark:         7,646 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1]
+
+benchmark:        18,802 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1]
+
+benchmark:        90,694 ns RxDogTagAndroidPerf.observable_e2e[enabled=false,times=1]
+
+benchmark:           445 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1]
+
+benchmark:        89,750 ns RxDogTagAndroidPerf.flowable_e2e[enabled=false,times=1]
+
+benchmark:           449 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1]
+
+benchmark:         9,252 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000]
+
+benchmark:        15,729 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000]
+
+benchmark:        94,218 ns RxDogTagAndroidPerf.observable_e2e[enabled=false,times=1,000]
+
+benchmark:        18,060 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000]
+
+benchmark:       121,536 ns RxDogTagAndroidPerf.flowable_e2e[enabled=false,times=1,000]
+
+benchmark:        20,034 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000]
+
+benchmark:         9,001 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,000]
+
+benchmark:        21,583 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,000]
+
+benchmark:    21,301,147 ns RxDogTagAndroidPerf.observable_e2e[enabled=false,times=1,000,000]
+
+benchmark:    17,801,721 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,000]
+
+benchmark:    21,891,044 ns RxDogTagAndroidPerf.flowable_e2e[enabled=false,times=1,000,000]
+
+benchmark:    18,230,262 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,000]
+>>>>>>> Update parser
   """.trimIndent()
 
   // Skip the header line
   val results = data.lineSequence()
+      .filterNot { it.isBlank() }
       .filter { it.startsWith("benchmark") }
       .map { line ->
         // benchmark:     6,154,949 ns SpeedTest.gson_autovalue_buffer_fromJson_minified
