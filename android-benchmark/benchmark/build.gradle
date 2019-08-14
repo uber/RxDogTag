@@ -25,7 +25,6 @@ android {
   defaultConfig {
     minSdkVersion 14
     targetSdkVersion 28
-    testInstrumentationRunner "androidx.benchmark.AndroidBenchmarkRunner"
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
