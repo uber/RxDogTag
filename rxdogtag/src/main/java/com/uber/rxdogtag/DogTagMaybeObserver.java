@@ -48,14 +48,22 @@ final class DogTagMaybeObserver<T> implements MaybeObserver<T>, LambdaConsumerIn
 
   @Override
   public void onSubscribe(Disposable d) {
-    guardedDelegateCall(
-        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(d));
+    } else {
+      delegate.onSubscribe(d);
+    }
   }
 
   @Override
   public void onSuccess(T t) {
-    guardedDelegateCall(
-        e -> reportError(config, this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, this.t, e, "onSuccess"), () -> delegate.onSuccess(t));
+    } else {
+      delegate.onSuccess(t);
+    }
   }
 
   @Override
@@ -65,7 +73,11 @@ final class DogTagMaybeObserver<T> implements MaybeObserver<T>, LambdaConsumerIn
 
   @Override
   public void onComplete() {
-    guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    } else {
+      delegate.onComplete();
+    }
   }
 
   @Override

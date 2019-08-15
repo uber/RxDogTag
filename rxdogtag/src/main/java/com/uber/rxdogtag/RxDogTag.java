@@ -338,6 +338,7 @@ public final class RxDogTag {
   }
 
   public static final class Builder {
+    boolean guardObserverCallbacks = true;
     boolean disableAnnotations = false;
     List<ObserverHandler> observerHandlers = new ArrayList<>();
     Set<String> ignoredPackages = new LinkedHashSet<>();
@@ -395,6 +396,17 @@ public final class RxDogTag {
      */
     public Builder addIgnoredPackages(Collection<String> packages) {
       ignoredPackages.addAll(packages);
+      return this;
+    }
+
+    /**
+     * @param guardObserverCallbacks Guards observer callbacks so that any exceptions that occur
+     *     during observer callbacks are intercepted and routed to RxDogTag's error handling that
+     *     will give you more info on the subscription point. Set to true by default.
+     * @return this builder for fluent chaining.
+     */
+    public Builder guardObserverCallbacks(boolean guardObserverCallbacks) {
+      this.guardObserverCallbacks = guardObserverCallbacks;
       return this;
     }
 
@@ -500,6 +512,7 @@ public final class RxDogTag {
     final List<ObserverHandler> observerHandlers;
     final Set<String> ignoredPackages;
     final boolean repackageOnErrorNotImplementedExceptions;
+    final boolean guardObserverCallbacks;
 
     Configuration(Builder builder) {
       this.disableAnnotations = builder.disableAnnotations;
@@ -513,6 +526,7 @@ public final class RxDogTag {
       this.ignoredPackages = unmodifiableSet(finalIgnoredPackages);
       this.repackageOnErrorNotImplementedExceptions =
           builder.repackageOnErrorNotImplementedExceptions;
+      this.guardObserverCallbacks = builder.guardObserverCallbacks;
     }
   }
 

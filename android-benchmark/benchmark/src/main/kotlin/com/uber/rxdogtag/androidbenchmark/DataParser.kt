@@ -5,31 +5,43 @@ import java.util.Locale
 fun main() {
 
   val data = """
-benchmark:    17,078,596 ns RxDogTagAndroidPerf.observable1000000_false
-benchmark:           112 ns RxDogTagAndroidPerf.observable_false_subscribe_simple
-benchmark:        13,129 ns RxDogTagAndroidPerf.flowable1_true
-benchmark:        12,725 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple
-Timed out waiting for process to appear on google-pixel_3-89UX0H5NB.
-benchmark:        17,596 ns RxDogTagAndroidPerf.observable1000_false
-benchmark:       145,833 ns RxDogTagAndroidPerf.observable_true_e2e
-benchmark:   152,887,724 ns RxDogTagAndroidPerf.flowable1000000_true
-benchmark:         5,322 ns RxDogTagAndroidPerf.observable_false_subscribe_complex
-benchmark:           212 ns RxDogTagAndroidPerf.observable1_false
-benchmark:        49,184 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex
-benchmark:       143,646 ns RxDogTagAndroidPerf.flowable1000_true
-benchmark:    17,790,262 ns RxDogTagAndroidPerf.flowable1000000_false
-benchmark:         8,376 ns RxDogTagAndroidPerf.flowable_false_subscribe_complex
-benchmark:       126,371 ns RxDogTagAndroidPerf.flowable_false_e2e
-benchmark:   161,099,912 ns RxDogTagAndroidPerf.observable1000000_true
-benchmark:        13,017 ns RxDogTagAndroidPerf.observable_true_subscribe_simple
-benchmark:        25,046 ns RxDogTagAndroidPerf.observable_true_subscribe_complex
-benchmark:        13,267 ns RxDogTagAndroidPerf.observable1_true
-benchmark:       153,107 ns RxDogTagAndroidPerf.flowable_true_e2e
-benchmark:           147 ns RxDogTagAndroidPerf.flowable_false_subscribe_simple
-benchmark:        99,010 ns RxDogTagAndroidPerf.observable_false_e2e
-benchmark:           223 ns RxDogTagAndroidPerf.flowable1_false
-benchmark:       156,953 ns RxDogTagAndroidPerf.observable1000_true
-benchmark:        17,854 ns RxDogTagAndroidPerf.flowable1000_false
+benchmark:    26,984,534 ns RxDogTagAndroidPerf.observable1000000_false
+benchmark:           148 ns RxDogTagAndroidPerf.observable_false_subscribe_simple
+Timed out waiting for process to appear on google-pixel_2-HT79N1A00303.
+benchmark:        16,765 ns RxDogTagAndroidPerf.flowable1_true
+benchmark:        15,677 ns RxDogTagAndroidPerf.observable1_true_withoutGuardedDelegate
+benchmark:        15,895 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple
+benchmark:        27,913 ns RxDogTagAndroidPerf.observable1000_false
+benchmark:    34,621,670 ns RxDogTagAndroidPerf.observable1000000_true_withoutGuardedDelegate
+benchmark:        15,630 ns RxDogTagAndroidPerf.observable_true_subscribe_simple_withoutGuardedDelegate
+benchmark:       129,817 ns RxDogTagAndroidPerf.observable_true_e2e
+benchmark:   224,655,387 ns RxDogTagAndroidPerf.flowable1000000_true
+benchmark:         5,331 ns RxDogTagAndroidPerf.observable_false_subscribe_complex
+benchmark:       152,865 ns RxDogTagAndroidPerf.flowable_true_e2e_withoutGuardedDelegate
+benchmark:           423 ns RxDogTagAndroidPerf.observable1_false
+benchmark:       126,928 ns RxDogTagAndroidPerf.observable_true_e2e_withoutGuardedDelegate
+benchmark:        29,531 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex
+benchmark:       210,677 ns RxDogTagAndroidPerf.flowable1000_true
+benchmark:    29,811,097 ns RxDogTagAndroidPerf.flowable1000000_false
+benchmark:        60,498 ns RxDogTagAndroidPerf.flowable_false_subscribe_complex
+benchmark:        36,630 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex_withoutGuardedCall
+benchmark:       110,730 ns RxDogTagAndroidPerf.flowable_false_e2e
+benchmark:   280,736,746 ns RxDogTagAndroidPerf.observable1000000_true
+benchmark:        15,881 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple_withoutGuardedDelegate
+benchmark:        15,973 ns RxDogTagAndroidPerf.observable_true_subscribe_simple
+benchmark:        23,033 ns RxDogTagAndroidPerf.observable_true_subscribe_complex_withoutGuardedDelegate
+benchmark:        22,095 ns RxDogTagAndroidPerf.observable_true_subscribe_complex
+benchmark:        16,603 ns RxDogTagAndroidPerf.observable1_true
+benchmark:       176,510 ns RxDogTagAndroidPerf.flowable_true_e2e
+benchmark:        51,765 ns RxDogTagAndroidPerf.flowable1000_true_withoutGuardedDelegate
+benchmark:           198 ns RxDogTagAndroidPerf.flowable_false_subscribe_simple
+benchmark:       104,063 ns RxDogTagAndroidPerf.observable_false_e2e
+benchmark:    36,557,868 ns RxDogTagAndroidPerf.flowable1000000_true_withoutGuardedDelegate
+benchmark:        49,496 ns RxDogTagAndroidPerf.observable1000_true_withoutGuardedDelegate
+benchmark:           320 ns RxDogTagAndroidPerf.flowable1_false
+benchmark:        16,157 ns RxDogTagAndroidPerf.flowable1_true_withoutGuardedDelegate
+benchmark:       249,479 ns RxDogTagAndroidPerf.observable1000_true
+benchmark:        32,566 ns RxDogTagAndroidPerf.flowable1000_false
   """.trimIndent()
 
   // Skip the header line

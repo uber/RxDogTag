@@ -53,13 +53,21 @@ final class DogTagSubscriber<T> implements FlowableSubscriber<T>, LambdaConsumer
 
   @Override
   public void onSubscribe(Subscription s) {
-    guardedDelegateCall(
-        e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(s));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(
+          e -> reportError(config, t, e, "onSubscribe"), () -> delegate.onSubscribe(s));
+    } else {
+      delegate.onSubscribe(s);
+    }
   }
 
   @Override
   public void onNext(T t) {
-    guardedDelegateCall(e -> reportError(config, this.t, e, "onNext"), () -> delegate.onNext(t));
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(e -> reportError(config, this.t, e, "onNext"), () -> delegate.onNext(t));
+    } else {
+      delegate.onNext(t);
+    }
   }
 
   @Override
@@ -69,7 +77,11 @@ final class DogTagSubscriber<T> implements FlowableSubscriber<T>, LambdaConsumer
 
   @Override
   public void onComplete() {
-    guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    if (config.guardObserverCallbacks) {
+      guardedDelegateCall(e -> reportError(config, t, e, "onComplete"), delegate::onComplete);
+    } else {
+      delegate.onComplete();
+    }
   }
 
   @Override

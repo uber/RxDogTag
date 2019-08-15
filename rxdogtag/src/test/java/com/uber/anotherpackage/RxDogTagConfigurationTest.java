@@ -213,6 +213,26 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
 
+  @Test
+  public void disableGuardObserverChecks_rewritesStacktrace() {
+    RxDogTag.builder().guardObserverCallbacks(false).install();
+
+    Exception original = new RuntimeException("Exception!");
+    Observable.error(original).subscribe();
+
+    Throwable e = errorsRule.take();
+    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(e).hasMessageThat().isEqualTo(original.getMessage());
+    assertThat(e.getStackTrace()).isEmpty();
+    Throwable cause = e.getCause();
+    assertThat(cause.getStackTrace()[0].getFileName())
+        .isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[1].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[2].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
+  }
+
   abstract static class LambdaConsumerObserver<T>
       implements Observer<T>, LambdaConsumerIntrospection {}
 }
