@@ -58,7 +58,11 @@ class RxDogTagAndroidPerf(
       for (enabled in ENABLED) {
         for (iterations in ITERATIONS) {
           for (guardedDelegateEnabled in GUARDED_DELEGATE_ENABLED) {
-            list.add(arrayOf(enabled, iterations, guardedDelegateEnabled))
+            if (!enabled && guardedDelegateEnabled) {
+              // Skip these configurations since they're irrelevant
+            } else {
+              list.add(arrayOf(enabled, iterations, guardedDelegateEnabled))
+            }
           }
         }
       }
