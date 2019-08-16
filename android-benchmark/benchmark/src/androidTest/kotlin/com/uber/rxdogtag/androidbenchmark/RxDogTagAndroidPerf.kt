@@ -23,6 +23,8 @@ import com.uber.rxdogtag.RxDogTag
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
@@ -99,8 +101,7 @@ class RxDogTagAndroidPerf(
   fun flowable_simple() {
     val flowable = flowableInstance(times)
     benchmarkRule.measureRepeated {
-      val disposable = flowable.subscribe()
-      runWithTimingDisabled { disposable.dispose() }
+      disposeWithTimingDisabled(flowable.subscribe())
     }
   }
 
@@ -108,8 +109,7 @@ class RxDogTagAndroidPerf(
   fun observable_simple() {
     val observable = observableInstance(times)
     benchmarkRule.measureRepeated {
-      val disposable = observable.subscribe()
-      runWithTimingDisabled { disposable.dispose() }
+      disposeWithTimingDisabled(observable.subscribe())
     }
   }
 
@@ -123,8 +123,7 @@ class RxDogTagAndroidPerf(
         .ambWith(Flowable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      val disposable = flowable.subscribe()
-      runWithTimingDisabled { disposable.dispose() }
+      disposeWithTimingDisabled(flowable.subscribe())
     }
   }
 
@@ -138,8 +137,7 @@ class RxDogTagAndroidPerf(
         .ambWith(Observable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      val disposable = observable.subscribe()
-      runWithTimingDisabled { disposable.dispose() }
+      disposeWithTimingDisabled(observable.subscribe())
     }
   }
 
@@ -153,9 +151,7 @@ class RxDogTagAndroidPerf(
         .ambWith(Flowable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      val latch = runWithTimingDisabled { CountDownLatch(1) }
-      flowable.subscribe { latch.countDown() }
-      latch.await()
+      latchSubscribe { flowable.subscribe(it) }
     }
   }
 
@@ -169,10 +165,18 @@ class RxDogTagAndroidPerf(
         .ambWith(Observable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      val latch = runWithTimingDisabled { CountDownLatch(1) }
-      observable.subscribe { latch.countDown() }
-      latch.await()
+      latchSubscribe { observable.subscribe(it) }
     }
+  }
+
+  private inline fun BenchmarkRule.Scope.disposeWithTimingDisabled(disposable: Disposable) {
+    runWithTimingDisabled { disposable.dispose() }
+  }
+
+  private inline fun BenchmarkRule.Scope.latchSubscribe(onComplete: (Action) -> Unit) {
+    val latch = runWithTimingDisabled { CountDownLatch(1) }
+    onComplete(Action { latch.countDown() })
+    latch.await()
   }
 
   /**
