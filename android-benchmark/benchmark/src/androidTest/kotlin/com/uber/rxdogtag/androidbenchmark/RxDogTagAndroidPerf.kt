@@ -54,7 +54,7 @@ class RxDogTagAndroidPerf(
 
   companion object {
     @JvmStatic
-    @Parameters(name = "enabled={0},times={1},guardedDelegateEnabled={1}")
+    @Parameters(name = "enabled={0},times={1},guardedDelegateEnabled={2}")
     fun data(): List<Array<*>> {
       val list = mutableListOf<Array<*>>()
       for (enabled in ENABLED) {
