@@ -5,12 +5,6 @@ import java.util.Locale
 fun main() {
 
   val data = """
-benchmark:        14,154 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=0,guardedDelegateEnabled=true]
-benchmark:        26,961 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0,guardedDelegateEnabled=true]
-benchmark:        61,956 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=0,guardedDelegateEnabled=true]
-benchmark:         7,396 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=0,guardedDelegateEnabled=true]
-benchmark:        76,137 ns RxDogTagAndroidPerf.flowable_e2e[enabled=true,times=0,guardedDelegateEnabled=true]
-benchmark:         7,386 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=0,guardedDelegateEnabled=true]
 benchmark:        13,648 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=0,guardedDelegateEnabled=false]
 benchmark:        49,232 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0,guardedDelegateEnabled=false]
 benchmark:        95,277 ns RxDogTagAndroidPerf.observable_e2e[enabled=true,times=0,guardedDelegateEnabled=false]
@@ -103,6 +97,9 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
         grouping.matchFunction(it.benchmark)
       }
   }
+  check(groupedResults.isNotEmpty()) {
+    "Empty results for $type with \n$results"
+  }
   val benchmarkLength = results.maxBy { it.benchmark.length }!!.benchmark.length
   val scoreLength = results.maxBy { it.formattedScore.length }!!.formattedScore.length
 
@@ -117,6 +114,9 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
     appendln()
     groupedResults.entries
         .joinTo(this, "\n\n", postfix = "\n") { (grouping, matchedAnalyses) ->
+          check(matchedAnalyses.isNotEmpty()) {
+            "Empty analysis for $type, $grouping, with \n$matchedAnalyses"
+          }
           val sorted = matchedAnalyses.sortedBy { it.score }
           val first = sorted[0]
           val largestDelta = sorted.drop(1)
@@ -160,22 +160,22 @@ private enum class ResultType(val title: String, val description: String, val gr
       description = "Measures the amount of time it takes for given number of elements to pass through the stream.",
       groupings = listOf(
           Grouping("1 item (Observable)") {
-            "1_" in it && it.isObservable()
+            "1," in it && it.isObservable()
           },
           Grouping("1 item (Flowable)") {
-            "1_" in it && it.isFlowable()
+            "1," in it && it.isFlowable()
           },
           Grouping("1000 items (Observable)") {
-            "1000_" in it && it.isObservable()
+            "1000," in it && it.isObservable()
           },
           Grouping("1000 items (Flowable)") {
-            "1000_" in it && it.isFlowable()
+            "1000," in it && it.isFlowable()
           },
           Grouping("1_000_000 items (Observable)") {
-            "1000000_" in it && it.isObservable()
+            "1000000," in it && it.isObservable()
           },
           Grouping("1_000_000 items (Flowable)") {
-            "1000000_" in it && it.isFlowable()
+            "1000000," in it && it.isFlowable()
           }
       )
   ),

@@ -58,12 +58,12 @@ class RxDogTagAndroidPerf(
     fun data(): List<Array<*>> {
       val list = mutableListOf<Array<*>>()
       for (enabled in ENABLED) {
-        for (iterations in ITERATIONS) {
+        for (times in ITERATIONS) {
           for (guardedDelegateEnabled in GUARDED_DELEGATE_ENABLED) {
-            if (!enabled && guardedDelegateEnabled) {
+            if ((!enabled && guardedDelegateEnabled) || (guardedDelegateEnabled && times == 0)) {
               // Skip these configurations since they're irrelevant
             } else {
-              list.add(arrayOf(enabled, iterations, guardedDelegateEnabled))
+              list.add(arrayOf(enabled, times, guardedDelegateEnabled))
             }
           }
         }
