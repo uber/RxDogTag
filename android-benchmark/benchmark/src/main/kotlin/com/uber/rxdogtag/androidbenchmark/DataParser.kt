@@ -98,8 +98,8 @@ benchmark:    18,326,148 ns RxDogTagAndroidPerf.observable_simple[enabled=false,
 }
 
 private fun printResults(type: ResultType, results: List<Analysis>) {
-  val groupedResults = type.groupings.associate { grouping ->
-    grouping to results.filter {
+  val groupedResults = type.groupings.associateWith { grouping ->
+      results.filter {
       grouping.matchFunction(it.benchmark)
     }
   }
