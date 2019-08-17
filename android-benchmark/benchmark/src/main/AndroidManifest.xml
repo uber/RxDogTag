@@ -15,7 +15,10 @@
   ~ limitations under the License.
   -->
 
-<manifest
-    package="com.uber.rxdogtag.android.benchmark">
+<manifest package="com.uber.rxdogtag.android.benchmark"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <!-- This attribute is "false" by default on apps targeting Android Q. -->
+  <application android:requestLegacyExternalStorage="true" />
 
 </manifest>
