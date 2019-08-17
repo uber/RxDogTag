@@ -194,6 +194,12 @@ private enum class ResultType(val title: String, val description: String, val gr
           },
           Grouping("Complex (Flowable)") {
             "subscribe" in it && "complex" in it && it.isSubscribeThroughput() && it.isFlowable()
+          },
+          Grouping("e2e (Observable)") {
+            "e2e" in it && it.isSubscribeThroughput() && it.isObservable()
+          },
+          Grouping("e2e (Flowable)") {
+            "e2e" in it && it.isSubscribeThroughput() && it.isFlowable()
           }
       )
   ),
