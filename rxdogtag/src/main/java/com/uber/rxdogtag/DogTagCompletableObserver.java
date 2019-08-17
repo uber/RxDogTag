@@ -55,7 +55,11 @@ final class DogTagCompletableObserver implements CompletableObserver, LambdaCons
 
   @Override
   public void onError(Throwable e) {
-    reportError(config, t, e, null);
+    if (delegate instanceof TryOnError) {
+      guardedDelegateCall(e2 -> reportError(config, t, e2, "onError"), () -> delegate.onError(e));
+    } else {
+      reportError(config, t, e, null);
+    }
   }
 
   @Override

@@ -103,16 +103,23 @@ public final class RxDogTag {
     new Builder().install();
   }
 
+  private static boolean shouldDecorate(Object observerToCheck) {
+    if (observerToCheck instanceof TryOnError) {
+      return true;
+    } else if (observerToCheck instanceof LambdaConsumerIntrospection) {
+      return !((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError();
+    }
+    return false;
+  }
+
   private static synchronized void installWithBuilder(final Configuration config) {
     RxJavaPlugins.setOnObservableSubscribe(
         (observable, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             Observer observerToCheck = handler.handle(observable, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -121,11 +128,9 @@ public final class RxDogTag {
         (flowable, originalSubscriber) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             Subscriber subscriberToCheck = handler.handle(flowable, originalSubscriber);
-            if (subscriberToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) subscriberToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagSubscriber(config, originalSubscriber);
-              }
+            if (shouldDecorate(subscriberToCheck)) {
+              //noinspection unchecked
+              return new DogTagSubscriber(config, originalSubscriber);
             }
           }
           return originalSubscriber;
@@ -134,11 +139,9 @@ public final class RxDogTag {
         (single, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             SingleObserver observerToCheck = handler.handle(single, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagSingleObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagSingleObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -147,11 +150,9 @@ public final class RxDogTag {
         (maybe, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             MaybeObserver observerToCheck = handler.handle(maybe, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagMaybeObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagMaybeObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -160,10 +161,8 @@ public final class RxDogTag {
         (completable, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             CompletableObserver observerToCheck = handler.handle(completable, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                return new DogTagCompletableObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              return new DogTagCompletableObserver(config, originalObserver);
             }
           }
           return originalObserver;
