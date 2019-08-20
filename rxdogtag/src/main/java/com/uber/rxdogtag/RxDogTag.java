@@ -15,10 +15,6 @@
  */
 package com.uber.rxdogtag;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableSet;
-
 import io.reactivex.CompletableObserver;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
@@ -37,6 +33,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.reactivestreams.Subscriber;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
 
 /**
  * RxDogTag is a mechanism to automatically detect RxJava observers with no error handling and wrap
@@ -224,10 +224,8 @@ public final class RxDogTag {
     } finally {
       Thread.currentThread().setUncaughtExceptionHandler(h);
     }
-  }
-
-  /**
-   * Reports a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
+  }/**
+   * Creates a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
    * cause with a modified stacktrace. If the original cause is not an instance of
    * OnErrorNotImplementedException, a new one is created with the cause as its original cause. The
    * new modified stacktrace contains a line pointing to the inferred subscribe point, and then the
@@ -235,13 +233,12 @@ public final class RxDogTag {
    * irrelevant). The message of the exception is the message from the {@code originalCause}, if
    * present, and an empty string otherwise.
    *
-   * <p>Reporting is done via {@link RxJavaPlugins#onError(Throwable)}.
-   *
    * @param stackSource the source throwable to extract a stack element tag from.
    * @param originalCause the cause of the original error.
    * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
+   * @return the created exception.
    */
-  static void reportError(
+  static OnErrorNotImplementedException createException(
       Configuration config,
       Throwable stackSource,
       Throwable originalCause,
@@ -311,7 +308,23 @@ public final class RxDogTag {
       }
     }
     cause.setStackTrace(newTrace);
-    RxJavaPlugins.onError(error);
+    return error;
+  }
+
+  /**
+   * Shorthand for {@link #createException(Configuration, Throwable, Throwable, String)} +
+   * {@link RxJavaPlugins#onError(Throwable)}.
+   *
+   * @param stackSource the source throwable to extract a stack element tag from.
+   * @param originalCause the cause of the original error.
+   * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
+   */
+  static void reportError(
+      Configuration config,
+      Throwable stackSource,
+      Throwable originalCause,
+      @Nullable String callbackType) {
+    RxJavaPlugins.onError(createException(config, stackSource, originalCause, callbackType));
   }
 
   private static boolean containsAnyPackages(String input, Set<String> ignorablePackages) {
