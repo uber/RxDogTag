@@ -68,7 +68,7 @@ final class DogTagObserver<T> implements Observer<T>, LambdaConsumerIntrospectio
   @Override
   public void onError(Throwable e) {
     if (delegate instanceof RxDogTagErrorReceiver) {
-      if (delegate instanceof RxDogTagModifiedExceptionReceiver) {
+      if (delegate instanceof RxDogTagTaggedExceptionReceiver) {
         delegate.onError(createException(config, t, e, null));
       } else if (config.guardObserverCallbacks) {
         guardedDelegateCall(e2 -> reportError(config, t, e2, "onError"), () -> delegate.onError(e));
