@@ -15,13 +15,14 @@
  */
 package com.uber.rxdogtag;
 
-import static com.uber.rxdogtag.RxDogTag.guardedDelegateCall;
-import static com.uber.rxdogtag.RxDogTag.reportError;
-
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.LambdaConsumerIntrospection;
+
+import static com.uber.rxdogtag.RxDogTag.createException;
+import static com.uber.rxdogtag.RxDogTag.guardedDelegateCall;
+import static com.uber.rxdogtag.RxDogTag.reportError;
 
 /**
  * A delegating {@link SingleObserver} that throws {@link OnErrorNotImplementedException} with stack
@@ -68,7 +69,13 @@ final class DogTagSingleObserver<T> implements SingleObserver<T>, LambdaConsumer
   @Override
   public void onError(Throwable e) {
     if (delegate instanceof TryOnError) {
-      guardedDelegateCall(e2 -> reportError(config, t, e2, "onError"), () -> delegate.onError(e));
+      if (delegate instanceof DeliverModifiedException) {
+        delegate.onError(createException(config, t, e, null));
+      } else if (config.guardObserverCallbacks) {
+        guardedDelegateCall(e2 -> reportError(config, t, e2, "onError"), () -> delegate.onError(e));
+      } else {
+        delegate.onError(e);
+      }
     } else {
       reportError(config, t, e, null);
     }
