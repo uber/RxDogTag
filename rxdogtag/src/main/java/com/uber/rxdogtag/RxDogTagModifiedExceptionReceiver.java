@@ -6,6 +6,6 @@ package com.uber.rxdogtag;
  * delegate behavior will be attempted even if
  * {@link RxDogTag.Builder#guardObserverCallbacks(boolean)} is enabled in configuration.
  */
-public interface DeliverModifiedException extends TryOnError {
+public interface RxDogTagModifiedExceptionReceiver extends RxDogTagErrorReceiver {
 
 }

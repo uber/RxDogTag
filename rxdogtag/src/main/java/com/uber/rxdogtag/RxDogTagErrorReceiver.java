@@ -21,7 +21,7 @@ import io.reactivex.annotations.NonNull;
  * A marker type to indicate that RxDogTag's decorating observers should try the onError() of the
  * delegate of the observer that implements this.
  */
-public interface TryOnError {
+public interface RxDogTagErrorReceiver {
   /**
    * Called once if the deferred computation 'throws' an exception.
    *

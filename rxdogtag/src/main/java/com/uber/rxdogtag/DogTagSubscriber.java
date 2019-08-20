@@ -73,8 +73,8 @@ final class DogTagSubscriber<T> implements FlowableSubscriber<T>, LambdaConsumer
 
   @Override
   public void onError(Throwable e) {
-    if (delegate instanceof TryOnError) {
-      if (delegate instanceof DeliverModifiedException) {
+    if (delegate instanceof RxDogTagErrorReceiver) {
+      if (delegate instanceof RxDogTagModifiedExceptionReceiver) {
         delegate.onError(createException(config, t, e, null));
       } else if (config.guardObserverCallbacks) {
         guardedDelegateCall(e2 -> reportError(config, t, e2, "onError"), () -> delegate.onError(e));

@@ -104,7 +104,7 @@ public final class RxDogTag {
   }
 
   private static boolean shouldDecorate(Object observerToCheck) {
-    if (observerToCheck instanceof TryOnError) {
+    if (observerToCheck instanceof RxDogTagErrorReceiver) {
       return true;
     } else if (observerToCheck instanceof LambdaConsumerIntrospection) {
       return !((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError();
