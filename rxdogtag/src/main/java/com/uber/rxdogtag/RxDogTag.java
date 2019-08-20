@@ -15,6 +15,10 @@
  */
 package com.uber.rxdogtag;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
+
 import io.reactivex.CompletableObserver;
 import io.reactivex.MaybeObserver;
 import io.reactivex.Observable;
@@ -33,10 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.reactivestreams.Subscriber;
-
-import static java.util.Arrays.asList;
-import static java.util.Collections.unmodifiableList;
-import static java.util.Collections.unmodifiableSet;
 
 /**
  * RxDogTag is a mechanism to automatically detect RxJava observers with no error handling and wrap
@@ -224,7 +224,8 @@ public final class RxDogTag {
     } finally {
       Thread.currentThread().setUncaughtExceptionHandler(h);
     }
-  }/**
+  }
+  /**
    * Creates a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
    * cause with a modified stacktrace. If the original cause is not an instance of
    * OnErrorNotImplementedException, a new one is created with the cause as its original cause. The
@@ -312,8 +313,8 @@ public final class RxDogTag {
   }
 
   /**
-   * Shorthand for {@link #createException(Configuration, Throwable, Throwable, String)} +
-   * {@link RxJavaPlugins#onError(Throwable)}.
+   * Shorthand for {@link #createException(Configuration, Throwable, Throwable, String)} + {@link
+   * RxJavaPlugins#onError(Throwable)}.
    *
    * @param stackSource the source throwable to extract a stack element tag from.
    * @param originalCause the cause of the original error.

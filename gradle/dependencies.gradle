@@ -23,7 +23,7 @@ def versions = [
     jmhPlugin: '0.4.8',
     nullawayPlugin: '0.1',
     dokka: '0.9.18',
-    spotless: '3.21.1'
+    spotless: '3.24.2'
 ]
 
 def build = [

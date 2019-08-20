@@ -15,14 +15,14 @@
  */
 package com.uber.rxdogtag;
 
+import static com.uber.rxdogtag.RxDogTag.createException;
+import static com.uber.rxdogtag.RxDogTag.guardedDelegateCall;
+import static com.uber.rxdogtag.RxDogTag.reportError;
+
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.LambdaConsumerIntrospection;
-
-import static com.uber.rxdogtag.RxDogTag.createException;
-import static com.uber.rxdogtag.RxDogTag.guardedDelegateCall;
-import static com.uber.rxdogtag.RxDogTag.reportError;
 
 /**
  * A delegating {@link SingleObserver} that throws {@link OnErrorNotImplementedException} with stack
