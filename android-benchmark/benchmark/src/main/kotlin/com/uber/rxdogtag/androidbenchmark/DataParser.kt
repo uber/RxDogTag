@@ -72,12 +72,15 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 
   val output = buildString {
     appendln()
-    append(type.description)
-    appendln(':')
+    append("### ")
+    append(type.title)
     appendln()
-    appendln("```")
+    appendln()
+    append(type.description)
+    appendln()
+    appendln()
     groupedResults.entries
-        .joinTo(this, "\n\n", postfix = "\n```") { (grouping, matchedAnalyses) ->
+        .joinTo(this, "\n\n", postfix = "\n") { (grouping, matchedAnalyses) ->
           val sorted = matchedAnalyses.sortedBy { it.score }
           val first = sorted[0]
           val largestDelta = sorted.drop(1)
@@ -101,7 +104,10 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
                     msLength,
                     if (index == 0) null else first.score)
               }
-          "${grouping.name}\n$content"
+          "#### ${grouping.name}" +
+              "\n| Benchmark | Time (ns) | Time (ms) | Percent Increase |" +
+              "\n|----------|------------|-----------|------------------|" +
+              "\n$content"
         }
   }
 
@@ -111,49 +117,52 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 private fun String.isFlowable(): Boolean = "flowable" in this
 private fun String.isObservable(): Boolean = "observable" in this
 
-private enum class ResultType(val description: String, val groupings: List<Grouping>) {
+private enum class ResultType(val title: String, val description: String, val groupings: List<Grouping>) {
   THROUGHPUT(
-      description = "Event throughput: grouped by number of events",
+      title = "Event throughput: grouped by number of events",
+      description = "Measures the amount of time it takes for given number of elements to pass through the stream.",
       groupings = listOf(
-          Grouping("1 item (observable)") {
+          Grouping("1 item (Observable)") {
             "1_" in it && it.isObservable()
           },
-          Grouping("1 item (flowable)") {
+          Grouping("1 item (Flowable)") {
             "1_" in it && it.isFlowable()
           },
-          Grouping("1000 items (observable)") {
+          Grouping("1000 items (Observable)") {
             "1000_" in it && it.isObservable()
           },
-          Grouping("1000 items (flowable)") {
+          Grouping("1000 items (Flowable)") {
             "1000_" in it && it.isFlowable()
           },
-          Grouping("1000000 items (observable)") {
+          Grouping("1_000_000 items (Observable)") {
             "1000000_" in it && it.isObservable()
           },
-          Grouping("1000000 items (flowable)") {
+          Grouping("1_000_000 items (Flowable)") {
             "1000000_" in it && it.isFlowable()
           }
       )
   ),
   SUBSCRIBE(
-      description = "Subscribe cost: grouped by complexity",
+      title = "Subscribe cost: grouped by complexity",
+      description = "This measures the cost to subscription incurred by RxDogTag.",
       groupings = listOf(
-          Grouping("Simple (observable)") {
+          Grouping("Simple (Observable)") {
             "subscribe" in it && "simple" in it && it.isObservable()
           },
-          Grouping("Simple (flowable)") {
+          Grouping("Simple (Flowable)") {
             "subscribe" in it && "simple" in it && it.isFlowable()
           },
-          Grouping("Complex (observable)") {
+          Grouping("Complex (Observable)") {
             "subscribe" in it && "complex" in it && it.isObservable()
           },
-          Grouping("Complex (flowable)") {
+          Grouping("Complex (Flowable)") {
             "subscribe" in it && "complex" in it && it.isFlowable()
           }
       )
   ),
   E2E(
-      description = "E2E amortized cost",
+      title = "E2E amortized cost",
+      description = "This measures the end-to-end amortized cost.",
       groupings = listOf(
           Grouping("Observable") {
             "e2e" in it && it.isObservable()
@@ -180,7 +189,7 @@ private data class Analysis(
   fun formattedString(benchmarkLength: Int, scoreLength: Int, msLength: Int, deltaLength: Int, base: Long?): String {
     return if (base == null) {
       String.format(Locale.US,
-          "%-${benchmarkLength}s  %${scoreLength}s%s  %$msLength.3f%s",
+          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s |",
           benchmark,
           formattedScore,
           units,
@@ -189,7 +198,7 @@ private data class Analysis(
     } else {
       val delta = ((score - base).toDouble() / base) * 100
       String.format(Locale.US,
-          "%-${benchmarkLength}s  %${scoreLength}s%s  %$msLength.3f%s  %$deltaLength.2f%%",
+          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s | %$deltaLength.2f%% |",
           benchmark,
           formattedScore,
           units,
