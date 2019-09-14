@@ -221,6 +221,9 @@ public final class RxDogTag {
     } catch (OnErrorNotImplementedException e) {
       Throwable cause = e.getCause();
       errorConsumer.accept(cause);
+    } catch (Throwable t) {
+      // This should only happen in cases where we're guarding a call to onError()
+      errorConsumer.accept(t);
     } finally {
       Thread.currentThread().setUncaughtExceptionHandler(h);
     }
