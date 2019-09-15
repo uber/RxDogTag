@@ -103,16 +103,23 @@ public final class RxDogTag {
     new Builder().install();
   }
 
+  private static boolean shouldDecorate(Object observerToCheck) {
+    if (observerToCheck instanceof RxDogTagErrorReceiver) {
+      return true;
+    } else if (observerToCheck instanceof LambdaConsumerIntrospection) {
+      return !((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError();
+    }
+    return false;
+  }
+
   private static synchronized void installWithBuilder(final Configuration config) {
     RxJavaPlugins.setOnObservableSubscribe(
         (observable, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             Observer observerToCheck = handler.handle(observable, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -121,11 +128,9 @@ public final class RxDogTag {
         (flowable, originalSubscriber) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             Subscriber subscriberToCheck = handler.handle(flowable, originalSubscriber);
-            if (subscriberToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) subscriberToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagSubscriber(config, originalSubscriber);
-              }
+            if (shouldDecorate(subscriberToCheck)) {
+              //noinspection unchecked
+              return new DogTagSubscriber(config, originalSubscriber);
             }
           }
           return originalSubscriber;
@@ -134,11 +139,9 @@ public final class RxDogTag {
         (single, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             SingleObserver observerToCheck = handler.handle(single, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagSingleObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagSingleObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -147,11 +150,9 @@ public final class RxDogTag {
         (maybe, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             MaybeObserver observerToCheck = handler.handle(maybe, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                //noinspection unchecked
-                return new DogTagMaybeObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              //noinspection unchecked
+              return new DogTagMaybeObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -160,10 +161,8 @@ public final class RxDogTag {
         (completable, originalObserver) -> {
           for (ObserverHandler handler : config.observerHandlers) {
             CompletableObserver observerToCheck = handler.handle(completable, originalObserver);
-            if (observerToCheck instanceof LambdaConsumerIntrospection) {
-              if (!((LambdaConsumerIntrospection) observerToCheck).hasCustomOnError()) {
-                return new DogTagCompletableObserver(config, originalObserver);
-              }
+            if (shouldDecorate(observerToCheck)) {
+              return new DogTagCompletableObserver(config, originalObserver);
             }
           }
           return originalObserver;
@@ -222,13 +221,15 @@ public final class RxDogTag {
     } catch (OnErrorNotImplementedException e) {
       Throwable cause = e.getCause();
       errorConsumer.accept(cause);
+    } catch (Throwable t) {
+      // This should only happen in cases where we're guarding a call to onError()
+      errorConsumer.accept(t);
     } finally {
       Thread.currentThread().setUncaughtExceptionHandler(h);
     }
   }
-
   /**
-   * Reports a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
+   * Creates a new {@link OnErrorNotImplementedException} instance with an empty stacktrace and its
    * cause with a modified stacktrace. If the original cause is not an instance of
    * OnErrorNotImplementedException, a new one is created with the cause as its original cause. The
    * new modified stacktrace contains a line pointing to the inferred subscribe point, and then the
@@ -236,13 +237,12 @@ public final class RxDogTag {
    * irrelevant). The message of the exception is the message from the {@code originalCause}, if
    * present, and an empty string otherwise.
    *
-   * <p>Reporting is done via {@link RxJavaPlugins#onError(Throwable)}.
-   *
    * @param stackSource the source throwable to extract a stack element tag from.
    * @param originalCause the cause of the original error.
    * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
+   * @return the created exception.
    */
-  static void reportError(
+  static OnErrorNotImplementedException createException(
       Configuration config,
       Throwable stackSource,
       Throwable originalCause,
@@ -312,7 +312,23 @@ public final class RxDogTag {
       }
     }
     cause.setStackTrace(newTrace);
-    RxJavaPlugins.onError(error);
+    return error;
+  }
+
+  /**
+   * Shorthand for {@link #createException(Configuration, Throwable, Throwable, String)} + {@link
+   * RxJavaPlugins#onError(Throwable)}.
+   *
+   * @param stackSource the source throwable to extract a stack element tag from.
+   * @param originalCause the cause of the original error.
+   * @param callbackType optional callback type of the original exception (onComplete, onNext, etc).
+   */
+  static void reportError(
+      Configuration config,
+      Throwable stackSource,
+      Throwable originalCause,
+      @Nullable String callbackType) {
+    RxJavaPlugins.onError(createException(config, stackSource, originalCause, callbackType));
   }
 
   private static boolean containsAnyPackages(String input, Set<String> ignorablePackages) {

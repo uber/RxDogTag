@@ -17,17 +17,24 @@ package com.uber.anotherpackage;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.uber.anotherpackage.DogTagTestUtil.getPreviousLineNumber;
+import static org.junit.Assert.fail;
 
 import com.uber.rxdogtag.RxDogTag;
+import com.uber.rxdogtag.RxDogTagErrorReceiver;
+import com.uber.rxdogtag.RxDogTagTaggedExceptionReceiver;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.CompositeException;
 import io.reactivex.exceptions.OnErrorNotImplementedException;
 import io.reactivex.observers.TestObserver;
+import io.reactivex.subjects.PublishSubject;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicReference;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -180,13 +187,164 @@ public class DogTagObserverTest implements DogTagTest {
         .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
   }
 
+  @Test
+  public void errorReceiver_noGuards() {
+    RxDogTag.reset();
+    RxDogTag.builder().guardObserverCallbacks(false).install();
+    AtomicReference<Throwable> recordedError = new AtomicReference<>();
+    TestErrorReceiver<Integer> o =
+        new TestErrorReceiver<Integer>() {
+          @Override
+          public void onError(Throwable e) {
+            recordedError.compareAndSet(null, e);
+          }
+
+          @Override
+          public void onSubscribe(Disposable d) {}
+
+          @Override
+          public void onNext(Integer integer) {}
+
+          @Override
+          public void onComplete() {}
+        };
+    Exception original = new RuntimeException("Blah");
+    Observable.<Integer>error(original).subscribe(o);
+    Throwable recorded = recordedError.get();
+    assertThat(recorded).isSameAs(original);
+  }
+
+  @Test
+  public void errorReceiver_withGuard_noException() {
+    RxDogTag.reset();
+    RxDogTag.builder().guardObserverCallbacks(true).install();
+    AtomicReference<Throwable> recordedError = new AtomicReference<>();
+    TestErrorReceiver<Integer> o =
+        new TestErrorReceiver<Integer>() {
+          @Override
+          public void onError(Throwable e) {
+            recordedError.compareAndSet(null, e);
+          }
+
+          @Override
+          public void onSubscribe(Disposable d) {}
+
+          @Override
+          public void onNext(Integer integer) {}
+
+          @Override
+          public void onComplete() {}
+        };
+    Exception original = new RuntimeException("Blah");
+    Observable.<Integer>error(original).subscribe(o);
+    Throwable recorded = recordedError.get();
+    assertThat(recorded).isSameAs(original);
+  }
+
+  @Test
+  public void errorReceiver_withGuard_withException() {
+    RxDogTag.reset();
+    RxDogTag.builder().guardObserverCallbacks(true).install();
+    AtomicReference<Throwable> thrownException = new AtomicReference<>();
+    TestErrorReceiver<Integer> o =
+        new TestErrorReceiver<Integer>() {
+          @Override
+          public void onError(Throwable e) {
+            RuntimeException toThrow = new RuntimeException(e);
+            thrownException.compareAndSet(null, toThrow);
+            throw toThrow;
+          }
+
+          @Override
+          public void onSubscribe(Disposable d) {}
+
+          @Override
+          public void onNext(Integer integer) {}
+
+          @Override
+          public void onComplete() {}
+        };
+    Exception original = new RuntimeException("Blah");
+    PublishSubject<Integer> subject = PublishSubject.create();
+    // Can't do this one synchronously because it will fail in subscribe();
+    subject.subscribe(o);
+    int lineNumber = getPreviousLineNumber();
+    subject.onError(original);
+    Throwable recorded = errorsRule.take();
+    Throwable thrown = thrownException.get();
+    if (thrown == null) {
+      // Partially more descriptive error message, partially to make NullAway happy since it doesn't
+      // speak truth's isNotNull() assertions
+      fail("thrown was null! This means the observer's onError was never called");
+      return;
+    }
+    assertThat(thrown).hasCauseThat().isSameAs(original);
+    assertThat(recorded).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(recorded).hasCauseThat().isSameAs(thrown);
+    // The original cause was put in this
+    assertThat(recorded).hasMessageThat().contains("java.lang.RuntimeException: Blah");
+
+    // Slightly duplicated, but this is a special delegates case for onError
+    Throwable cause = recorded.getCause();
+    assertThat(cause).isNotNull();
+    assertThat(cause.getStackTrace()[0].getFileName())
+        .isEqualTo(getClass().getSimpleName() + ".java");
+    assertThat(cause.getStackTrace()[0].getLineNumber()).isEqualTo(lineNumber);
+    assertThat(cause.getStackTrace()[1].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
+    assertThat(cause.getStackTrace()[2].getClassName())
+        .isEqualTo(String.format(Locale.US, RxDogTag.STACK_ELEMENT_SOURCE_DELEGATE, "onError"));
+    assertThat(cause.getStackTrace()[3].getClassName())
+        .isEqualTo(RxDogTag.STACK_ELEMENT_TRACE_HEADER);
+  }
+
+  @Test
+  public void taggedErrorReceiver() {
+    AtomicReference<Throwable> recordedError = new AtomicReference<>();
+    TestTaggedErrorReceiver<Integer> o =
+        new TestTaggedErrorReceiver<Integer>() {
+          @Override
+          public void onError(Throwable e) {
+            recordedError.compareAndSet(null, e);
+          }
+
+          @Override
+          public void onSubscribe(Disposable d) {}
+
+          @Override
+          public void onNext(Integer integer) {}
+
+          @Override
+          public void onComplete() {}
+        };
+    Exception original = new RuntimeException("Blah");
+    Observable.<Integer>error(original).subscribe(o);
+    int lineNumber = getPreviousLineNumber();
+    Throwable recorded = recordedError.get();
+    if (recorded == null) {
+      fail("No exception recorded!");
+    } else {
+      assertRewrittenStacktrace(lineNumber, original, recorded);
+    }
+  }
+
+  private interface TestTaggedErrorReceiver<T>
+      extends RxDogTagTaggedExceptionReceiver, Observer<T> {}
+
+  private interface TestErrorReceiver<T> extends RxDogTagErrorReceiver, Observer<T> {}
+
   /** This tests that the original stacktrace was rewritten with the relevant source information. */
-  private void assertRewrittenStacktrace(int expectedLineNumber, Exception original) {
+  private void assertRewrittenStacktrace(int expectedLineNumber, Throwable original) {
     Throwable e = errorsRule.take();
-    assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
-    assertThat(e).hasMessageThat().isEqualTo(original.getMessage());
-    assertThat(e.getStackTrace()).isEmpty();
-    Throwable cause = e.getCause();
+    assertRewrittenStacktrace(expectedLineNumber, original, e);
+  }
+  /** This tests that the original stacktrace was rewritten with the relevant source information. */
+  private void assertRewrittenStacktrace(
+      int expectedLineNumber, Throwable original, Throwable recorded) {
+    assertThat(recorded).isInstanceOf(OnErrorNotImplementedException.class);
+    assertThat(recorded).hasMessageThat().isEqualTo(original.getMessage());
+    assertThat(recorded.getStackTrace()).isEmpty();
+    Throwable cause = recorded.getCause();
     assertThat(cause.getStackTrace()[0].getFileName())
         .isEqualTo(getClass().getSimpleName() + ".java");
     assertThat(cause.getStackTrace()[0].getLineNumber()).isEqualTo(expectedLineNumber);
