@@ -25,6 +25,7 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Action
+import io.reactivex.functions.Consumer
 import io.reactivex.schedulers.Schedulers
 import org.junit.After
 import org.junit.Before
@@ -60,6 +61,7 @@ class RxDogTagAndroidPerf(
       for (enabled in ENABLED) {
         for (times in ITERATIONS) {
           for (guardedDelegateEnabled in GUARDED_DELEGATE_ENABLED) {
+            @Suppress("ControlFlowWithEmptyBody") // Readability
             if ((!enabled && guardedDelegateEnabled) || (guardedDelegateEnabled && times == 0)) {
               // Skip these configurations since they're irrelevant
             } else {
@@ -81,6 +83,8 @@ class RxDogTagAndroidPerf(
 
   @Before
   fun setup() {
+    Schedulers.shutdown()
+    Schedulers.start()
     if (enabled) {
       RxDogTag.builder()
           .apply {
@@ -95,87 +99,119 @@ class RxDogTagAndroidPerf(
   @After
   fun tearDown() {
     RxDogTag.reset()
+    Schedulers.shutdown()
   }
 
   @Test
   fun flowable_simple() {
     val flowable = flowableInstance(times)
-    benchmarkRule.measureRepeated {
-      disposeWithTimingDisabled(flowable.subscribe())
+    if (times == 0) {
+      benchmarkRule.measureRepeated {
+        disposeWithTimingDisabled(flowable.subscribe())
+      }
+    } else {
+      benchmarkRule.measureRepeated {
+        latchConsumer { flowable.subscribe(it) }
+      }
     }
   }
 
   @Test
   fun observable_simple() {
     val observable = observableInstance(times)
-    benchmarkRule.measureRepeated {
-      disposeWithTimingDisabled(observable.subscribe())
+    if (times == 0) {
+      benchmarkRule.measureRepeated {
+        disposeWithTimingDisabled(observable.subscribe())
+      }
+    } else {
+      benchmarkRule.measureRepeated {
+        latchConsumer { observable.subscribe(it) }
+      }
     }
   }
 
   @Test
   fun flowable_complex() {
     val flowable = flowableInstance(times)
-        .filter { it == 2 }
+        .filter { true }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Flowable.never())
+        .takeUntil<Any>(Flowable.never())
         .ignoreElements()
-    benchmarkRule.measureRepeated {
-      disposeWithTimingDisabled(flowable.subscribe())
+    if (times == 0) {
+      benchmarkRule.measureRepeated {
+        disposeWithTimingDisabled(flowable.subscribe())
+      }
+    } else {
+      benchmarkRule.measureRepeated {
+        latchAction { flowable.subscribe(it) }
+      }
     }
   }
 
   @Test
   fun observable_complex() {
     val observable = observableInstance(times)
-        .filter { it == 2 }
+        .filter { true }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Observable.never())
+        .takeUntil<Any>(Observable.never())
         .ignoreElements()
-    benchmarkRule.measureRepeated {
-      disposeWithTimingDisabled(observable.subscribe())
+    if (times == 0) {
+      benchmarkRule.measureRepeated {
+        disposeWithTimingDisabled(observable.subscribe())
+      }
+    } else {
+      benchmarkRule.measureRepeated {
+        latchAction { observable.subscribe(it) }
+      }
     }
   }
 
   @Test
   fun flowable_e2e() {
     val flowable = flowableInstance(times.takeIf { it != 0 } ?: -1)
-        .filter { it == 2 }
+        .filter { true }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Flowable.never())
+        .takeUntil<Any>(Flowable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      latchSubscribe { flowable.subscribe(it) }
+      latchAction { flowable.subscribe(it) }
     }
   }
 
   @Test
   fun observable_e2e() {
     val observable = observableInstance(times.takeIf { it != 0 } ?: -1)
-        .filter { it == 2 }
+        .filter { true }
         .map { it * 2 }
         .subscribeOn(Schedulers.computation())
         .observeOn(AndroidSchedulers.mainThread())
-        .ambWith(Observable.never())
+        .takeUntil<Any>(Observable.never())
         .ignoreElements()
     benchmarkRule.measureRepeated {
-      latchSubscribe { observable.subscribe(it) }
+      latchAction { observable.subscribe(it) }
     }
   }
 
+  @Suppress("NOTHING_TO_INLINE") // Inlined for test overhead reasons
   private inline fun BenchmarkRule.Scope.disposeWithTimingDisabled(disposable: Disposable) {
     runWithTimingDisabled { disposable.dispose() }
   }
 
-  private inline fun BenchmarkRule.Scope.latchSubscribe(onComplete: (Action) -> Unit) {
+  private inline fun BenchmarkRule.Scope.latchAction(onComplete: (Action) -> Unit) {
     val latch = runWithTimingDisabled { CountDownLatch(1) }
     onComplete(Action { latch.countDown() })
+    latch.await()
+  }
+
+  private inline fun BenchmarkRule.Scope.latchConsumer(onComplete: (Consumer<Any>) -> Unit) {
+    val latch = runWithTimingDisabled { CountDownLatch(1) }
+    onComplete(Consumer { latch.countDown() })
     latch.await()
   }
 
@@ -195,12 +231,11 @@ class RxDogTagAndroidPerf(
    * @param times -1 for empty, 0 for never, otherwise that number of emissions
    */
   private fun observableInstance(times: Int): Observable<Int> {
-    if (times == 0) {
-      return Observable.never()
-    } else if (times == -1) {
-      return Observable.empty()
+    return when (times) {
+      0 -> Observable.never()
+      -1 -> Observable.empty()
+      else -> Observable.fromArray(*Array(times) { 777 })
     }
-    return Observable.fromArray(*Array(times) { 777 })
   }
 
 }
