@@ -106,21 +106,16 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
                 it.length
               }!!
               .length
-          val msLength = matchedAnalyses.map { String.format(Locale.US, "%.3f", it.score.toFloat() / 1000000) }
-              .maxBy { it.length }!!
-              .length
           val content = sorted
-              .withIndex()
-              .joinToString("\n") { (index, analysis) ->
+              .joinToString("\n") { analysis ->
                 analysis.formattedString(benchmarkLength,
                     scoreLength,
-                    largestDelta,
-                    msLength,
-                    if (index == 0) null else first.score)
+                    largestDelta
+                )
               }
           "#### ${grouping.name}" +
-              "\n| Benchmark | Time (ns) | Time (ms) | Percent Increase |" +
-              "\n|----------|------------|-----------|------------------|" +
+              "\n| Benchmark | Time (ns) | Time (ms) |" +
+              "\n|----------|------------|-----------|" +
               "\n$content"
         }
   }
@@ -200,26 +195,15 @@ private data class Analysis(
 ) {
   override fun toString() = "$benchmark\t$score\t$units"
 
-  fun formattedString(benchmarkLength: Int, scoreLength: Int, msLength: Int, deltaLength: Int, base: Long?): String {
-    return if (base == null) {
-      String.format(Locale.US,
-          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s |",
-          benchmark,
-          formattedScore,
-          units,
-          score.toFloat() / 1000000,
-          "ms")
-    } else {
-      val delta = ((score - base).toDouble() / base) * 100
-      String.format(Locale.US,
-          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s | %$deltaLength.2f%% |",
-          benchmark,
-          formattedScore,
-          units,
-          score.toFloat() / 1000000,
-          "ms",
-          delta)
-    }
+  fun formattedString(benchmarkLength: Int, scoreLength: Int, msLength: Int): String {
+    return String.format(Locale.US,
+        "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s |",
+        benchmark,
+        formattedScore,
+        units,
+        score.toFloat() / 1000000,
+        "ms"
+    )
   }
 
   val formattedScore: String
