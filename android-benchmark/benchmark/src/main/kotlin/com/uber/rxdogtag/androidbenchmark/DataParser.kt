@@ -153,6 +153,9 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 private fun String.isFlowable(): Boolean = "flowable" in this
 private fun String.isObservable(): Boolean = "observable" in this
 private fun String.isSubscribeThroughput(): Boolean = "times=0" in this
+private fun String.isSingle(): Boolean = "=1,g" in this
+private fun String.isThousand(): Boolean = "=1,000,g" in this
+private fun String.isMillion(): Boolean = "=1,000,000,g" in this
 
 private enum class ResultType(val title: String, val description: String, val groupings: List<Grouping>) {
   THROUGHPUT(
@@ -160,22 +163,22 @@ private enum class ResultType(val title: String, val description: String, val gr
       description = "Measures the amount of time it takes for given number of elements to pass through the stream.",
       groupings = listOf(
           Grouping("1 item (Observable)") {
-            "=1," in it && it.isObservable()
+            it.isSingle() && it.isObservable()
           },
           Grouping("1 item (Flowable)") {
-            "=1," in it && it.isFlowable()
+            it.isSingle() && it.isFlowable()
           },
           Grouping("1_000 items (Observable)") {
-            "=1,000," in it && it.isObservable()
+            it.isThousand() && it.isObservable()
           },
           Grouping("1_000 items (Flowable)") {
-            "=1,000," in it && it.isFlowable()
+            it.isThousand() && it.isFlowable()
           },
           Grouping("1_000_000 items (Observable)") {
-            "=1,000,000," in it && it.isObservable()
+            it.isMillion() && it.isObservable()
           },
           Grouping("1_000_000 items (Flowable)") {
-            "=1,000,000," in it && it.isFlowable()
+            it.isMillion() && it.isFlowable()
           }
       )
   ),
