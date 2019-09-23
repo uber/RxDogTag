@@ -135,7 +135,7 @@ class RxDogTagAndroidPerf(
     val flowable = flowableInstance(times)
         .filter { true }
         .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
+        .subscribeOn(Schedulers.trampoline())
         .observeOn(AndroidSchedulers.mainThread())
         .takeUntil<Any>(Flowable.never())
         .ignoreElements()
@@ -155,7 +155,7 @@ class RxDogTagAndroidPerf(
     val observable = observableInstance(times)
         .filter { true }
         .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
+        .subscribeOn(Schedulers.trampoline())
         .observeOn(AndroidSchedulers.mainThread())
         .takeUntil<Any>(Observable.never())
         .ignoreElements()

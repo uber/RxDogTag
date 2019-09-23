@@ -19,86 +19,86 @@ Measures the amount of time it takes for given number of elements to pass throug
 #### Simple: 1 item (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,guardedDelegateEnabled=false]          |         577ns |   0.001ms |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=false]           |      13,903ns |   0.014ms | 2309.53% |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=true]            |      14,303ns |   0.014ms | 2378.86% |
+| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,guardedDelegateEnabled=false]          |         532ns |   0.001ms |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=false]           |       7,060ns |   0.007ms | 1227.07% |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=true]            |       7,378ns |   0.007ms | 1286.84% |
 
 #### Complex: 1 item (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,guardedDelegateEnabled=false]         |      79,250ns |   0.079ms |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=true]           |     116,120ns |   0.116ms | 46.52% |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=false]          |   1,799,375ns |   1.799ms | 2170.50% |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=false]          |      49,195ns | 0.049ms |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=true]           |      50,492ns | 0.050ms |  2.64% |
+| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,guardedDelegateEnabled=false]         |      53,672ns | 0.054ms |  9.10% |
 
 #### Simple: 1_000 items (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]      |      23,987ns |  0.024ms |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]       |      40,871ns |  0.041ms | 70.39% |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]        |     149,349ns |  0.149ms | 522.62% |
+| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]      |      23,968ns |  0.024ms |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]       |      40,743ns |  0.041ms | 69.99% |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]        |     152,943ns |  0.153ms | 538.11% |
 
 #### Complex: 1_000 items (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]      |     387,552ns |  0.388ms |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]       |     756,146ns |  0.756ms | 95.11% |
-| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]     |   1,429,844ns |  1.430ms | 268.94% |
+| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]     |     291,301ns | 0.291ms |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]      |     312,864ns | 0.313ms |  7.40% |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]       |     313,334ns | 0.313ms |  7.56% |
 
 #### Simple: 1_000_000 items (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]  |  23,983,701ns | 23.984ms |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]   |  26,762,085ns | 26.762ms |   11.58% |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]    | 161,242,933ns | 161.243ms |  572.30% |
+| RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]  |  23,993,700ns | 23.994ms |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]   |  27,304,847ns | 27.305ms |   13.80% |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]    | 166,887,047ns | 166.887ms |  595.55% |
 
 #### Complex: 1_000_000 items (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false] | 234,562,471ns | 234.562ms |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]   | 239,577,889ns | 239.578ms |    2.14% |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]  | 243,418,670ns | 243.419ms |    3.78% |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]  | 249,739,764ns | 249.740ms |
+| RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false] | 252,727,577ns | 252.728ms |    1.20% |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]   | 257,553,671ns | 257.554ms |    3.13% |
 
 #### Simple: 1 item (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,guardedDelegateEnabled=false]            |         546ns |   0.001ms |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=false]             |      13,923ns |   0.014ms | 2450.00% |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=true]              |      14,609ns |   0.015ms | 2575.64% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,guardedDelegateEnabled=false]            |         519ns |   0.001ms |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=false]             |       7,234ns |   0.007ms | 1293.83% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=true]              |       7,581ns |   0.008ms | 1360.69% |
 
 #### Complex: 1 item (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=false]            |     130,781ns |   0.131ms |
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=true]             |     131,163ns |   0.131ms |  0.29% |
-| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,guardedDelegateEnabled=false]           |   1,456,641ns |   1.457ms | 1013.80% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=false]            |      50,081ns | 0.050ms |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=true]             |      50,787ns | 0.051ms |  1.41% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,guardedDelegateEnabled=false]           |      56,004ns | 0.056ms | 11.83% |
 
 #### Simple: 1_000 items (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]        |      24,299ns |  0.024ms |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]         |      40,203ns |  0.040ms | 65.45% |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]          |     152,370ns |  0.152ms | 527.06% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]        |      24,920ns |  0.025ms |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]         |      40,568ns |  0.041ms | 62.79% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]          |     153,124ns |  0.153ms | 514.46% |
 
 #### Complex: 1_000 items (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]       |     470,885ns | 0.471ms |
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]         |     592,499ns | 0.592ms | 25.83% |
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]        |     718,021ns | 0.718ms | 52.48% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]       |     273,178ns | 0.273ms |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]         |     342,812ns | 0.343ms | 25.49% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]        |     375,208ns | 0.375ms | 37.35% |
 
 #### Simple: 1_000_000 items (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]    |  23,566,147ns | 23.566ms |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]     |  26,045,210ns | 26.045ms |   10.52% |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]      | 158,885,276ns | 158.885ms |  574.21% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]    |  23,952,919ns | 23.953ms |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]     |  26,791,825ns | 26.792ms |   11.85% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]      | 162,547,359ns | 162.547ms |  578.61% |
 
 #### Complex: 1_000_000 items (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]    | 593,260,735ns | 593.261ms |
-| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false]   | 629,395,375ns | 629.395ms |    6.09% |
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]     | 755,996,898ns | 755.997ms |   27.43% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]     | 300,186,228ns | 300.186ms |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]    | 302,880,498ns | 302.881ms |    0.90% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false]   | 304,952,062ns | 304.952ms |    1.59% |
 
 
 ### Subscribe cost: grouped by complexity
@@ -108,23 +108,23 @@ This measures the cost to subscription incurred by RxDogTag.
 #### Simple (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_simple[enabled=false,times=0,guardedDelegateEnabled=false]          |         329ns |   0.000ms |
-| RxDogTagAndroidPerf.observable_simple[enabled=true,times=0,guardedDelegateEnabled=false]           |      14,293ns |   0.014ms | 4244.38% |
+| RxDogTagAndroidPerf.observable_simple[enabled=false,times=0,guardedDelegateEnabled=false]          |         331ns |   0.000ms |
+| RxDogTagAndroidPerf.observable_simple[enabled=true,times=0,guardedDelegateEnabled=false]           |       7,275ns |   0.007ms | 2097.89% |
 
 #### Simple (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=0,guardedDelegateEnabled=false]            |         350ns |   0.000ms |
-| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=0,guardedDelegateEnabled=false]             |      14,616ns |   0.015ms | 4076.00% |
+| RxDogTagAndroidPerf.flowable_simple[enabled=false,times=0,guardedDelegateEnabled=false]            |         365ns |   0.000ms |
+| RxDogTagAndroidPerf.flowable_simple[enabled=true,times=0,guardedDelegateEnabled=false]             |       7,506ns |   0.008ms | 1956.44% |
 
 #### Complex (Observable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_complex[enabled=false,times=0,guardedDelegateEnabled=false]         |       9,485ns |  0.009ms |
-| RxDogTagAndroidPerf.observable_complex[enabled=true,times=0,guardedDelegateEnabled=false]          |      27,028ns |  0.027ms | 184.96% |
+| RxDogTagAndroidPerf.observable_complex[enabled=false,times=0,guardedDelegateEnabled=false]         |       1,673ns |  0.002ms |
+| RxDogTagAndroidPerf.observable_complex[enabled=true,times=0,guardedDelegateEnabled=false]          |       9,770ns |  0.010ms | 483.98% |
 
 #### Complex (Flowable)
 | Benchmark | Time (ns) | Time (ms) | Percent Increase |
 |----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=0,guardedDelegateEnabled=false]           |      15,904ns |  0.016ms |
-| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0,guardedDelegateEnabled=false]            |      50,602ns |  0.051ms | 218.17% |
+| RxDogTagAndroidPerf.flowable_complex[enabled=false,times=0,guardedDelegateEnabled=false]           |       5,741ns |  0.006ms |
+| RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0,guardedDelegateEnabled=false]            |      20,783ns |  0.021ms | 262.01% |
