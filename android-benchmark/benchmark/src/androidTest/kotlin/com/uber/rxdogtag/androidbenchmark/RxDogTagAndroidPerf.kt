@@ -170,34 +170,6 @@ class RxDogTagAndroidPerf(
     }
   }
 
-  @Test
-  fun flowable_e2e() {
-    val flowable = flowableInstance(times.takeIf { it != 0 } ?: -1)
-        .filter { true }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .takeUntil<Any>(Flowable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      latchAction { flowable.subscribe(it) }
-    }
-  }
-
-  @Test
-  fun observable_e2e() {
-    val observable = observableInstance(times.takeIf { it != 0 } ?: -1)
-        .filter { true }
-        .map { it * 2 }
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-        .takeUntil<Any>(Observable.never())
-        .ignoreElements()
-    benchmarkRule.measureRepeated {
-      latchAction { observable.subscribe(it) }
-    }
-  }
-
   @Suppress("NOTHING_TO_INLINE") // Inlined for test overhead reasons
   private inline fun BenchmarkRule.Scope.disposeWithTimingDisabled(disposable: Disposable) {
     runWithTimingDisabled { disposable.dispose() }

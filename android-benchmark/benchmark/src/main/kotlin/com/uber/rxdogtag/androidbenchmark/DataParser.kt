@@ -156,72 +156,55 @@ private fun String.isSubscribeThroughput(): Boolean = "times=0" in this
 private fun String.isSingle(): Boolean = "=1,g" in this
 private fun String.isThousand(): Boolean = "=1,000,g" in this
 private fun String.isMillion(): Boolean = "=1,000,000,g" in this
-private fun String.isE2e(): Boolean = "e2e" in this
+private fun String.isSimple(): Boolean = "simple" in this
+private fun String.isComplex(): Boolean = "complex" in this
 
 private enum class ResultType(val title: String, val description: String, val groupings: List<Grouping>) {
   THROUGHPUT(
       title = "Event throughput: grouped by number of events",
       description = "Measures the amount of time it takes for given number of elements to pass through the stream.",
-      groupings = listOf(
-          Grouping("1 item (Observable)") {
-            it.isSingle() && it.isObservable()
-          },
-          Grouping("1 item (Flowable)") {
-            it.isSingle() && it.isFlowable()
-          },
-          Grouping("1_000 items (Observable)") {
-            it.isThousand() && it.isObservable()
-          },
-          Grouping("1_000 items (Flowable)") {
-            it.isThousand() && it.isFlowable()
-          },
-          Grouping("1_000_000 items (Observable)") {
-            it.isMillion() && it.isObservable()
-          },
-          Grouping("1_000_000 items (Flowable)") {
-            it.isMillion() && it.isFlowable()
+      groupings = run {
+        mutableListOf<Grouping>().apply {
+          val complexities: Map<String, (String) -> Boolean> = mapOf(
+              "Simple" to String::isSimple,
+              "Complex" to String::isComplex
+          )
+          val counts: Map<String, (String) -> Boolean> = mapOf(
+              "1 item" to String::isSingle,
+              "1_000 items" to String::isThousand,
+              "1_000_000 items" to String::isMillion
+          )
+          val types: Map<String, (String) -> Boolean> = mapOf(
+              "Observable" to String::isObservable,
+              "Flowable" to String::isFlowable
+          )
+          for (type in types) {
+            for (count in counts) {
+              for (complexity in complexities) {
+                add(Grouping("${complexity.key}: ${count.key} (${type.key})") {
+                  complexity.value.invoke(it) && count.value.invoke(it) && type.value.invoke(it)
+                })
+              }
+            }
           }
-      )
+        }
+      }
   ),
   SUBSCRIBE(
       title = "Subscribe cost: grouped by complexity",
       description = "This measures the cost to subscription incurred by RxDogTag.",
       groupings = listOf(
           Grouping("Simple (Observable)") {
-            !it.isE2e() && "simple" in it && it.isSubscribeThroughput() && it.isObservable()
+            it.isSimple() && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Simple (Flowable)") {
-            !it.isE2e() && "simple" in it && it.isSubscribeThroughput() && it.isFlowable()
+            it.isSimple() && it.isSubscribeThroughput() && it.isFlowable()
           },
           Grouping("Complex (Observable)") {
-            !it.isE2e() && "complex" in it && it.isSubscribeThroughput() && it.isObservable()
+            it.isComplex() && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Complex (Flowable)") {
-            !it.isE2e() && "complex" in it && it.isSubscribeThroughput() && it.isFlowable()
-          }
-      )
-  ),
-  E2E(
-      title = "E2E amortized cost",
-      description = "This measures the end-to-end amortized cost.",
-      groupings = listOf(
-          Grouping("1 item (Observable)") {
-            it.isE2e() && it.isSingle() && it.isObservable()
-          },
-          Grouping("1 item (Flowable)") {
-            it.isE2e() && it.isSingle() && it.isFlowable()
-          },
-          Grouping("1_000 items (Observable)") {
-            it.isE2e() && it.isThousand() && it.isObservable()
-          },
-          Grouping("1_000 items (Flowable)") {
-            it.isE2e() && it.isThousand() && it.isFlowable()
-          },
-          Grouping("1_000_000 items (Observable)") {
-            it.isE2e() && it.isMillion() && it.isObservable()
-          },
-          Grouping("1_000_000 items (Flowable)") {
-            it.isE2e() && it.isMillion() && it.isFlowable()
+            it.isComplex() && it.isSubscribeThroughput() && it.isFlowable()
           }
       )
   )
