@@ -78,7 +78,6 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
   check(groupedResults.isNotEmpty()) {
     "Empty results for $type with \n$results"
   }
-  val benchmarkLength = results.maxBy { it.benchmark.length }!!.benchmark.length
   val scoreLength = results.maxBy { it.formattedScore.length }!!.formattedScore.length
 
   val output = buildString {
@@ -107,15 +106,17 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
               }!!
               .length
           val content = sorted
-              .joinToString("\n") { analysis ->
-                analysis.formattedString(benchmarkLength,
+              .withIndex()
+              .joinToString("\n") { (index, analysis) ->
+                analysis.formattedString(
+                    index,
                     scoreLength,
                     largestDelta
                 )
               }
           "#### ${grouping.name}" +
-              "\n| Benchmark | Time (ns) | Time (ms) |" +
-              "\n|----------|------------|-----------|" +
+              "\n|  | RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |" +
+              "\n|----------|----------|----------|------------|-----------|" +
               "\n$content"
         }
   }
@@ -195,17 +196,26 @@ private data class Analysis(
 ) {
   override fun toString() = "$benchmark\t$score\t$units"
 
-  fun formattedString(benchmarkLength: Int, scoreLength: Int, msLength: Int): String {
+  val rxDogTagEnabled = benchmark.substringAfter("enabled=")
+      .substringBefore(",")
+      .toBoolean()
+  val guardedObserverCallbacksEnabled = benchmark.substringAfter("guardedDelegateEnabled=")
+      .substringBefore("]")
+      .toBoolean()
+
+  fun formattedString(index: Int, scoreLength: Int, msLength: Int): String {
     return String.format(Locale.US,
-        "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s |",
-        benchmark,
-        formattedScore,
-        units,
+        "| $index | %-${5}s | %-${5}s | %$msLength.3f%s | %${scoreLength}s%s |",
+        rxDogTagEnabled,
+        guardedObserverCallbacksEnabled,
         score.toFloat() / 1000000,
-        "ms"
+        "ms",
+        formattedScore,
+        units
     )
   }
 
   val formattedScore: String
     get() = String.format(Locale.US, "%,d", score)
 }
+
