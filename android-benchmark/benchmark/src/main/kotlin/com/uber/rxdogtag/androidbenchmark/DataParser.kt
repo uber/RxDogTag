@@ -86,7 +86,9 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
     append(type.title)
     appendln()
     appendln()
+    append("_")
     append(type.description)
+    append("_")
     appendln()
     appendln()
     groupedResults.entries
@@ -164,7 +166,7 @@ private enum class ResultType(val title: String, val description: String, val gr
   ),
   SUBSCRIBE(
       title = "Subscribe cost: grouped by complexity",
-      description = "This measures the cost to subscription incurred by RxDogTag.",
+      description = "Measures the cost to subscription incurred by RxDogTag. Subscription means no emissions, subscription only.",
       groupings = listOf(
           Grouping("Simple (Observable)") {
             it.isSimple() && it.isSubscribeThroughput() && it.isObservable()

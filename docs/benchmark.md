@@ -12,7 +12,7 @@ Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_sp
 
 ## Event throughput: grouped by number of events
 
-Measures the amount of time it takes for given number of elements to pass through the stream.
+_Measures the amount of time it takes for given number of elements to pass through the stream._
 
 ### Simple: 1 item (Observable)
 | RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
@@ -101,7 +101,7 @@ Measures the amount of time it takes for given number of elements to pass throug
 
 ## Subscribe cost: grouped by complexity
 
-This measures the cost to subscription incurred by RxDogTag.
+_Measures the cost to subscription incurred by RxDogTag. Subscription means no emissions, subscription only._
 
 ### Simple (Observable)
 | RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
