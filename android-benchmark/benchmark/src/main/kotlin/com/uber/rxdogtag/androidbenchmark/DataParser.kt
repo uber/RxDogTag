@@ -82,7 +82,7 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 
   val output = buildString {
     appendln()
-    append("### ")
+    append("## ")
     append(type.title)
     appendln()
     appendln()
@@ -112,7 +112,7 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
                     largestDelta
                 )
               }
-          "#### ${grouping.name}" +
+          "### ${grouping.name}" +
               "\n| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |" +
               "\n|----------|----------|------------|-----------|" +
               "\n$content"
