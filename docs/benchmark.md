@@ -6,7 +6,7 @@ You can run the benchmark by executing `./gradlew :android-benchmark:benchmark:c
 
 You can then take the output from the benchmark and run it through `DataParser.kt` to get a structured breakdown as seen below.
 
-It's important to look at the units than at the percentages. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
+It's important to look at the units. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
 
 ## Results
 
