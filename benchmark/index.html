@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/uber_oss_logo.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
     
     
       
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -183,7 +183,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -315,66 +315,100 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-the-benchmark" title="Running the benchmark" class="md-nav__link">
+  <a href="#running-the-benchmark" class="md-nav__link">
     Running the benchmark
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#results" title="Results" class="md-nav__link">
-    Results
+  <a href="#event-throughput-grouped-by-number-of-events" class="md-nav__link">
+    Event throughput: grouped by number of events
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#event-throughput-grouped-by-number-of-events" title="Event throughput (grouped by number of events)" class="md-nav__link">
-    Event throughput (grouped by number of events)
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-item-observable" title="1 item (Observable)" class="md-nav__link">
-    1 item (Observable)
+  <a href="#simple-1-item-observable" class="md-nav__link">
+    Simple: 1 item (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1-item-flowable" title="1 item (Flowable)" class="md-nav__link">
-    1 item (Flowable)
+  <a href="#complex-1-item-observable" class="md-nav__link">
+    Complex: 1 item (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1000-items-observable" title="1000 items (Observable)" class="md-nav__link">
-    1000 items (Observable)
+  <a href="#simple-1_000-items-observable" class="md-nav__link">
+    Simple: 1_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1000-items-flowable" title="1000 items (Flowable)" class="md-nav__link">
-    1000 items (Flowable)
+  <a href="#complex-1_000-items-observable" class="md-nav__link">
+    Complex: 1_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1_000_000-items-observable" title="1_000_000 items (Observable)" class="md-nav__link">
-    1_000_000 items (Observable)
+  <a href="#simple-1_000_000-items-observable" class="md-nav__link">
+    Simple: 1_000_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1_000_000-items-flowable" title="1_000_000 items (Flowable)" class="md-nav__link">
-    1_000_000 items (Flowable)
+  <a href="#complex-1_000_000-items-observable" class="md-nav__link">
+    Complex: 1_000_000 items (Observable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1-item-flowable" class="md-nav__link">
+    Simple: 1 item (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1-item-flowable" class="md-nav__link">
+    Complex: 1 item (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1_000-items-flowable" class="md-nav__link">
+    Simple: 1_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1_000-items-flowable" class="md-nav__link">
+    Complex: 1_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1_000_000-items-flowable" class="md-nav__link">
+    Simple: 1_000_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1_000_000-items-flowable" class="md-nav__link">
+    Complex: 1_000_000 items (Flowable)
   </a>
   
 </li>
@@ -383,72 +417,40 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#subscribe-cost-grouped-by-complexity" title="Subscribe Cost (grouped by complexity)" class="md-nav__link">
-    Subscribe Cost (grouped by complexity)
+      
+        <li class="md-nav__item">
+  <a href="#subscribe-cost-grouped-by-complexity" class="md-nav__link">
+    Subscribe cost: grouped by complexity
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simple-observable" title="Simple (Observable)" class="md-nav__link">
+  <a href="#simple-observable" class="md-nav__link">
     Simple (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simple-flowable" title="Simple (Flowable)" class="md-nav__link">
+  <a href="#simple-flowable" class="md-nav__link">
     Simple (Flowable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#complex-observable" title="Complex (Observable)" class="md-nav__link">
+  <a href="#complex-observable" class="md-nav__link">
     Complex (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#complex-flowable" title="Complex (Flowable)" class="md-nav__link">
+  <a href="#complex-flowable" class="md-nav__link">
     Complex (Flowable)
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#end-to-end-amortized-cost" title="End-to-end amortized cost" class="md-nav__link">
-    End-to-end amortized cost
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#observable" title="Observable" class="md-nav__link">
-    Observable
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowable" title="Flowable" class="md-nav__link">
-    Flowable
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -561,66 +563,100 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#running-the-benchmark" title="Running the benchmark" class="md-nav__link">
+  <a href="#running-the-benchmark" class="md-nav__link">
     Running the benchmark
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#results" title="Results" class="md-nav__link">
-    Results
+  <a href="#event-throughput-grouped-by-number-of-events" class="md-nav__link">
+    Event throughput: grouped by number of events
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#event-throughput-grouped-by-number-of-events" title="Event throughput (grouped by number of events)" class="md-nav__link">
-    Event throughput (grouped by number of events)
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-item-observable" title="1 item (Observable)" class="md-nav__link">
-    1 item (Observable)
+  <a href="#simple-1-item-observable" class="md-nav__link">
+    Simple: 1 item (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1-item-flowable" title="1 item (Flowable)" class="md-nav__link">
-    1 item (Flowable)
+  <a href="#complex-1-item-observable" class="md-nav__link">
+    Complex: 1 item (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1000-items-observable" title="1000 items (Observable)" class="md-nav__link">
-    1000 items (Observable)
+  <a href="#simple-1_000-items-observable" class="md-nav__link">
+    Simple: 1_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1000-items-flowable" title="1000 items (Flowable)" class="md-nav__link">
-    1000 items (Flowable)
+  <a href="#complex-1_000-items-observable" class="md-nav__link">
+    Complex: 1_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1_000_000-items-observable" title="1_000_000 items (Observable)" class="md-nav__link">
-    1_000_000 items (Observable)
+  <a href="#simple-1_000_000-items-observable" class="md-nav__link">
+    Simple: 1_000_000 items (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#1_000_000-items-flowable" title="1_000_000 items (Flowable)" class="md-nav__link">
-    1_000_000 items (Flowable)
+  <a href="#complex-1_000_000-items-observable" class="md-nav__link">
+    Complex: 1_000_000 items (Observable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1-item-flowable" class="md-nav__link">
+    Simple: 1 item (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1-item-flowable" class="md-nav__link">
+    Complex: 1 item (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1_000-items-flowable" class="md-nav__link">
+    Simple: 1_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1_000-items-flowable" class="md-nav__link">
+    Complex: 1_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simple-1_000_000-items-flowable" class="md-nav__link">
+    Simple: 1_000_000 items (Flowable)
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complex-1_000_000-items-flowable" class="md-nav__link">
+    Complex: 1_000_000 items (Flowable)
   </a>
   
 </li>
@@ -629,72 +665,40 @@
     </nav>
   
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#subscribe-cost-grouped-by-complexity" title="Subscribe Cost (grouped by complexity)" class="md-nav__link">
-    Subscribe Cost (grouped by complexity)
+      
+        <li class="md-nav__item">
+  <a href="#subscribe-cost-grouped-by-complexity" class="md-nav__link">
+    Subscribe cost: grouped by complexity
   </a>
   
     <nav class="md-nav">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simple-observable" title="Simple (Observable)" class="md-nav__link">
+  <a href="#simple-observable" class="md-nav__link">
     Simple (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simple-flowable" title="Simple (Flowable)" class="md-nav__link">
+  <a href="#simple-flowable" class="md-nav__link">
     Simple (Flowable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#complex-observable" title="Complex (Observable)" class="md-nav__link">
+  <a href="#complex-observable" class="md-nav__link">
     Complex (Observable)
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#complex-flowable" title="Complex (Flowable)" class="md-nav__link">
+  <a href="#complex-flowable" class="md-nav__link">
     Complex (Flowable)
   </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#end-to-end-amortized-cost" title="End-to-end amortized cost" class="md-nav__link">
-    End-to-end amortized cost
-  </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#observable" title="Observable" class="md-nav__link">
-    Observable
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#flowable" title="Flowable" class="md-nav__link">
-    Flowable
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -726,312 +730,481 @@
 <h2 id="running-the-benchmark">Running the benchmark<a class="headerlink" href="#running-the-benchmark" title="Permanent link">&para;</a></h2>
 <p>You can run the benchmark by executing <code>./gradlew :android-benchmark:benchmark:connectedCheck</code>. Note that the benchmark should be run on an actual device</p>
 <p>You can then take the output from the benchmark and run it through <code>DataParser.kt</code> to get a structured breakdown as seen below.</p>
-<p>It&rsquo;s important to look at the units than at the percentages. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).</p>
-<h2 id="results">Results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
-<p>Running the benchmark on a <a href="https://store.google.com/product/pixel_3_specs">Pixel 3</a> yields the following results:</p>
-<h3 id="event-throughput-grouped-by-number-of-events">Event throughput (grouped by number of events)<a class="headerlink" href="#event-throughput-grouped-by-number-of-events" title="Permanent link">&para;</a></h3>
-<p>Measures the amount of time it takes for given number of elements to pass through the stream.</p>
-<h4 id="1-item-observable">1 item (Observable)<a class="headerlink" href="#1-item-observable" title="Permanent link">&para;</a></h4>
+<p>It&rsquo;s important to look at the units. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).</p>
+<p>Running the benchmark on a <a href="https://store.google.com/product/pixel_3_specs">Pixel 3</a> yields the below results.</p>
+<h2 id="event-throughput-grouped-by-number-of-events">Event throughput: grouped by number of events<a class="headerlink" href="#event-throughput-grouped-by-number-of-events" title="Permanent link">&para;</a></h2>
+<p><em>Measures the amount of time it takes for given number of elements to pass through the stream.</em></p>
+<h3 id="simple-1-item-observable">Simple: 1 item (Observable)<a class="headerlink" href="#simple-1-item-observable" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
 <th>Time (ms)</th>
-<th>Percent Increase</th>
+<th>Time (ns)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>RxDogTagAndroidPerf.observable1_false</td>
-<td>212ns</td>
-<td>0.000ms</td>
-<td></td>
+<td>false</td>
+<td>false</td>
+<td>0.001ms</td>
+<td>532ns</td>
 </tr>
 <tr>
-<td>RxDogTagAndroidPerf.observable1_true</td>
-<td>13,267ns</td>
-<td>0.013ms</td>
-<td>6158.02%</td>
+<td>true</td>
+<td>false</td>
+<td>0.007ms</td>
+<td>7,060ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.007ms</td>
+<td>7,378ns</td>
 </tr>
 </tbody>
 </table>
-<h4 id="1-item-flowable">1 item (Flowable)<a class="headerlink" href="#1-item-flowable" title="Permanent link">&para;</a></h4>
+<h3 id="complex-1-item-observable">Complex: 1 item (Observable)<a class="headerlink" href="#complex-1-item-observable" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
 <th>Time (ms)</th>
-<th>Percent Increase</th>
+<th>Time (ns)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>RxDogTagAndroidPerf.flowable1_false</td>
-<td>223ns</td>
-<td>0.000ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.flowable1_true</td>
-<td>13,129ns</td>
-<td>0.013ms</td>
-<td>5787.44%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="1000-items-observable">1000 items (Observable)<a class="headerlink" href="#1000-items-observable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.observable1000_false</td>
-<td>17,596ns</td>
-<td>0.018ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.observable1000_true</td>
-<td>156,953ns</td>
-<td>0.157ms</td>
-<td>791.98%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="1000-items-flowable">1000 items (Flowable)<a class="headerlink" href="#1000-items-flowable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.flowable1000_false</td>
-<td>17,854ns</td>
-<td>0.018ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.flowable1000_true</td>
-<td>143,646ns</td>
-<td>0.144ms</td>
-<td>704.56%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="1_000_000-items-observable">1_000_000 items (Observable)<a class="headerlink" href="#1_000_000-items-observable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.observable1000000_false</td>
-<td>17,078,596ns</td>
-<td>17.079ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.observable1000000_true</td>
-<td>161,099,912ns</td>
-<td>161.100ms</td>
-<td>843.29%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="1_000_000-items-flowable">1_000_000 items (Flowable)<a class="headerlink" href="#1_000_000-items-flowable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.flowable1000000_false</td>
-<td>17,790,262ns</td>
-<td>17.790ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.flowable1000000_true</td>
-<td>152,887,724ns</td>
-<td>152.888ms</td>
-<td>759.39%</td>
-</tr>
-</tbody>
-</table>
-<h3 id="subscribe-cost-grouped-by-complexity">Subscribe Cost (grouped by complexity)<a class="headerlink" href="#subscribe-cost-grouped-by-complexity" title="Permanent link">&para;</a></h3>
-<p>This measures the cost to subscription incurred by RxDogTag.</p>
-<h4 id="simple-observable">Simple (Observable)<a class="headerlink" href="#simple-observable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.observable_false_subscribe_simple</td>
-<td>112ns</td>
-<td>0.000ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.observable_true_subscribe_simple</td>
-<td>13,017ns</td>
-<td>0.013ms</td>
-<td>11522.32%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="simple-flowable">Simple (Flowable)<a class="headerlink" href="#simple-flowable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.flowable_false_subscribe_simple</td>
-<td>147ns</td>
-<td>0.000ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.flowable_true_subscribe_simple</td>
-<td>12,725ns</td>
-<td>0.013ms</td>
-<td>8556.46%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="complex-observable">Complex (Observable)<a class="headerlink" href="#complex-observable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.observable_false_subscribe_complex</td>
-<td>5,322ns</td>
-<td>0.005ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.observable_true_subscribe_complex</td>
-<td>25,046ns</td>
-<td>0.025ms</td>
-<td>370.61%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="complex-flowable">Complex (Flowable)<a class="headerlink" href="#complex-flowable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.flowable_false_subscribe_complex</td>
-<td>8,376ns</td>
-<td>0.008ms</td>
-<td></td>
-</tr>
-<tr>
-<td>RxDogTagAndroidPerf.flowable_true_subscribe_complex</td>
-<td>49,184ns</td>
+<td>true</td>
+<td>false</td>
 <td>0.049ms</td>
-<td>487.20%</td>
+<td>49,195ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.050ms</td>
+<td>50,492ns</td>
+</tr>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.054ms</td>
+<td>53,672ns</td>
 </tr>
 </tbody>
 </table>
-<h3 id="end-to-end-amortized-cost">End-to-end amortized cost<a class="headerlink" href="#end-to-end-amortized-cost" title="Permanent link">&para;</a></h3>
-<p>This measures the end-to-end amortized cost.</p>
-<h4 id="observable">Observable<a class="headerlink" href="#observable" title="Permanent link">&para;</a></h4>
+<h3 id="simple-1_000-items-observable">Simple: 1_000 items (Observable)<a class="headerlink" href="#simple-1_000-items-observable" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
 <th>Time (ms)</th>
-<th>Percent Increase</th>
+<th>Time (ns)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>RxDogTagAndroidPerf.observable_false_e2e</td>
-<td>99,010ns</td>
-<td>0.099ms</td>
-<td></td>
+<td>false</td>
+<td>false</td>
+<td>0.024ms</td>
+<td>23,968ns</td>
 </tr>
 <tr>
-<td>RxDogTagAndroidPerf.observable_true_e2e</td>
-<td>145,833ns</td>
-<td>0.146ms</td>
-<td>47.29%</td>
-</tr>
-</tbody>
-</table>
-<h4 id="flowable">Flowable<a class="headerlink" href="#flowable" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>Benchmark</th>
-<th>Time (ns)</th>
-<th>Time (ms)</th>
-<th>Percent Increase</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>RxDogTagAndroidPerf.flowable_false_e2e</td>
-<td>126,371ns</td>
-<td>0.126ms</td>
-<td></td>
+<td>true</td>
+<td>false</td>
+<td>0.041ms</td>
+<td>40,743ns</td>
 </tr>
 <tr>
-<td>RxDogTagAndroidPerf.flowable_true_e2e</td>
-<td>153,107ns</td>
+<td>true</td>
+<td>true</td>
 <td>0.153ms</td>
-<td>21.16%</td>
+<td>152,943ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-1_000-items-observable">Complex: 1_000 items (Observable)<a class="headerlink" href="#complex-1_000-items-observable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.291ms</td>
+<td>291,301ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.313ms</td>
+<td>312,864ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.313ms</td>
+<td>313,334ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-1_000_000-items-observable">Simple: 1_000_000 items (Observable)<a class="headerlink" href="#simple-1_000_000-items-observable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>23.994ms</td>
+<td>23,993,700ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>27.305ms</td>
+<td>27,304,847ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>166.887ms</td>
+<td>166,887,047ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-1_000_000-items-observable">Complex: 1_000_000 items (Observable)<a class="headerlink" href="#complex-1_000_000-items-observable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>249.740ms</td>
+<td>249,739,764ns</td>
+</tr>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>252.728ms</td>
+<td>252,727,577ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>257.554ms</td>
+<td>257,553,671ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-1-item-flowable">Simple: 1 item (Flowable)<a class="headerlink" href="#simple-1-item-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.001ms</td>
+<td>519ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.007ms</td>
+<td>7,234ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.008ms</td>
+<td>7,581ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-1-item-flowable">Complex: 1 item (Flowable)<a class="headerlink" href="#complex-1-item-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.050ms</td>
+<td>50,081ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.051ms</td>
+<td>50,787ns</td>
+</tr>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.056ms</td>
+<td>56,004ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-1_000-items-flowable">Simple: 1_000 items (Flowable)<a class="headerlink" href="#simple-1_000-items-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.025ms</td>
+<td>24,920ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.041ms</td>
+<td>40,568ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.153ms</td>
+<td>153,124ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-1_000-items-flowable">Complex: 1_000 items (Flowable)<a class="headerlink" href="#complex-1_000-items-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.273ms</td>
+<td>273,178ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>0.343ms</td>
+<td>342,812ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.375ms</td>
+<td>375,208ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-1_000_000-items-flowable">Simple: 1_000_000 items (Flowable)<a class="headerlink" href="#simple-1_000_000-items-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>23.953ms</td>
+<td>23,952,919ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>26.792ms</td>
+<td>26,791,825ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>162.547ms</td>
+<td>162,547,359ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-1_000_000-items-flowable">Complex: 1_000_000 items (Flowable)<a class="headerlink" href="#complex-1_000_000-items-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>true</td>
+<td>true</td>
+<td>300.186ms</td>
+<td>300,186,228ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>302.881ms</td>
+<td>302,880,498ns</td>
+</tr>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>304.952ms</td>
+<td>304,952,062ns</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subscribe-cost-grouped-by-complexity">Subscribe cost: grouped by complexity<a class="headerlink" href="#subscribe-cost-grouped-by-complexity" title="Permanent link">&para;</a></h2>
+<p><em>Measures the cost to subscription incurred by RxDogTag. Subscription means no emissions, subscription only.</em></p>
+<h3 id="simple-observable">Simple (Observable)<a class="headerlink" href="#simple-observable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.000ms</td>
+<td>331ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.007ms</td>
+<td>7,275ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="simple-flowable">Simple (Flowable)<a class="headerlink" href="#simple-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.000ms</td>
+<td>365ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.008ms</td>
+<td>7,506ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-observable">Complex (Observable)<a class="headerlink" href="#complex-observable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.002ms</td>
+<td>1,673ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.010ms</td>
+<td>9,770ns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complex-flowable">Complex (Flowable)<a class="headerlink" href="#complex-flowable" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>RxDogTag Enabled</th>
+<th>Guarded Observer Callbacks Enabled</th>
+<th>Time (ms)</th>
+<th>Time (ns)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>false</td>
+<td>false</td>
+<td>0.006ms</td>
+<td>5,741ns</td>
+</tr>
+<tr>
+<td>true</td>
+<td>false</td>
+<td>0.021ms</td>
+<td>20,783ns</td>
 </tr>
 </tbody>
 </table>
@@ -1108,7 +1281,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.245445c6.js"></script>
+      <script src="../assets/javascripts/application.c648116f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
