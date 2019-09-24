@@ -6,92 +6,123 @@ You can run the benchmark by executing `./gradlew :android-benchmark:benchmark:c
 
 You can then take the output from the benchmark and run it through `DataParser.kt` to get a structured breakdown as seen below.
 
-It's important to look at the units than at the percentages. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
+It's important to look at the units. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
 
-## Results
+Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_specs) yields the below results.
 
-Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_specs) yields the following results:
+## Event throughput: grouped by number of events
 
-### Event throughput (grouped by number of events)
+_Measures the amount of time it takes for given number of elements to pass through the stream._
 
-Measures the amount of time it takes for given number of elements to pass through the stream.
+### Simple: 1 item (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |   0.001ms |         532ns |
+| true  | false |   0.007ms |       7,060ns |
+| true  | true  |   0.007ms |       7,378ns |
 
-#### 1 item (Observable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|----------|------------|-----------|------------------|
-|RxDogTagAndroidPerf.observable1_false | 212ns | 0.000ms|
-|RxDogTagAndroidPerf.observable1_true | 13,267ns | 0.013ms | 6158.02% |
+### Complex: 1 item (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| true  | false | 0.049ms |      49,195ns |
+| true  | true  | 0.050ms |      50,492ns |
+| false | false | 0.054ms |      53,672ns |
 
-#### 1 item (Flowable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|----------|------------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable1_false | 223ns | 0.000ms |
-| RxDogTagAndroidPerf.flowable1_true | 13,129ns | 0.013ms | 5787.44% |
+### Simple: 1_000 items (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |  0.024ms |      23,968ns |
+| true  | false |  0.041ms |      40,743ns |
+| true  | true  |  0.153ms |     152,943ns |
 
-#### 1000 items (Observable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.observable1000_false | 17,596ns | 0.018ms
-| RxDogTagAndroidPerf.observable1000_true | 156,953ns | 0.157ms | 791.98%
+### Complex: 1_000 items (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false | 0.291ms |     291,301ns |
+| true  | false | 0.313ms |     312,864ns |
+| true  | true  | 0.313ms |     313,334ns |
 
-#### 1000 items (Flowable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable1000_false | 17,854ns | 0.018ms
-| RxDogTagAndroidPerf.flowable1000_true | 143,646ns | 0.144ms | 704.56%
+### Simple: 1_000_000 items (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false | 23.994ms |  23,993,700ns |
+| true  | false | 27.305ms |  27,304,847ns |
+| true  | true  | 166.887ms | 166,887,047ns |
 
-#### 1_000_000 items (Observable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.observable1000000_false | 17,078,596ns | 17.079ms
-| RxDogTagAndroidPerf.observable1000000_true | 161,099,912ns | 161.100ms | 843.29%
+### Complex: 1_000_000 items (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| true  | false | 249.740ms | 249,739,764ns |
+| false | false | 252.728ms | 252,727,577ns |
+| true  | true  | 257.554ms | 257,553,671ns |
 
-#### 1_000_000 items (Flowable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable1000000_false | 17,790,262ns | 17.790ms
-| RxDogTagAndroidPerf.flowable1000000_true | 152,887,724ns | 152.888ms | 759.39%
+### Simple: 1 item (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |   0.001ms |         519ns |
+| true  | false |   0.007ms |       7,234ns |
+| true  | true  |   0.008ms |       7,581ns |
 
-### Subscribe Cost (grouped by complexity)
+### Complex: 1 item (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| true  | false | 0.050ms |      50,081ns |
+| true  | true  | 0.051ms |      50,787ns |
+| false | false | 0.056ms |      56,004ns |
 
-This measures the cost to subscription incurred by RxDogTag.
+### Simple: 1_000 items (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |  0.025ms |      24,920ns |
+| true  | false |  0.041ms |      40,568ns |
+| true  | true  |  0.153ms |     153,124ns |
 
-#### Simple (Observable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_false_subscribe_simple | 112ns | 0.000ms
-| RxDogTagAndroidPerf.observable_true_subscribe_simple | 13,017ns | 0.013ms | 11522.32%
+### Complex: 1_000 items (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false | 0.273ms |     273,178ns |
+| true  | true  | 0.343ms |     342,812ns |
+| true  | false | 0.375ms |     375,208ns |
 
-#### Simple (Flowable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_false_subscribe_simple | 147ns | 0.000ms
-| RxDogTagAndroidPerf.flowable_true_subscribe_simple | 12,725ns | 0.013ms | 8556.46%
+### Simple: 1_000_000 items (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false | 23.953ms |  23,952,919ns |
+| true  | false | 26.792ms |  26,791,825ns |
+| true  | true  | 162.547ms | 162,547,359ns |
 
-#### Complex (Observable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_false_subscribe_complex | 5,322ns | 0.005ms
-| RxDogTagAndroidPerf.observable_true_subscribe_complex | 25,046ns | 0.025ms | 370.61%
+### Complex: 1_000_000 items (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| true  | true  | 300.186ms | 300,186,228ns |
+| true  | false | 302.881ms | 302,880,498ns |
+| false | false | 304.952ms | 304,952,062ns |
 
-#### Complex (Flowable)
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_false_subscribe_complex | 8,376ns | 0.008ms
-| RxDogTagAndroidPerf.flowable_true_subscribe_complex | 49,184ns | 0.049ms | 487.20%
 
-### End-to-end amortized cost
+## Subscribe cost: grouped by complexity
 
-This measures the end-to-end amortized cost.
+_Measures the cost to subscription incurred by RxDogTag. Subscription means no emissions, subscription only._
 
-#### Observable
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.observable_false_e2e | 99,010ns | 0.099ms
-| RxDogTagAndroidPerf.observable_true_e2e | 145,833ns | 0.146ms | 47.29%
+### Simple (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |   0.000ms |         331ns |
+| true  | false |   0.007ms |       7,275ns |
 
-#### Flowable
-| Benchmark | Time (ns) | Time (ms) | Percent Increase |
-|---------- |-----------|-----------|------------------|
-| RxDogTagAndroidPerf.flowable_false_e2e | 126,371ns | 0.126ms
-| RxDogTagAndroidPerf.flowable_true_e2e | 153,107ns | 0.153ms | 21.16%
+### Simple (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |   0.000ms |         365ns |
+| true  | false |   0.008ms |       7,506ns |
+
+### Complex (Observable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |  0.002ms |       1,673ns |
+| true  | false |  0.010ms |       9,770ns |
+
+### Complex (Flowable)
+| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |
+|----------|----------|------------|-----------|
+| false | false |  0.006ms |       5,741ns |
+| true  | false |  0.021ms |      20,783ns |

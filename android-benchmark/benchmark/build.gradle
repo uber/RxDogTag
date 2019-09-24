@@ -19,13 +19,11 @@ apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "androidx.benchmark"
 
 android {
-  compileSdkVersion 28
-  buildToolsVersion '28.0.3'
+  compileSdkVersion 29
 
   defaultConfig {
     minSdkVersion 14
-    targetSdkVersion 28
-    testInstrumentationRunner "androidx.benchmark.AndroidBenchmarkRunner"
+    targetSdkVersion 29
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -37,11 +35,18 @@ android {
   }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+}
+
 dependencies {
-  implementation "androidx.benchmark:benchmark:1.0.0-alpha01"
-  implementation "androidx.test:runner:1.1.1"
-  implementation "androidx.test:rules:1.1.1"
-  implementation "androidx.test.ext:junit:1.1.0"
+  implementation "androidx.benchmark:benchmark-common:${deps.versions.androidBenchmark}"
+  implementation "androidx.benchmark:benchmark-junit4:${deps.versions.androidBenchmark}"
+  implementation "androidx.test:runner:1.2.0"
+  implementation "androidx.test:rules:1.2.0"
+  implementation "androidx.test.ext:junit:1.1.1"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:1.3.50"
   implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
   implementation deps.test.junit

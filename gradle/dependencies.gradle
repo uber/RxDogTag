@@ -16,6 +16,7 @@
 
 def versions = [
     animalSniffer: '1.5.0',
+    androidBenchmark: '1.0.0-alpha06',
     errorProne: '2.3.3',
     errorPronePlugin: '0.7.1',
     gjf: '1.7',

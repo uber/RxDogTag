@@ -5,47 +5,55 @@ import java.util.Locale
 fun main() {
 
   val data = """
-benchmark:    26,984,534 ns RxDogTagAndroidPerf.observable1000000_false
-benchmark:           148 ns RxDogTagAndroidPerf.observable_false_subscribe_simple
-Timed out waiting for process to appear on google-pixel_2-HT79N1A00303.
-benchmark:        16,765 ns RxDogTagAndroidPerf.flowable1_true
-benchmark:        15,677 ns RxDogTagAndroidPerf.observable1_true_withoutGuardedDelegate
-benchmark:        15,895 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple
-benchmark:        27,913 ns RxDogTagAndroidPerf.observable1000_false
-benchmark:    34,621,670 ns RxDogTagAndroidPerf.observable1000000_true_withoutGuardedDelegate
-benchmark:        15,630 ns RxDogTagAndroidPerf.observable_true_subscribe_simple_withoutGuardedDelegate
-benchmark:       129,817 ns RxDogTagAndroidPerf.observable_true_e2e
-benchmark:   224,655,387 ns RxDogTagAndroidPerf.flowable1000000_true
-benchmark:         5,331 ns RxDogTagAndroidPerf.observable_false_subscribe_complex
-benchmark:       152,865 ns RxDogTagAndroidPerf.flowable_true_e2e_withoutGuardedDelegate
-benchmark:           423 ns RxDogTagAndroidPerf.observable1_false
-benchmark:       126,928 ns RxDogTagAndroidPerf.observable_true_e2e_withoutGuardedDelegate
-benchmark:        29,531 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex
-benchmark:       210,677 ns RxDogTagAndroidPerf.flowable1000_true
-benchmark:    29,811,097 ns RxDogTagAndroidPerf.flowable1000000_false
-benchmark:        60,498 ns RxDogTagAndroidPerf.flowable_false_subscribe_complex
-benchmark:        36,630 ns RxDogTagAndroidPerf.flowable_true_subscribe_complex_withoutGuardedCall
-benchmark:       110,730 ns RxDogTagAndroidPerf.flowable_false_e2e
-benchmark:   280,736,746 ns RxDogTagAndroidPerf.observable1000000_true
-benchmark:        15,881 ns RxDogTagAndroidPerf.flowable_true_subscribe_simple_withoutGuardedDelegate
-benchmark:        15,973 ns RxDogTagAndroidPerf.observable_true_subscribe_simple
-benchmark:        23,033 ns RxDogTagAndroidPerf.observable_true_subscribe_complex_withoutGuardedDelegate
-benchmark:        22,095 ns RxDogTagAndroidPerf.observable_true_subscribe_complex
-benchmark:        16,603 ns RxDogTagAndroidPerf.observable1_true
-benchmark:       176,510 ns RxDogTagAndroidPerf.flowable_true_e2e
-benchmark:        51,765 ns RxDogTagAndroidPerf.flowable1000_true_withoutGuardedDelegate
-benchmark:           198 ns RxDogTagAndroidPerf.flowable_false_subscribe_simple
-benchmark:       104,063 ns RxDogTagAndroidPerf.observable_false_e2e
-benchmark:    36,557,868 ns RxDogTagAndroidPerf.flowable1000000_true_withoutGuardedDelegate
-benchmark:        49,496 ns RxDogTagAndroidPerf.observable1000_true_withoutGuardedDelegate
-benchmark:           320 ns RxDogTagAndroidPerf.flowable1_false
-benchmark:        16,157 ns RxDogTagAndroidPerf.flowable1_true_withoutGuardedDelegate
-benchmark:       249,479 ns RxDogTagAndroidPerf.observable1000_true
-benchmark:        32,566 ns RxDogTagAndroidPerf.flowable1000_false
+benchmark:         9,770 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=0,guardedDelegateEnabled=false]
+benchmark:        20,783 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=0,guardedDelegateEnabled=false]
+benchmark:         7,506 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=0,guardedDelegateEnabled=false]
+benchmark:         7,275 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=0,guardedDelegateEnabled=false]
+benchmark:        50,492 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=true]
+benchmark:        50,787 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=true]
+benchmark:         7,581 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=true]
+benchmark:         7,378 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=true]
+benchmark:        49,195 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,guardedDelegateEnabled=false]
+benchmark:        50,081 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,guardedDelegateEnabled=false]
+benchmark:         7,234 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,guardedDelegateEnabled=false]
+benchmark:         7,060 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,guardedDelegateEnabled=false]
+benchmark:       313,334 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]
+benchmark:       342,812 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=true]
+benchmark:       153,124 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]
+benchmark:       152,943 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=true]
+benchmark:       312,864 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]
+benchmark:       375,208 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,guardedDelegateEnabled=false]
+benchmark:        40,568 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]
+benchmark:        40,743 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,guardedDelegateEnabled=false]
+benchmark:   257,553,671 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]
+benchmark:   300,186,228 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=true]
+benchmark:   162,547,359 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]
+benchmark:   166,887,047 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=true]
+benchmark:   249,739,764 ns RxDogTagAndroidPerf.observable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:   302,880,498 ns RxDogTagAndroidPerf.flowable_complex[enabled=true,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:    26,791,825 ns RxDogTagAndroidPerf.flowable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:    27,304,847 ns RxDogTagAndroidPerf.observable_simple[enabled=true,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:         1,673 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=0,guardedDelegateEnabled=false]
+benchmark:         5,741 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=0,guardedDelegateEnabled=false]
+benchmark:           365 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=0,guardedDelegateEnabled=false]
+benchmark:           331 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=0,guardedDelegateEnabled=false]
+benchmark:        53,672 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,guardedDelegateEnabled=false]
+benchmark:        56,004 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,guardedDelegateEnabled=false]
+benchmark:           519 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,guardedDelegateEnabled=false]
+benchmark:           532 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,guardedDelegateEnabled=false]
+benchmark:       291,301 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]
+benchmark:       273,178 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,guardedDelegateEnabled=false]
+benchmark:        24,920 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]
+benchmark:        23,968 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,guardedDelegateEnabled=false]
+benchmark:   252,727,577 ns RxDogTagAndroidPerf.observable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:   304,952,062 ns RxDogTagAndroidPerf.flowable_complex[enabled=false,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:    23,952,919 ns RxDogTagAndroidPerf.flowable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]
+benchmark:    23,993,700 ns RxDogTagAndroidPerf.observable_simple[enabled=false,times=1,000,000,guardedDelegateEnabled=false]
   """.trimIndent()
 
   // Skip the header line
   val results = data.lineSequence()
+      .filterNot { it.isBlank() }
       .filter { it.startsWith("benchmark") }
       .map { line ->
         // benchmark:     6,154,949 ns SpeedTest.gson_autovalue_buffer_fromJson_minified
@@ -62,25 +70,32 @@ benchmark:        32,566 ns RxDogTagAndroidPerf.flowable1000_false
 }
 
 private fun printResults(type: ResultType, results: List<Analysis>) {
-  val groupedResults = type.groupings.associate { grouping ->
-    grouping to results.filter {
-      grouping.matchFunction(it.benchmark)
-    }
+  val groupedResults = type.groupings.associateWith { grouping ->
+      results.filter {
+        grouping.matchFunction(it.benchmark)
+      }
   }
-  val benchmarkLength = results.maxBy { it.benchmark.length }!!.benchmark.length
+  check(groupedResults.isNotEmpty()) {
+    "Empty results for $type with \n$results"
+  }
   val scoreLength = results.maxBy { it.formattedScore.length }!!.formattedScore.length
 
   val output = buildString {
     appendln()
-    append("### ")
+    append("## ")
     append(type.title)
     appendln()
     appendln()
+    append("_")
     append(type.description)
+    append("_")
     appendln()
     appendln()
     groupedResults.entries
         .joinTo(this, "\n\n", postfix = "\n") { (grouping, matchedAnalyses) ->
+          check(matchedAnalyses.isNotEmpty()) {
+            "Empty analysis for $type, $grouping, with \n$matchedAnalyses"
+          }
           val sorted = matchedAnalyses.sortedBy { it.score }
           val first = sorted[0]
           val largestDelta = sorted.drop(1)
@@ -92,21 +107,16 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
                 it.length
               }!!
               .length
-          val msLength = matchedAnalyses.map { String.format(Locale.US, "%.3f", it.score.toFloat() / 1000000) }
-              .maxBy { it.length }!!
-              .length
           val content = sorted
-              .withIndex()
-              .joinToString("\n") { (index, analysis) ->
-                analysis.formattedString(benchmarkLength,
+              .joinToString("\n") { analysis ->
+                analysis.formattedString(
                     scoreLength,
-                    largestDelta,
-                    msLength,
-                    if (index == 0) null else first.score)
+                    largestDelta
+                )
               }
-          "#### ${grouping.name}" +
-              "\n| Benchmark | Time (ns) | Time (ms) | Percent Increase |" +
-              "\n|----------|------------|-----------|------------------|" +
+          "### ${grouping.name}" +
+              "\n| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |" +
+              "\n|----------|----------|------------|-----------|" +
               "\n$content"
         }
   }
@@ -116,59 +126,59 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
 
 private fun String.isFlowable(): Boolean = "flowable" in this
 private fun String.isObservable(): Boolean = "observable" in this
+private fun String.isSubscribeThroughput(): Boolean = "times=0" in this
+private fun String.isSingle(): Boolean = "=1,g" in this
+private fun String.isThousand(): Boolean = "=1,000,g" in this
+private fun String.isMillion(): Boolean = "=1,000,000,g" in this
+private fun String.isSimple(): Boolean = "simple" in this
+private fun String.isComplex(): Boolean = "complex" in this
 
 private enum class ResultType(val title: String, val description: String, val groupings: List<Grouping>) {
   THROUGHPUT(
       title = "Event throughput: grouped by number of events",
       description = "Measures the amount of time it takes for given number of elements to pass through the stream.",
-      groupings = listOf(
-          Grouping("1 item (Observable)") {
-            "1_" in it && it.isObservable()
-          },
-          Grouping("1 item (Flowable)") {
-            "1_" in it && it.isFlowable()
-          },
-          Grouping("1000 items (Observable)") {
-            "1000_" in it && it.isObservable()
-          },
-          Grouping("1000 items (Flowable)") {
-            "1000_" in it && it.isFlowable()
-          },
-          Grouping("1_000_000 items (Observable)") {
-            "1000000_" in it && it.isObservable()
-          },
-          Grouping("1_000_000 items (Flowable)") {
-            "1000000_" in it && it.isFlowable()
+      groupings = run {
+        mutableListOf<Grouping>().apply {
+          val complexities: Map<String, (String) -> Boolean> = mapOf(
+              "Simple" to String::isSimple,
+              "Complex" to String::isComplex
+          )
+          val counts: Map<String, (String) -> Boolean> = mapOf(
+              "1 item" to String::isSingle,
+              "1_000 items" to String::isThousand,
+              "1_000_000 items" to String::isMillion
+          )
+          val types: Map<String, (String) -> Boolean> = mapOf(
+              "Observable" to String::isObservable,
+              "Flowable" to String::isFlowable
+          )
+          for (type in types) {
+            for (count in counts) {
+              for (complexity in complexities) {
+                add(Grouping("${complexity.key}: ${count.key} (${type.key})") {
+                  complexity.value.invoke(it) && count.value.invoke(it) && type.value.invoke(it)
+                })
+              }
+            }
           }
-      )
+        }
+      }
   ),
   SUBSCRIBE(
       title = "Subscribe cost: grouped by complexity",
-      description = "This measures the cost to subscription incurred by RxDogTag.",
+      description = "Measures the cost to subscription incurred by RxDogTag. Subscription means no emissions, subscription only.",
       groupings = listOf(
           Grouping("Simple (Observable)") {
-            "subscribe" in it && "simple" in it && it.isObservable()
+            it.isSimple() && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Simple (Flowable)") {
-            "subscribe" in it && "simple" in it && it.isFlowable()
+            it.isSimple() && it.isSubscribeThroughput() && it.isFlowable()
           },
           Grouping("Complex (Observable)") {
-            "subscribe" in it && "complex" in it && it.isObservable()
+            it.isComplex() && it.isSubscribeThroughput() && it.isObservable()
           },
           Grouping("Complex (Flowable)") {
-            "subscribe" in it && "complex" in it && it.isFlowable()
-          }
-      )
-  ),
-  E2E(
-      title = "E2E amortized cost",
-      description = "This measures the end-to-end amortized cost.",
-      groupings = listOf(
-          Grouping("Observable") {
-            "e2e" in it && it.isObservable()
-          },
-          Grouping("Flowable") {
-            "e2e" in it && it.isFlowable()
+            it.isComplex() && it.isSubscribeThroughput() && it.isFlowable()
           }
       )
   )
@@ -186,28 +196,26 @@ private data class Analysis(
 ) {
   override fun toString() = "$benchmark\t$score\t$units"
 
-  fun formattedString(benchmarkLength: Int, scoreLength: Int, msLength: Int, deltaLength: Int, base: Long?): String {
-    return if (base == null) {
-      String.format(Locale.US,
-          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s |",
-          benchmark,
-          formattedScore,
-          units,
-          score.toFloat() / 1000000,
-          "ms")
-    } else {
-      val delta = ((score - base).toDouble() / base) * 100
-      String.format(Locale.US,
-          "| %-${benchmarkLength}s | %${scoreLength}s%s | %$msLength.3f%s | %$deltaLength.2f%% |",
-          benchmark,
-          formattedScore,
-          units,
-          score.toFloat() / 1000000,
-          "ms",
-          delta)
-    }
+  val rxDogTagEnabled = benchmark.substringAfter("enabled=")
+      .substringBefore(",")
+      .toBoolean()
+  val guardedObserverCallbacksEnabled = benchmark.substringAfter("guardedDelegateEnabled=")
+      .substringBefore("]")
+      .toBoolean()
+
+  fun formattedString(scoreLength: Int, msLength: Int): String {
+    return String.format(Locale.US,
+        "| %-${5}s | %-${5}s | %$msLength.3f%s | %${scoreLength}s%s |",
+        rxDogTagEnabled,
+        guardedObserverCallbacksEnabled,
+        score.toFloat() / 1000000,
+        "ms",
+        formattedScore,
+        units
+    )
   }
 
   val formattedScore: String
     get() = String.format(Locale.US, "%,d", score)
 }
+
