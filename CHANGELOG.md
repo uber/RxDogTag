@@ -1,6 +1,45 @@
 Changelog
 =========
 
+Version 0.3.0
+-------------
+
+_2019-09-23_
+
+**New: Builder option to disable guarded observer callbacks. [#43](https://github.com/uber/RxDogTag/pull/43)**
+
+By default, RxDogTag will try/catch every onNext/onSuccess/onComplete calls to try to catch exceptions
+and modify the trace before they're handed to the (unhandled) onError. If you only want to handle
+upstream errors, you can disable this behavior in the builder now. This can be useful in hot paths 
+where performance is more of a concern.
+
+```java
+RxDogTag.builder()
+    .guardObserverCallbacks(false)
+    .install();
+```
+
+**New: ErrorReceivers API. [#45](https://github.com/uber/RxDogTag/pull/45)**
+
+For users that have custom onError() implementations but want to supplement it with RxDogTag, there are
+two new APIs to help with this.
+
+`RxDogTagErrorReceiver` is a simple interface that your custom observer can implement to indicate that
+it wants its onError() method to be called with the aforementioned guarded observer callback. Note 
+however that modified tagged exceptions in this case will be delivered to `RxJavaPlugins.onError()`.
+
+`RxDogTagTaggedExceptionReceiver` is an interface that your custom observer can implement to indicate
+that it wants its onError() called with the modified tagged exception. This is useful if you have
+custom onError() handling but want to use/report RxDogTag's tagged information for something custom.
+
+**Misc**
+- Proguard file has been tuned to use the more idiomatic `-keeppackagenames`. [#29](https://github.com/uber/RxDogTag/pull/29)
+- We have a website now! https://uber.github.io/RxDogTag
+- We've been doing a lot of work to add thorough benchmarks for RxDogTag. A dedicated section can be 
+found on the website at https://uber.github.io/RxDogTag/benchmark.
+
+Special thanks to [@emartynov](https://github.com/emartynov) for contributing to this release!
+
 Version 0.2.0
 -------------
 
