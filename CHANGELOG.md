@@ -8,7 +8,7 @@ _2019-09-23_
 
 **New: Builder option to disable guarded observer callbacks. [#43](https://github.com/uber/RxDogTag/pull/43)**
 
-By default, RxDogTag will try/catch every onNext/onSuccess/onComplete calls to try to catch exceptions
+By default, RxDogTag will try/catch every onNext/onSuccess/onComplete calls in its observers to try to catch exceptions
 and modify the trace before they're handed to the (unhandled) onError. If you only want to handle
 upstream errors, you can disable this behavior in the builder now. This can be useful in hot paths 
 where performance is more of a concern.
