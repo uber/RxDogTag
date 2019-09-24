@@ -8,7 +8,7 @@ You can then take the output from the benchmark and run it through `DataParser.k
 
 It's important to look at the units. In general, RxDogTag does add some overhead to your RxJava subscriptions but that overhead is irrelevant in the larger execution context of the code around it (less than a millisecond in most cases).
 
-Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_specs) yields the following results:
+Running the benchmark on a [Pixel 3](https://store.google.com/product/pixel_3_specs) yields the below results.
 
 ## Event throughput: grouped by number of events
 
