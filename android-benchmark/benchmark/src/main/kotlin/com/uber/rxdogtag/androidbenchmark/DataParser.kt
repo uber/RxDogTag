@@ -106,17 +106,15 @@ private fun printResults(type: ResultType, results: List<Analysis>) {
               }!!
               .length
           val content = sorted
-              .withIndex()
-              .joinToString("\n") { (index, analysis) ->
+              .joinToString("\n") { analysis ->
                 analysis.formattedString(
-                    index,
                     scoreLength,
                     largestDelta
                 )
               }
           "#### ${grouping.name}" +
-              "\n|  | RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |" +
-              "\n|----------|----------|----------|------------|-----------|" +
+              "\n| RxDogTag Enabled | Guarded Observer Callbacks Enabled | Time (ms) | Time (ns) |" +
+              "\n|----------|----------|------------|-----------|" +
               "\n$content"
         }
   }
@@ -203,9 +201,9 @@ private data class Analysis(
       .substringBefore("]")
       .toBoolean()
 
-  fun formattedString(index: Int, scoreLength: Int, msLength: Int): String {
+  fun formattedString(scoreLength: Int, msLength: Int): String {
     return String.format(Locale.US,
-        "| $index | %-${5}s | %-${5}s | %$msLength.3f%s | %${scoreLength}s%s |",
+        "| %-${5}s | %-${5}s | %$msLength.3f%s | %${scoreLength}s%s |",
         rxDogTagEnabled,
         guardedObserverCallbacksEnabled,
         score.toFloat() / 1000000,
