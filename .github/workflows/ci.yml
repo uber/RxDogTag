@@ -11,14 +11,17 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Setup Gradle
+      # Initial gradle configuration, install dependencies, etc
+      run: ./gradlew help
     - name: Spot check
       # Run spotless first to fail fast on spotless issues
       run: ./gradlew spotlessCheck --stacktrace
-    - name: Build with Gradle
+    - name: Build
       run: ./gradlew assemble --stacktrace
-    - name: Test with Gradle
+    - name: Run tests
       run: ./gradlew test --stacktrace
-    - name: Check with Gradle
+    - name: Final checks
       run: ./gradlew check --stacktrace
     - name: Upload snapshot
       env:
