@@ -11,6 +11,9 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Spot check
+      # Run spotless first to fail fast on spotless issues
+      run: ./gradlew spotlessCheck --stacktrace
     - name: Build with Gradle
       run: ./gradlew assemble --stacktrace
     - name: Test with Gradle
