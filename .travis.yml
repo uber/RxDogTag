@@ -19,8 +19,8 @@ install: ./gradlew build --stacktrace
 script:
 - ./gradlew check --stacktrace
 
-after_success:
-- .buildscript/deploy_snapshot.sh
+#after_success:
+#- .buildscript/deploy_snapshot.sh
 
 env:
   global:
