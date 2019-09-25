@@ -5,10 +5,6 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      # For snapshots
-      ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SonatypeUsername }}
-      ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SonatypePassword }}
     steps:
     - uses: actions/checkout@v1
     - name: set up JDK 1.8
@@ -20,5 +16,8 @@ jobs:
     - name: Check with Gradle
       run: ./gradlew check --stacktrace
     - name: Upload snapshot
+      env:
+        ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SonatypeUsername }}
+        ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SonatypePassword }}
       run: ./gradlew uploadArchives
       if: success() && github.ref == 'master' && github.event_name != 'pull_request'
