@@ -24,7 +24,7 @@ jobs:
       run: ./gradlew test --stacktrace
     - name: Final checks
       run: ./gradlew check --stacktrace
-    - name: Upload snapshot
+      - name: Upload snapshot (master only)
       env:
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SonatypeUsername }}
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SonatypePassword }}
