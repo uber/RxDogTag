@@ -24,9 +24,11 @@ jobs:
       run: ./gradlew test --stacktrace
     - name: Final checks
       run: ./gradlew check --stacktrace
+    - name: Checking github ref
+      run: echo ${{ github.ref }}
     - name: Upload snapshot (master only)
       env:
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SonatypeUsername }}
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SonatypePassword }}
       run: ./gradlew uploadArchives
-      if: github.event_name != 'pull_request'
+      if: success() && github.event_name != 'pull_request'
