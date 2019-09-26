@@ -29,4 +29,4 @@ jobs:
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SonatypeUsername }}
         ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SonatypePassword }}
       run: ./gradlew uploadArchives
-      if: github.ref == 'master' && github.event_name != 'pull_request'
+      if: github.ref == 'master'
