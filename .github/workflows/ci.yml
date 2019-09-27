@@ -8,6 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # TODO Add 13 once Gradle 6.0 is out
         java_version: [1.8, 9, 10, 11, 12]
     steps:
     - name: Checkout
