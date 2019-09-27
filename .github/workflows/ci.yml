@@ -1,4 +1,4 @@
-name: RxDogTag CI
+name: CI
 
 on: [push]
 
