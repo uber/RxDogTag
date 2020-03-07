@@ -4,7 +4,7 @@ Changelog
 Version 1.0.0
 -------------
 
-_2020_03_07_
+_2020-03-07_
 
 * Stable release!
 * This release is identical in functionality to 0.3.0.
