@@ -12,7 +12,6 @@ _2020-03-07_
 ```
 RxJava 2.2.18
 AutoDispose 1.4.0
-Android Benchmark 1.0.0
 ```
 
 Version 0.3.0
