@@ -1,6 +1,20 @@
 Changelog
 =========
 
+Version 1.0.0
+-------------
+
+_2020_03_07_
+
+* Stable release!
+* This release is identical in functionality to 0.3.0.
+* Various dependency upgrades. ([#55](https://github.com/uber/RxDogTag/pull/55))
+```
+RxJava 2.2.18
+AutoDispose 1.4.0
+Android Benchmark 1.0.0
+```
+
 Version 0.3.0
 -------------
 
