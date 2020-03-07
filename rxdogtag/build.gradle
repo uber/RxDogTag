@@ -35,7 +35,7 @@ dokka {
 
   // Output as Github flavored markdown so that docs show up inline in mkdocs website
   outputFormat = 'gfm'
-  outputDirectory = "$rootDir/docs/0.x"
+  outputDirectory = "$rootDir/docs/1.x"
   classpath = new ArrayList<File>(project.tasks['assemble'].outputs.files.files)
   sourceDirs = files('src/main/java')
 }
