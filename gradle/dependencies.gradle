@@ -46,7 +46,7 @@ def rx = [
 
 def test = [
     junit: 'junit:junit:4.12',
-    truth: 'com.google.truth:truth:1.0'
+    truth: 'com.google.truth:truth:1.0.1'
 ]
 
 ext.deps = [

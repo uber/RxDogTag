@@ -211,7 +211,7 @@ public class DogTagObserverTest implements DogTagTest {
     Exception original = new RuntimeException("Blah");
     Observable.<Integer>error(original).subscribe(o);
     Throwable recorded = recordedError.get();
-    assertThat(recorded).isSameAs(original);
+    assertThat(recorded).isSameInstanceAs(original);
   }
 
   @Test
@@ -238,7 +238,7 @@ public class DogTagObserverTest implements DogTagTest {
     Exception original = new RuntimeException("Blah");
     Observable.<Integer>error(original).subscribe(o);
     Throwable recorded = recordedError.get();
-    assertThat(recorded).isSameAs(original);
+    assertThat(recorded).isSameInstanceAs(original);
   }
 
   @Test
@@ -278,9 +278,9 @@ public class DogTagObserverTest implements DogTagTest {
       fail("thrown was null! This means the observer's onError was never called");
       return;
     }
-    assertThat(thrown).hasCauseThat().isSameAs(original);
+    assertThat(thrown).hasCauseThat().isSameInstanceAs(original);
     assertThat(recorded).isInstanceOf(OnErrorNotImplementedException.class);
-    assertThat(recorded).hasCauseThat().isSameAs(thrown);
+    assertThat(recorded).hasCauseThat().isSameInstanceAs(thrown);
     // The original cause was put in this
     assertThat(recorded).hasMessageThat().contains("java.lang.RuntimeException: Blah");
 

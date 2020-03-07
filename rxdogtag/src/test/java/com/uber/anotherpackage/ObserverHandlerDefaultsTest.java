@@ -38,11 +38,11 @@ public final class ObserverHandlerDefaultsTest {
     TestObserver<Integer> o = new TestObserver<>();
     TestSubscriber<Integer> s = new TestSubscriber<>();
 
-    assertThat(handler.handle(Flowable.never(), s)).isSameAs(s);
-    assertThat(handler.handle(Observable.never(), o)).isSameAs(o);
-    assertThat(handler.handle(Maybe.never(), o)).isSameAs(o);
-    assertThat(handler.handle(Single.never(), o)).isSameAs(o);
-    assertThat(handler.handle(Completable.never(), o)).isSameAs(o);
+    assertThat(handler.handle(Flowable.never(), s)).isSameInstanceAs(s);
+    assertThat(handler.handle(Observable.never(), o)).isSameInstanceAs(o);
+    assertThat(handler.handle(Maybe.never(), o)).isSameInstanceAs(o);
+    assertThat(handler.handle(Single.never(), o)).isSameInstanceAs(o);
+    assertThat(handler.handle(Completable.never(), o)).isSameInstanceAs(o);
   }
 
   /**
