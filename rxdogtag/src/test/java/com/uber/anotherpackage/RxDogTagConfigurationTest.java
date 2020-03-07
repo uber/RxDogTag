@@ -115,7 +115,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
 
@@ -138,7 +138,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
 
@@ -154,7 +154,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
 
     // Confirm that we ignored the subscribe line in this test because of the matching package.
@@ -171,7 +171,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
     assertThat(e.getStackTrace()).isEmpty();
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString())
         .doesNotContain(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
@@ -190,7 +190,7 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
     assertThat(e.getStackTrace()).isEmpty();
     assertThat(e).hasMessageThat().isEqualTo(expected.getMessage());
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
 
@@ -205,11 +205,11 @@ public final class RxDogTagConfigurationTest implements DogTagTest {
 
     // Assert it's the original, untouched exception
     assertThat(e).isInstanceOf(OnErrorNotImplementedException.class);
-    assertThat(e).isSameAs(parent);
+    assertThat(e).isSameInstanceAs(parent);
     assertThat(e.getStackTrace()).isEqualTo(parent.getStackTrace());
     assertThat(e).hasMessageThat().isEqualTo(parent.getMessage());
     Throwable cause = e.getCause();
-    assertThat(cause).isSameAs(expected);
+    assertThat(cause).isSameInstanceAs(expected);
     assertThat(cause.getStackTrace()[1].toString()).contains(RxDogTag.STACK_ELEMENT_SOURCE_HEADER);
   }
 

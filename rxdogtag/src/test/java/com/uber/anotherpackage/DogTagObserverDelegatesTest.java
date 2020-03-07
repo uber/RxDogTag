@@ -333,7 +333,7 @@ public class DogTagObserverDelegatesTest implements DogTagTest {
     assertUnwrappedError(recordedThrowable, lineNumber, originalError, delegateType);
 
     // Make sure we've restored the original handler
-    assertThat(Thread.currentThread().getUncaughtExceptionHandler()).isSameAs(handler);
+    assertThat(Thread.currentThread().getUncaughtExceptionHandler()).isSameInstanceAs(handler);
   }
 
   private Thread.UncaughtExceptionHandler prepareTest() {
