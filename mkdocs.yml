@@ -40,6 +40,9 @@ nav:
   - '1.X API':
       - 'rxdogtag': 1.x/rxdogtag/com.uber.rxdogtag/
       - 'rxdogtag-autodispose': 1.x/rxdogtag-autodispose/com.uber.rxdogtag.autodispose/
+  - '2.X API':
+      - 'rxdogtag': 2.x/rxdogtag/rxdogtag2/
+      - 'rxdogtag-autodispose': 2.x/rxdogtag-autodispose/rxdogtag2.autodispose2/
   - 'Benchmark': benchmark.md
   - 'Examples': examples.md
   - 'Under The Hood': under-the-hood.md
