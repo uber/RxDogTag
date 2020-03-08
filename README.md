@@ -6,10 +6,20 @@ error. This is _only_ for RxJava observers that do not implement `onError()`.
 
 ## Download
 
+If you're targeting RxJava 2:
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag)
 
 ```gradle
 implementation("com.uber.rxdogtag:rxdogtag:x.y.z")
+```
+
+If you're targeting RxJava 3:
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag2/rxdogtag.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag2/rxdogtag)
+
+```gradle
+implementation("com.uber.rxdogtag2:rxdogtag:x.y.z")
 ```
 
 # Setup
@@ -126,10 +136,20 @@ RxDogTag.builder()
     .install();
 ```
 
+If you're targeting RxJava 2:
+
 [![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag-autodispose.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag-autodispose)
 
 ```gradle
 implementation("com.uber.rxdogtag:rxdogtag-autodispose:x.y.z")
+```
+
+If you're targeting RxJava 3:
+
+[![Maven Central](https://img.shields.io/maven-central/v/com.uber.rxdogtag2/rxdogtag-autodispose.svg)](https://mvnrepository.com/artifact/com.uber.rxdogtag2/rxdogtag-autodispose)
+
+```gradle
+implementation("com.uber.rxdogtag2:rxdogtag-autodispose:x.y.z")
 ```
 
 ## Development
