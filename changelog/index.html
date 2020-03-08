@@ -287,6 +287,54 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      2.X API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        2.X API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.x/rxdogtag/rxdogtag2/" title="rxdogtag" class="md-nav__link">
+      rxdogtag
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.x/rxdogtag-autodispose/rxdogtag2.autodispose2/" title="rxdogtag-autodispose" class="md-nav__link">
+      rxdogtag-autodispose
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../benchmark/" title="Benchmark" class="md-nav__link">
       Benchmark
@@ -361,6 +409,33 @@
   
     <label class="md-nav__title" for="__toc">Table of contents</label>
     <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-200" title="Version 2.0.0" class="md-nav__link">
+    Version 2.0.0
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#packaging" title="Packaging" class="md-nav__link">
+    Packaging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" title="Changes" class="md-nav__link">
+    Changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#version-100" title="Version 1.0.0" class="md-nav__link">
@@ -446,6 +521,33 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#version-200" title="Version 2.0.0" class="md-nav__link">
+    Version 2.0.0
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#packaging" title="Packaging" class="md-nav__link">
+    Packaging
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changes" title="Changes" class="md-nav__link">
+    Changes
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#version-100" title="Version 1.0.0" class="md-nav__link">
     Version 1.0.0
   </a>
@@ -493,15 +595,47 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<h2 id="version-200">Version 2.0.0<a class="headerlink" href="#version-200" title="Permanent link">&para;</a></h2>
+<p><em>2020-03-08</em></p>
+<p>RxDogTag 2 is built against RxJava 3 and is binary-compatible with RxDogTag 1.x and RxJava 2.x. As such - it has a different package name and maven group ID.</p>
+<h3 id="packaging">Packaging<a class="headerlink" href="#packaging" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Maven Group ID</th>
+<th>Package Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.x</td>
+<td><code>com.uber.rxdogtag</code></td>
+<td><code>com.uber.rxdogtag</code></td>
+</tr>
+<tr>
+<td>2.x</td>
+<td><code>com.uber.rxdogtag2</code></td>
+<td><code>rxdogtag2</code></td>
+</tr>
+</tbody>
+</table>
+<p>For any sub-packages, the above mapping should be used for those package prefix replacements as well.</p>
+<h3 id="changes">Changes<a class="headerlink" href="#changes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Dependency Upgrades
+<div class="codehilite"><pre><span></span>RxJava 3.0.0
+AutoDispose 2.0.0
+</pre></div></li>
+</ul>
 <h2 id="version-100">Version 1.0.0<a class="headerlink" href="#version-100" title="Permanent link">&para;</a></h2>
-<p><em>2020_03_07</em></p>
+<p><em>2020-03-07</em></p>
 <ul>
 <li>Stable release!</li>
 <li>This release is identical in functionality to 0.3.0.</li>
 <li>Various dependency upgrades. (<a href="https://github.com/uber/RxDogTag/pull/55">#55</a>)
 <div class="codehilite"><pre><span></span>RxJava 2.2.18
 AutoDispose 1.4.0
-Android Benchmark 1.0.0
 </pre></div></li>
 </ul>
 <h2 id="version-030">Version 0.3.0<a class="headerlink" href="#version-030" title="Permanent link">&para;</a></h2>

@@ -325,6 +325,54 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      2.X API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        2.X API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="2.x/rxdogtag/rxdogtag2/" title="rxdogtag" class="md-nav__link">
+      rxdogtag
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="2.x/rxdogtag-autodispose/rxdogtag2.autodispose2/" title="rxdogtag-autodispose" class="md-nav__link">
+      rxdogtag-autodispose
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="benchmark/" title="Benchmark" class="md-nav__link">
       Benchmark
@@ -455,8 +503,14 @@
 surfacing their subscribe locations for error reporting/investigation later in the event of an unhandled
 error. This is <em>only</em> for RxJava observers that do not implement <code>onError()</code>.</p>
 <h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
+<p>If you&rsquo;re targeting RxJava 2:</p>
 <p><a href="https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag.svg" /></a></p>
 <div class="codehilite"><pre><span></span>implementation(&quot;com.uber.rxdogtag:rxdogtag:x.y.z&quot;)
+</pre></div>
+
+<p>If you&rsquo;re targeting RxJava 3:</p>
+<p><a href="https://mvnrepository.com/artifact/com.uber.rxdogtag2/rxdogtag"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.uber.rxdogtag2/rxdogtag.svg" /></a></p>
+<div class="codehilite"><pre><span></span>implementation(&quot;com.uber.rxdogtag2:rxdogtag:x.y.z&quot;)
 </pre></div>
 
 <h1 id="setup">Setup<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h1>
@@ -504,7 +558,7 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 <div class="codehilite"><pre><span></span>io.reactivex.exceptions.OnErrorNotImplementedException: The mapper function returned a null value.
 
 Caused by: java.lang.NullPointerException: The mapper function returned a null value.
-    at com.uber.anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
+    at anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
     at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
     at [[ ↓↓ Original trace ↓↓ ]].(:0)
     at io.reactivex.internal.functions.ObjectHelper.requireNonNull(ObjectHelper.java:39)
@@ -551,8 +605,14 @@ interfaces. Support for this is available via separate <code>rxdogtag-autodispos
     <span class="o">.</span><span class="na">install</span><span class="o">();</span>
 </pre></div>
 
+<p>If you&rsquo;re targeting RxJava 2:</p>
 <p><a href="https://mvnrepository.com/artifact/com.uber.rxdogtag/rxdogtag-autodispose"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.uber.rxdogtag/rxdogtag-autodispose.svg" /></a></p>
 <div class="codehilite"><pre><span></span>implementation(&quot;com.uber.rxdogtag:rxdogtag-autodispose:x.y.z&quot;)
+</pre></div>
+
+<p>If you&rsquo;re targeting RxJava 3:</p>
+<p><a href="https://mvnrepository.com/artifact/com.uber.rxdogtag2/rxdogtag-autodispose"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.uber.rxdogtag2/rxdogtag-autodispose.svg" /></a></p>
+<div class="codehilite"><pre><span></span>implementation(&quot;com.uber.rxdogtag2:rxdogtag-autodispose:x.y.z&quot;)
 </pre></div>
 
 <h2 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h2>

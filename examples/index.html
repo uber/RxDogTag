@@ -287,6 +287,54 @@
       
 
 
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      2.X API
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        2.X API
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.x/rxdogtag/rxdogtag2/" title="rxdogtag" class="md-nav__link">
+      rxdogtag
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.x/rxdogtag-autodispose/rxdogtag2.autodispose2/" title="rxdogtag-autodispose" class="md-nav__link">
+      rxdogtag-autodispose
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
   <li class="md-nav__item">
     <a href="../benchmark/" title="Benchmark" class="md-nav__link">
       Benchmark
@@ -519,10 +567,10 @@ no error handling.</p>
     at io.reactivex.Observable.subscribe(Observable.java:12090)
     at io.reactivex.Observable.subscribe(Observable.java:12076)
     at io.reactivex.Observable.subscribe(Observable.java:11954)
-    at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
+    at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
     &lt;collapsed internal calls&gt;
 Caused by: java.lang.RuntimeException: Unhandled error!
-    at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
+    at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
     ... 25 more
 </pre></div>
 
@@ -530,10 +578,10 @@ Caused by: java.lang.RuntimeException: Unhandled error!
 <div class="codehilite"><pre><span></span>io.reactivex.exceptions.OnErrorNotImplementedException: Unhandled error!
 
 Caused by: java.lang.RuntimeException: Unhandled error!
-    at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
+    at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
     at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
     at [[ ↓↓ Original trace ↓↓ ]].(:0)
-    at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
+    at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
     ... 25 more
 </pre></div>
 
@@ -584,7 +632,7 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
 <div class="codehilite"><pre><span></span>io.reactivex.exceptions.OnErrorNotImplementedException: The mapper function returned a null value.
 
 Caused by: java.lang.NullPointerException: The mapper function returned a null value.
-    at com.uber.anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
+    at anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
     at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
     at [[ ↓↓ Original trace ↓↓ ]].(:0)
     at io.reactivex.internal.functions.ObjectHelper.requireNonNull(ObjectHelper.java:39)
@@ -641,8 +689,8 @@ upstream in the chain, the exception occurs in one of the observer callbacks; in
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
     at java.lang.Thread.run(Thread.java:748)
 Caused by: java.lang.RuntimeException: Unhandled error!
-    at com.uber.anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
-    at com.uber.anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
+    at anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
+    at anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
     at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:63)
     ... 14 more
 </pre></div>
@@ -656,9 +704,9 @@ exception in this trivial case.</p>
     at io.reactivex.internal.functions.Functions$OnErrorMissingConsumer.accept(Functions.java:701)
     at io.reactivex.internal.observers.LambdaObserver.onError(LambdaObserver.java:77)
     at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:67)
-    at com.uber.rxdogtag.DogTagObserver.lambda$onNext$3(DogTagObserver.java:53)
-    at com.uber.rxdogtag.RxDogTag.guardedDelegateCall(RxDogTag.java:262)
-    at com.uber.rxdogtag.DogTagObserver.onNext(DogTagObserver.java:53)
+    at rxdogtag2.DogTagObserver.lambda$onNext$3(DogTagObserver.java:53)
+    at rxdogtag2.RxDogTag.guardedDelegateCall(RxDogTag.java:262)
+    at rxdogtag2.DogTagObserver.onNext(DogTagObserver.java:53)
     at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeOnObserver.onNext(ObservableSubscribeOn.java:58)
     at io.reactivex.internal.operators.observable.ObservableScalarXMap$ScalarDisposable.run(ObservableScalarXMap.java:248)
     at io.reactivex.internal.operators.observable.ObservableJust.subscribeActual(ObservableJust.java:35)
@@ -674,12 +722,12 @@ exception in this trivial case.</p>
     at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
     at java.lang.Thread.run(Thread.java:748)
 Caused by: java.lang.RuntimeException: Unhandled error!
-    at com.uber.anotherpackage.ReadMeExample.complexDelegate(ReadMeExample.java:63)
+    at anotherpackage.ReadMeExample.complexDelegate(ReadMeExample.java:63)
     at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
     at [[ Originating callback: onNext ]].(:0)
     at [[ ↓↓ Original trace ↓↓ ]].(:0)
-    at com.uber.anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
-    at com.uber.anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
+    at anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
+    at anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
     at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:63)
     ... 17 more
 </pre></div>
