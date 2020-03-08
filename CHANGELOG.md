@@ -1,6 +1,30 @@
 Changelog
 =========
 
+Version 2.0.0
+-------------
+
+_2020-03-08_
+
+RxDogTag 2 is built against RxJava 3 and is binary-compatible with RxDogTag 1.x and RxJava 2.x. As such - it has a different package name and maven group ID.
+
+### Packaging
+
+|  | Maven Group ID | Package Name |
+| --- | --- | --- |
+| 1.x | `com.uber.rxdogtag` | `com.uber.rxdogtag` |
+| 2.x | `com.uber.rxdogtag2` | `rxdogtag2` |
+
+For any sub-packages, the above mapping should be used for those package prefix replacements as well.
+
+### Changes
+
+*  Dependency Upgrades
+```
+RxJava 3.0.0
+AutoDispose 2.0.0
+```
+
 Version 1.0.0
 -------------
 
