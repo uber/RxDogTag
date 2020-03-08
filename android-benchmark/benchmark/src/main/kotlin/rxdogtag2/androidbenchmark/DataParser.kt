@@ -1,4 +1,4 @@
-package com.uber.rxdogtag.androidbenchmark
+package rxdogtag2.androidbenchmark
 
 import java.util.Locale
 
