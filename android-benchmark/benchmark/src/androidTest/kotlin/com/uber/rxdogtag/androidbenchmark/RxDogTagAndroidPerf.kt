@@ -19,7 +19,7 @@ package com.uber.rxdogtag.androidbenchmark
 import androidx.benchmark.junit4.BenchmarkRule
 import androidx.benchmark.junit4.measureRepeated
 import androidx.test.filters.LargeTest
-import com.uber.rxdogtag.RxDogTag
+import rxdogtag2.RxDogTag
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers

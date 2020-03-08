@@ -23,10 +23,10 @@ io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not ha
 	at io.reactivex.Observable.subscribe(Observable.java:12090)
 	at io.reactivex.Observable.subscribe(Observable.java:12076)
 	at io.reactivex.Observable.subscribe(Observable.java:11954)
-	at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
+	at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
 	<collapsed internal calls>
 Caused by: java.lang.RuntimeException: Unhandled error!
-	at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
+	at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
 	... 25 more
 ```
 
@@ -36,10 +36,10 @@ Now let's look at the same example with tagging enabled:
 io.reactivex.exceptions.OnErrorNotImplementedException: Unhandled error!
 
 Caused by: java.lang.RuntimeException: Unhandled error!
-	at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
+	at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:26)
 	at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
 	at [[ ↓↓ Original trace ↓↓ ]].(:0)
-	at com.uber.anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
+	at anotherpackage.ReadMeExample.simpleSubscribe(ReadMeExample.java:25)
 	... 25 more
 ```
 
@@ -100,7 +100,7 @@ Now the same trace with tagging enabled:
 io.reactivex.exceptions.OnErrorNotImplementedException: The mapper function returned a null value.
 
 Caused by: java.lang.NullPointerException: The mapper function returned a null value.
-	at com.uber.anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
+	at anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
 	at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
 	at [[ ↓↓ Original trace ↓↓ ]].(:0)
 	at io.reactivex.internal.functions.ObjectHelper.requireNonNull(ObjectHelper.java:39)
@@ -163,8 +163,8 @@ io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not ha
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
 Caused by: java.lang.RuntimeException: Unhandled error!
-	at com.uber.anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
-	at com.uber.anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
+	at anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
+	at anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
 	at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:63)
 	... 14 more
 ```
@@ -181,9 +181,9 @@ io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not ha
 	at io.reactivex.internal.functions.Functions$OnErrorMissingConsumer.accept(Functions.java:701)
 	at io.reactivex.internal.observers.LambdaObserver.onError(LambdaObserver.java:77)
 	at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:67)
-	at com.uber.rxdogtag.DogTagObserver.lambda$onNext$3(DogTagObserver.java:53)
-	at com.uber.rxdogtag.RxDogTag.guardedDelegateCall(RxDogTag.java:262)
-	at com.uber.rxdogtag.DogTagObserver.onNext(DogTagObserver.java:53)
+	at rxdogtag2.DogTagObserver.lambda$onNext$3(DogTagObserver.java:53)
+	at rxdogtag2.RxDogTag.guardedDelegateCall(RxDogTag.java:262)
+	at rxdogtag2.DogTagObserver.onNext(DogTagObserver.java:53)
 	at io.reactivex.internal.operators.observable.ObservableSubscribeOn$SubscribeOnObserver.onNext(ObservableSubscribeOn.java:58)
 	at io.reactivex.internal.operators.observable.ObservableScalarXMap$ScalarDisposable.run(ObservableScalarXMap.java:248)
 	at io.reactivex.internal.operators.observable.ObservableJust.subscribeActual(ObservableJust.java:35)
@@ -199,12 +199,12 @@ io.reactivex.exceptions.OnErrorNotImplementedException: The exception was not ha
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
 	at java.lang.Thread.run(Thread.java:748)
 Caused by: java.lang.RuntimeException: Unhandled error!
-	at com.uber.anotherpackage.ReadMeExample.complexDelegate(ReadMeExample.java:63)
+	at anotherpackage.ReadMeExample.complexDelegate(ReadMeExample.java:63)
 	at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
 	at [[ Originating callback: onNext ]].(:0)
 	at [[ ↓↓ Original trace ↓↓ ]].(:0)
-	at com.uber.anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
-	at com.uber.anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
+	at anotherpackage.ReadMeExample.throwSomething(ReadMeExample.java:68)
+	at anotherpackage.ReadMeExample.lambda$complexDelegate$1(ReadMeExample.java:63)
 	at io.reactivex.internal.observers.LambdaObserver.onNext(LambdaObserver.java:63)
 	... 17 more
 ```

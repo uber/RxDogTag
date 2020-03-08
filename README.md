@@ -67,7 +67,7 @@ Now the same error with RxDogTag enabled:
 io.reactivex.exceptions.OnErrorNotImplementedException: The mapper function returned a null value.
 
 Caused by: java.lang.NullPointerException: The mapper function returned a null value.
-	at com.uber.anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
+	at anotherpackage.ReadMeExample.complex(ReadMeExample.java:55)
 	at [[ ↑↑ Inferred subscribe point ↑↑ ]].(:0)
 	at [[ ↓↓ Original trace ↓↓ ]].(:0)
 	at io.reactivex.internal.functions.ObjectHelper.requireNonNull(ObjectHelper.java:39)
