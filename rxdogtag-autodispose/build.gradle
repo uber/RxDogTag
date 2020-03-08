@@ -32,12 +32,12 @@ dependencies {
 
 dokka {
   externalDocumentationLink {
-    url = new URL("http://reactivex.io/RxJava/2.x/javadoc/")
+    url = new URL("http://reactivex.io/RxJava/3.x/javadoc/")
   }
 
   // Output as Github flavored markdown so that docs show up inline in mkdocs website
   outputFormat = 'gfm'
-  outputDirectory = "$rootDir/docs/1.x"
+  outputDirectory = "$rootDir/docs/2.x"
   classpath = new ArrayList<File>(project.tasks['assemble'].outputs.files.files)
   sourceDirs = files('src/main/java')
 }

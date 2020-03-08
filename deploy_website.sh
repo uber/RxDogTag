@@ -22,7 +22,18 @@ if ! [ $local ]; then
   # Move working directory into temp folder
   cd $DIR
 
-  # Generate the API docs
+  # Fetch all tags
+  git fetch --all --tags --prune
+
+  # Checkout the last 1.x release
+  git checkout tags/1.0.0
+
+  # Generate the 1.x docs
+  ./gradlew dokka
+
+  git checkout master
+
+  # Generate docs for 2.x
   ./gradlew dokka
 fi
 
