@@ -23,7 +23,7 @@ def versions = [
     jmhLib: '1.21',
     jmhPlugin: '0.4.8',
     nullawayPlugin: '0.1',
-    dokka: '0.9.18',
+    dokka: '0.10.1',
     spotless: '3.27.2'
 ]
 
