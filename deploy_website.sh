@@ -31,7 +31,7 @@ if ! [ $local ]; then
   # Generate the 1.x docs
   ./gradlew dokka
 
-  git checkout master
+  git checkout main
 
   # Generate docs for 2.x
   ./gradlew dokka
