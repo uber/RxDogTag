@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="images/uber_oss_logo.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="assets/stylesheets/application.1b62728e.css">
       
-        <link rel="stylesheet" href="assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -55,7 +55,7 @@
       
     
     
-      <script src="assets/javascripts/modernizr.74668098.js"></script>
+      <script src="assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -183,7 +183,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -255,7 +255,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#download" title="Download" class="md-nav__link">
+  <a href="#download" class="md-nav__link">
     Download
   </a>
   
@@ -473,7 +473,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#download" title="Download" class="md-nav__link">
+  <a href="#download" class="md-nav__link">
     Download
   </a>
   
@@ -499,7 +499,7 @@
                 
                 
                 <h1 id="rxdogtag">RxDogTag<a class="headerlink" href="#rxdogtag" title="Permanent link">&para;</a></h1>
-<p>RxDogTag is a utility to tag originating subscribe points in RxJava 2 observers, with the goal of 
+<p>RxDogTag is a utility to tag originating subscribe points in RxJava 2+ observers, with the goal of 
 surfacing their subscribe locations for error reporting/investigation later in the event of an unhandled
 error. This is <em>only</em> for RxJava observers that do not implement <code>onError()</code>.</p>
 <h2 id="download">Download<a class="headerlink" href="#download" title="Permanent link">&para;</a></h2>
@@ -519,10 +519,10 @@ hooks in <code>RxJavaPlugins</code>. Note that these will replace any existing p
 the <a href="https://uber.github.io/RxDogTag/0.x/rxdogtag/com.uber.rxdogtag/-rx-dog-tag/install/">JavaDoc</a> for full details of which plugins it uses.</p>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">&para;</a></h2>
 <p>Consider the following classic RxJava error:</p>
-<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="o">.</span><span class="na">range</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">10</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">io</span><span class="o">())</span>
-    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">subscribe</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="p">.</span><span class="na">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">subscribeOn</span><span class="p">(</span><span class="n">Schedulers</span><span class="p">.</span><span class="na">io</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="kc">null</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">subscribe</span><span class="p">();</span>
 </pre></div>
 
 <p>This is a fairly common case in RxJava concurrency. Without tagging, this yields the following trace:</p>
@@ -600,9 +600,9 @@ to deduce the subscribe point. You can add other custom ones via <code>RxDogTag.
 under the hood. AutoDispose can work with RxDogTag via its <code>delegateObserver()</code> APIs on the AutoDisposingObserver
 interfaces. Support for this is available via separate <code>rxdogtag-autodispose</code> artifact and its 
 <code>AutoDisposeObserverHandler</code> singleton instance.</p>
-<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">configureWith</span><span class="o">(</span><span class="n">AutoDisposeConfigurer</span><span class="o">::</span><span class="n">configure</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">install</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">configureWith</span><span class="p">(</span><span class="n">AutoDisposeConfigurer</span><span class="p">::</span><span class="n">configure</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">install</span><span class="p">();</span>
 </pre></div>
 
 <p>If you&rsquo;re targeting RxJava 2:</p>
@@ -692,7 +692,7 @@ limitations under the License.
       
     </div>
     
-      <script src="assets/javascripts/application.245445c6.js"></script>
+      <script src="assets/javascripts/application.a8b5e56f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
       

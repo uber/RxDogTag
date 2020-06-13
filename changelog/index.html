@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/uber_oss_logo.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -183,7 +183,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -411,7 +411,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#version-200" title="Version 2.0.0" class="md-nav__link">
+  <a href="#version-200" class="md-nav__link">
     Version 2.0.0
   </a>
   
@@ -419,14 +419,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#packaging" title="Packaging" class="md-nav__link">
+  <a href="#packaging" class="md-nav__link">
     Packaging
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changes" title="Changes" class="md-nav__link">
+  <a href="#changes" class="md-nav__link">
     Changes
   </a>
   
@@ -438,28 +438,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-100" title="Version 1.0.0" class="md-nav__link">
+  <a href="#version-100" class="md-nav__link">
     Version 1.0.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-030" title="Version 0.3.0" class="md-nav__link">
+  <a href="#version-030" class="md-nav__link">
     Version 0.3.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-020" title="Version 0.2.0" class="md-nav__link">
+  <a href="#version-020" class="md-nav__link">
     Version 0.2.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-010" title="Version 0.1.0" class="md-nav__link">
+  <a href="#version-010" class="md-nav__link">
     Version 0.1.0
   </a>
   
@@ -521,7 +521,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#version-200" title="Version 2.0.0" class="md-nav__link">
+  <a href="#version-200" class="md-nav__link">
     Version 2.0.0
   </a>
   
@@ -529,14 +529,14 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#packaging" title="Packaging" class="md-nav__link">
+  <a href="#packaging" class="md-nav__link">
     Packaging
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#changes" title="Changes" class="md-nav__link">
+  <a href="#changes" class="md-nav__link">
     Changes
   </a>
   
@@ -548,28 +548,28 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-100" title="Version 1.0.0" class="md-nav__link">
+  <a href="#version-100" class="md-nav__link">
     Version 1.0.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-030" title="Version 0.3.0" class="md-nav__link">
+  <a href="#version-030" class="md-nav__link">
     Version 0.3.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-020" title="Version 0.2.0" class="md-nav__link">
+  <a href="#version-020" class="md-nav__link">
     Version 0.2.0
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#version-010" title="Version 0.1.0" class="md-nav__link">
+  <a href="#version-010" class="md-nav__link">
     Version 0.1.0
   </a>
   
@@ -645,9 +645,9 @@ AutoDispose 1.4.0
 and modify the trace before they&rsquo;re handed to the (unhandled) onError. If you only want to handle
 upstream errors, you can disable this behavior in the builder now. This can be useful in hot paths 
 where performance is more of a concern.</p>
-<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">guardObserverCallbacks</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">install</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">guardObserverCallbacks</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">install</span><span class="p">();</span>
 </pre></div>
 
 <p><strong>New: ErrorReceivers API. <a href="https://github.com/uber/RxDogTag/pull/45">#45</a></strong></p>
@@ -670,12 +670,12 @@ found on the website at <a href="https://uber.github.io/RxDogTag/benchmark">http
 <p><strong>New: Builder-based API for configuration</strong></p>
 <p>RxDogTag now uses a builder API for configuration. Currently this includes the existing <code>ObserverHandler</code>
  and package whitelisting, as well as a new configuration to optionally disable stacktrace annotations.</p>
-<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">disableAnnotations</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">addObserverHandlers</span><span class="o">(...)</span>
-    <span class="o">.</span><span class="na">addIgnoredPackages</span><span class="o">(...)</span>
-    <span class="o">.</span><span class="na">configureWith</span><span class="o">(...)</span> <span class="c1">// For other custom AutoDispose.Configurers</span>
-    <span class="o">.</span><span class="na">install</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">disableAnnotations</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">addObserverHandlers</span><span class="p">(...)</span>
+    <span class="p">.</span><span class="na">addIgnoredPackages</span><span class="p">(...)</span>
+    <span class="p">.</span><span class="na">configureWith</span><span class="p">(...)</span> <span class="c1">// For other custom AutoDispose.Configurers</span>
+    <span class="p">.</span><span class="na">install</span><span class="p">();</span>
 </pre></div>
 
 <p>Note: No-config <code>RxDogTag.install()</code> still exists, but is now just a proxy to 
@@ -685,9 +685,9 @@ found on the website at <a href="https://uber.github.io/RxDogTag/benchmark">http
 the builder API.
 * The AutoDispose artifact now uses the builder API&rsquo;s <code>configureWith</code> support, and 
 <code>AutoDisposeObserverHandler</code> is now just a package-private implementation detail.</p>
-<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
-    <span class="o">.</span><span class="na">configureWith</span><span class="o">(</span><span class="n">AutoDisposeConfigurer</span><span class="o">::</span><span class="n">configure</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">install</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">RxDogTag</span><span class="p">.</span><span class="na">builder</span><span class="p">()</span>
+    <span class="p">.</span><span class="na">configureWith</span><span class="p">(</span><span class="n">AutoDisposeConfigurer</span><span class="p">::</span><span class="n">configure</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">install</span><span class="p">();</span>
 </pre></div>
 
 <p><strong>New: Inferred subscribe point is now the first element in the stacktrace.</strong></p>
@@ -784,7 +784,7 @@ Caused by: java.lang.NullPointerException: The mapper function returned a null v
       
     </div>
     
-      <script src="../assets/javascripts/application.245445c6.js"></script>
+      <script src="../assets/javascripts/application.a8b5e56f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

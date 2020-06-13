@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../images/uber_oss_logo.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.5.0">
     
     
       
@@ -44,9 +44,9 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.0284f74d.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
-        <link rel="stylesheet" href="../assets/stylesheets/application-palette.01803549.css">
+        <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -55,7 +55,7 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
@@ -183,7 +183,7 @@
         
       
       
-      <main class="md-main">
+      <main class="md-main" role="main">
         <div class="md-main__inner md-grid" data-md-component="container">
           
             
@@ -371,7 +371,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#examples" title="Examples" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     Examples
   </a>
   
@@ -379,21 +379,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simple" title="Simple" class="md-nav__link">
+  <a href="#simple" class="md-nav__link">
     Simple
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#threading" title="Threading" class="md-nav__link">
+  <a href="#threading" class="md-nav__link">
     Threading
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#delegate-callbacks" title="Delegate callbacks" class="md-nav__link">
+  <a href="#delegate-callbacks" class="md-nav__link">
     Delegate callbacks
   </a>
   
@@ -494,7 +494,7 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#examples" title="Examples" class="md-nav__link">
+  <a href="#examples" class="md-nav__link">
     Examples
   </a>
   
@@ -502,21 +502,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simple" title="Simple" class="md-nav__link">
+  <a href="#simple" class="md-nav__link">
     Simple
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#threading" title="Threading" class="md-nav__link">
+  <a href="#threading" class="md-nav__link">
     Threading
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#delegate-callbacks" title="Delegate callbacks" class="md-nav__link">
+  <a href="#delegate-callbacks" class="md-nav__link">
     Delegate callbacks
   </a>
   
@@ -552,8 +552,8 @@
 <h3 id="simple">Simple<a class="headerlink" href="#simple" title="Permanent link">&para;</a></h3>
 <p>Consider the following trivial case of emitting an error with 
 no error handling.</p>
-<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&quot;Unhandled error!&quot;</span><span class="o">))</span>
-    <span class="o">.</span><span class="na">subscribe</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="p">.</span><span class="na">error</span><span class="p">(</span><span class="k">new</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Unhandled error!&quot;</span><span class="p">))</span>
+    <span class="p">.</span><span class="na">subscribe</span><span class="p">();</span>
 </pre></div>
 
 <p>This results in a stacktrace like this:</p>
@@ -593,10 +593,10 @@ In this case: <code>ReadMeExample.java:26</code>. </p>
 stacktrace as it&rsquo;s irrelevant to the trace.</p>
 <h3 id="threading">Threading<a class="headerlink" href="#threading" title="Permanent link">&para;</a></h3>
 <p>Consider a more complex example with threading:</p>
-<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">io</span><span class="o">())</span>
-    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="kc">null</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">subscribe</span><span class="o">();</span>
+<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">subscribeOn</span><span class="p">(</span><span class="n">Schedulers</span><span class="p">.</span><span class="na">io</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="kc">null</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">subscribe</span><span class="p">();</span>
 </pre></div>
 
 <p>This is a fairly common case in RxJava concurrency. Without tagging, this yields the following trace:</p>
@@ -658,13 +658,13 @@ root-causing why the exception occurred, but at least you know where it&rsquo;s 
 <h3 id="delegate-callbacks">Delegate callbacks<a class="headerlink" href="#delegate-callbacks" title="Permanent link">&para;</a></h3>
 <p>Let&rsquo;s look at one more example. This is similar to the previous, but instead of the exception occurring
 upstream in the chain, the exception occurs in one of the observer callbacks; in this case - <code>onNext</code>.</p>
-<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="o">.</span><span class="na">just</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-    <span class="o">.</span><span class="na">subscribeOn</span><span class="o">(</span><span class="n">Schedulers</span><span class="o">.</span><span class="na">io</span><span class="o">())</span>
-    <span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">throwSomething</span><span class="o">());</span>
+<div class="codehilite"><pre><span></span><span class="n">Observable</span><span class="p">.</span><span class="na">just</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">.</span><span class="na">subscribeOn</span><span class="p">(</span><span class="n">Schedulers</span><span class="p">.</span><span class="na">io</span><span class="p">())</span>
+    <span class="p">.</span><span class="na">subscribe</span><span class="p">(</span><span class="n">i</span> <span class="o">-&gt;</span> <span class="n">throwSomething</span><span class="p">());</span>
 
-<span class="kd">private</span> <span class="kt">void</span> <span class="nf">throwSomething</span><span class="o">()</span> <span class="o">{</span>
-  <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="o">(</span><span class="s">&quot;Unhandled error!&quot;</span><span class="o">);</span>
-<span class="o">}</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">throwSomething</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">throw</span> <span class="k">new</span> <span class="n">RuntimeException</span><span class="p">(</span><span class="s">&quot;Unhandled error!&quot;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 
 <p>Without tagging, this yields the following trace:</p>
@@ -808,7 +808,7 @@ standard callbacks and will report the correct name for each (<code>onSuccess</c
       
     </div>
     
-      <script src="../assets/javascripts/application.245445c6.js"></script>
+      <script src="../assets/javascripts/application.a8b5e56f.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
