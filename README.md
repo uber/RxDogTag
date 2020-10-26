@@ -1,4 +1,4 @@
-# RxDogTag
+# 🐕🏷 RxDogTag
 
 RxDogTag is a utility to tag originating subscribe points in RxJava 2+ observers, with the goal of 
 surfacing their subscribe locations for error reporting/investigation later in the event of an unhandled
