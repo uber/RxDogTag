@@ -12,7 +12,7 @@ inline `subscribe()` calls entirely to their call-sites, which breaks RxDogTag's
 While this blanket keep is sort of a cardinal sin of libraries to do this, RxDogTag is only a few 
 classes and incredibly small, so we claim this is a small price to pay for actionable stacktraces.
 
-Version 2.0.1
+Version 1.0.1
 -------------
 
 _2020-10-26_
