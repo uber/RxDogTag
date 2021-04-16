@@ -26,7 +26,7 @@ implementation("com.uber.rxdogtag2:rxdogtag:x.y.z")
 
 Install early in your application lifecycle via `RxDogTag.install()`. This will install the necessary
 hooks in `RxJavaPlugins`. Note that these will replace any existing plugins at the hooks it uses. See 
-the [JavaDoc](https://uber.github.io/RxDogTag/0.x/rxdogtag/com.uber.rxdogtag/-rx-dog-tag/install/) for full details of which plugins it uses.
+the [JavaDoc](https://uber.github.io/RxDogTag/1.x/rxdogtag/com.uber.rxdogtag/-rx-dog-tag/install/) for full details of which plugins it uses.
 
 ## Example
 
