@@ -1,6 +1,22 @@
 Changelog
 =========
 
+Version 2.0.2
+-------------
+
+_2023-03-09_
+
+Fix embedded proguard rules to use `-keepnames` instead of `-keeppackagenames` as the latter isn't respected by R8 3+ when `repackageclasses` is enabled.
+
+Thanks to [@viakunin](https://github.com/viakunin) for contributing this fix!
+
+Version 1.0.2
+-------------
+
+_2023-03-09_
+
+Same proguard changes as 2.0.2 but for RxJava 2.x/RxDogTag 1.x.
+
 Version 2.0.1
 -------------
 
